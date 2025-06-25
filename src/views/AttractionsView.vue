@@ -3,29 +3,53 @@
     <section class="hero-section">
       <div class="container">
         <h1>Istanbul Attractions</h1>
-        <p>Discover the most popular attractions included in your pass</p>
+        <p>Discover the most popular attractions and tours included in your pass</p>
       </div>
     </section>
 
     <section class="attractions-list">
       <div class="container">
-        <div class="attractions-grid">
+        <!-- Loading State -->
+        <div v-if="loading" class="loading-state">
+          <div class="loading-spinner"></div>
+          <p>Loading Istanbul attractions...</p>
+        </div>
+
+        <!-- Error State -->
+        <div v-else-if="error" class="error-state">
+          <p>{{ error }}</p>
+          <button @click="fetchAttractions" class="btn btn-primary">Try Again</button>
+        </div>
+
+        <!-- Attractions Grid -->
+        <div v-else class="attractions-grid">
           <div class="attraction-card" v-for="attraction in attractions" :key="attraction.id">
             <div class="attraction-image">
-              <img :src="attraction.image" :alt="attraction.name">
+              <img :src="getAttractionImage(attraction)" :alt="getAttractionName(attraction)">
             </div>
             <div class="attraction-content">
-              <h3>{{ attraction.name }}</h3>
-              <p>{{ attraction.description }}</p>
+              <h3>{{ getAttractionName(attraction) }}</h3>
+              <p>{{ getAttractionDescription(attraction) }}</p>
               <div class="attraction-meta">
-                <span class="price">{{ attraction.price }}</span>
-                <span class="rating">
-                  <i class="fas fa-star"></i>
-                  {{ attraction.rating }}
+                <span class="price">{{ getAttractionPrice(attraction) }}</span>
+                <span class="duration">
+                  <i class="fas fa-clock"></i>
+                  {{ getAttractionDuration(attraction) }}
                 </span>
+              </div>
+              <div class="attraction-actions">
+                <router-link :to="`/tour/${attraction.id}`" class="btn btn-primary">View Details</router-link>
+                <button @click="addToWishlist(attraction.id)" class="btn btn-secondary">
+                  <i class="fas fa-heart"></i>
+                </button>
               </div>
             </div>
           </div>
+        </div>
+
+        <!-- No Results -->
+        <div v-if="!loading && !error && attractions.length === 0" class="no-results">
+          <p>No Istanbul attractions found at the moment.</p>
         </div>
       </div>
     </section>
@@ -33,42 +57,89 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
-const attractions = ref([
-  {
-    id: 1,
-    name: 'Hagia Sophia',
-    description: 'Ancient architectural marvel and former cathedral turned mosque.',
-    image: 'https://via.placeholder.com/300x200',
-    price: 'FREE with Pass',
-    rating: 4.8
-  },
-  {
-    id: 2,
-    name: 'Topkapi Palace',
-    description: 'Ottoman imperial palace with stunning views of the Bosphorus.',
-    image: 'https://via.placeholder.com/300x200',
-    price: 'FREE with Pass',
-    rating: 4.7
-  },
-  {
-    id: 3,
-    name: 'Blue Mosque',
-    description: 'Famous mosque known for its beautiful blue tile work.',
-    image: 'https://via.placeholder.com/300x200',
-    price: 'FREE with Pass',
-    rating: 4.6
-  },
-  {
-    id: 4,
-    name: 'Grand Bazaar',
-    description: 'One of the largest and oldest covered markets in the world.',
-    image: 'https://via.placeholder.com/300x200',
-    price: 'FREE with Pass',
-    rating: 4.5
+const attractions = ref([])
+const loading = ref(false)
+const error = ref(null)
+
+// Fetch Istanbul attractions from API
+const fetchAttractions = async () => {
+  loading.value = true
+  error.value = null
+  
+  try {
+    const response = await fetch('https://searchyourtour.com/api/allTours')
+    if (!response.ok) {
+      throw new Error('Failed to fetch attractions')
+    }
+    
+    const data = await response.json()
+    // Filter for Istanbul tours (destination_id: 404)
+    attractions.value = (data.data || []).filter(tour => 
+      tour.destination?.id === 404 && tour.is_active
+    )
+  } catch (err) {
+    error.value = 'Failed to load attractions. Please try again later.'
+    console.error('Error fetching attractions:', err)
+  } finally {
+    loading.value = false
   }
-])
+}
+
+// Helper functions to extract data from API response
+const getAttractionName = (attraction) => {
+  return attraction.content?.[0]?.name || 'Unnamed Attraction'
+}
+
+const getAttractionDescription = (attraction) => {
+  const metaContent = attraction.content?.[0]?.meta_content
+  if (!metaContent) return 'No description available'
+  
+  // Remove HTML tags and extract plain text
+  const tempDiv = document.createElement('div')
+  tempDiv.innerHTML = metaContent
+  const text = tempDiv.textContent || tempDiv.innerText || ''
+  return text.length > 120 ? text.substring(0, 120) + '...' : text
+}
+
+const getAttractionImage = (attraction) => {
+  return attraction.files?.[0]?.url || 'https://via.placeholder.com/300x200?text=Istanbul+Attraction'
+}
+
+const getAttractionPrice = (attraction) => {
+  const price = attraction.tour_price?.[0]
+  if (!price) return 'FREE with Pass'
+  
+  const currency = price.currency?.icon || '€'
+  return `${currency}${price.price}`
+}
+
+const getAttractionDuration = (attraction) => {
+  const duration = attraction.tour_duraction
+  const type = attraction.tour_duraction_type || 'hour'
+  
+  if (!duration) return 'Duration not specified'
+  
+  if (type === 'hour') {
+    return `${duration} ${duration === 1 ? 'Hour' : 'Hours'}`
+  } else if (type === 'day') {
+    return `${duration} ${duration === 1 ? 'Day' : 'Days'}`
+  }
+  
+  return `${duration} ${type}s`
+}
+
+// Methods
+const addToWishlist = (attractionId) => {
+  console.log('Adding attraction to wishlist:', attractionId)
+  // Implement wishlist functionality
+}
+
+// Lifecycle
+onMounted(() => {
+  fetchAttractions()
+})
 </script>
 
 <style scoped>
@@ -92,27 +163,68 @@ const attractions = ref([
   padding: 4rem 0;
 }
 
+/* Loading State */
+.loading-state {
+  text-align: center;
+  padding: 4rem 0;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #e74c3c;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Error State */
+.error-state {
+  text-align: center;
+  padding: 4rem 0;
+  color: #e74c3c;
+}
+
+.error-state p {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+/* No Results */
+.no-results {
+  text-align: center;
+  padding: 4rem 0;
+  color: #666;
+}
+
 .attractions-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 2rem;
 }
 
 .attraction-card {
   background: white;
-  border-radius: 8px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .attraction-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.15);
 }
 
 .attraction-image img {
   width: 100%;
-  height: 200px;
+  height: 220px;
   object-fit: cover;
 }
 
@@ -121,23 +233,106 @@ const attractions = ref([
 }
 
 .attraction-content h3 {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
   color: #2c3e50;
+  font-size: 1.3rem;
+  font-weight: 600;
+}
+
+.attraction-content p {
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 1rem;
 }
 
 .attraction-meta {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 0.75rem 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
 }
 
 .price {
   color: #e74c3c;
   font-weight: 600;
+  font-size: 1.1rem;
 }
 
-.rating {
-  color: #f39c12;
+.duration {
+  color: #666;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.attraction-actions {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: #e74c3c;
+  color: white;
+  flex: 1;
+}
+
+.btn-primary:hover {
+  background: #c0392b;
+  transform: translateY(-2px);
+}
+
+.btn-secondary {
+  background: #f8f9fa;
+  color: #666;
+  padding: 0.75rem;
+  min-width: 44px;
+}
+
+.btn-secondary:hover {
+  background: #e9ecef;
+  color: #e74c3c;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-section h1 {
+    font-size: 2rem;
+  }
+  
+  .attractions-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .attraction-meta {
+    flex-direction: column;
+    gap: 0.5rem;
+    align-items: flex-start;
+  }
+  
+  .attraction-actions {
+    flex-direction: column;
+  }
+  
+  .btn-secondary {
+    align-self: flex-end;
+  }
 }
 </style> 

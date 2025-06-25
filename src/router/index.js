@@ -18,6 +18,16 @@ const routes = [
     component: () => import('../views/AttractionsView.vue')
   },
   {
+    path: '/tours',
+    name: 'tours',
+    component: () => import('../views/ToursView.vue')
+  },
+  {
+    path: '/tour/:id',
+    name: 'tour-detail',
+    component: () => import('../views/TourDetailView.vue')
+  },
+  {
     path: '/contact',
     name: 'contact',
     component: () => import('../views/ContactView.vue')
