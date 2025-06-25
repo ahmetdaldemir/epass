@@ -4,10 +4,11 @@ This guide provides solutions for deploying your Vue 3 application to various pl
 
 ## 🚀 Quick Fix for Cloudflare Wrangler Error
 
-The error you encountered is likely due to missing configuration files. We've added the necessary files to resolve this:
+The error you encountered was due to conflicting configuration fields in `wrangler.toml`. We've fixed this by using the correct configuration for Cloudflare Pages.
 
 ### Files Added:
-- `wrangler.toml` - Cloudflare Pages configuration
+- `wrangler.toml` - Cloudflare Pages configuration (FIXED)
+- `wrangler.workers.toml` - Alternative Cloudflare Workers configuration
 - `vercel.json` - Vercel deployment configuration  
 - `public/_redirects` - Netlify SPA routing
 - Updated `vite.config.js` - Optimized build settings
@@ -15,7 +16,7 @@ The error you encountered is likely due to missing configuration files. We've ad
 
 ## 📋 Deployment Options
 
-### 1. **Cloudflare Pages**
+### 1. **Cloudflare Pages** (Recommended)
 ```bash
 # Install Wrangler CLI
 npm install -g wrangler
@@ -23,8 +24,11 @@ npm install -g wrangler
 # Login to Cloudflare
 wrangler login
 
-# Deploy
-npm run deploy:cloudflare
+# Build the project
+npm run build
+
+# Deploy to Cloudflare Pages
+wrangler pages deploy dist
 ```
 
 ### 2. **Vercel**
@@ -56,17 +60,22 @@ npm run build
 
 ## 🔧 Configuration Files Explained
 
-### `wrangler.toml` (Cloudflare Pages)
+### `wrangler.toml` (Cloudflare Pages) - FIXED
 ```toml
-name = "istanbul-tourist-pass"
+name = 'epass'
+compatibility_date = "2024-01-01"
+
+[pages]
+bucket = "./dist"
+```
+
+### `wrangler.workers.toml` (Cloudflare Workers - Alternative)
+```toml
+name = 'epass-workers'
 compatibility_date = "2024-01-01"
 
 [site]
 bucket = "./dist"
-entry-point = "."
-
-[build]
-command = "npm run build"
 ```
 
 ### `vercel.json` (Vercel)
@@ -92,19 +101,23 @@ command = "npm run build"
 
 ### Common Issues:
 
-1. **Build Fails**
+1. **"Cannot use assets and Workers Sites in the same Worker"**
+   - ✅ FIXED: Removed conflicting `[build]` section from `wrangler.toml`
+   - Use `[pages]` for Cloudflare Pages, `[site]` for Workers
+
+2. **Build Fails**
    - Check Node.js version (16+ required)
    - Clear node_modules and reinstall: `rm -rf node_modules package-lock.json && npm install`
 
-2. **Routing Issues**
+3. **Routing Issues**
    - Ensure SPA routing is configured (all platforms above include this)
    - Check that `public/_redirects` or equivalent is present
 
-3. **API CORS Issues**
+4. **API CORS Issues**
    - The external API (`searchyourtour.com`) should handle CORS
    - If issues persist, consider using a proxy
 
-4. **Asset Loading Issues**
+5. **Asset Loading Issues**
    - Ensure all assets are in the `dist` folder
    - Check that paths are relative, not absolute
 
@@ -130,7 +143,7 @@ After deployment, test these key features:
 
 ## 🔄 CI/CD Integration
 
-### GitHub Actions Example:
+### GitHub Actions Example (Cloudflare Pages):
 ```yaml
 name: Deploy to Cloudflare Pages
 on:
@@ -151,7 +164,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: istanbul-tourist-pass
+          projectName: epass
           directory: dist
 ```
 
@@ -173,4 +186,22 @@ If you continue to experience deployment issues:
 - [ ] API calls work in production
 - [ ] All pages load correctly
 - [ ] Mobile responsiveness works
-- [ ] Performance is acceptable 
+- [ ] Performance is acceptable
+
+## 🎯 Cloudflare Pages Deployment Steps
+
+1. **Build your project:**
+   ```bash
+   npm run build
+   ```
+
+2. **Deploy to Cloudflare Pages:**
+   ```bash
+   wrangler pages deploy dist
+   ```
+
+3. **Set up custom domain** (optional) in Cloudflare dashboard
+
+4. **Configure environment variables** if needed
+
+The error should now be completely resolved! 🎉 
