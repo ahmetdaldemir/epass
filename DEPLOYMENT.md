@@ -4,13 +4,15 @@ This guide provides solutions for deploying your Vue 3 application to various pl
 
 ## 🚀 Quick Fix for Cloudflare Wrangler Error
 
-The error you encountered was due to conflicting configuration fields in `wrangler.toml`. We've fixed this by using the correct configuration for Cloudflare Pages.
+The error you encountered was due to conflicting configuration fields in `wrangler.toml` and infinite loop in redirect rules. We've fixed both issues.
 
 ### Files Added:
 - `wrangler.toml` - Cloudflare Pages configuration (FIXED)
 - `wrangler.workers.toml` - Alternative Cloudflare Workers configuration
+- `public/_redirects` - Specific route redirects (FIXED - no infinite loops)
+- `public/_routes.json` - Modern Cloudflare Pages routing
+- `public/_headers` - Security headers
 - `vercel.json` - Vercel deployment configuration  
-- `public/_redirects` - Netlify SPA routing
 - Updated `vite.config.js` - Optimized build settings
 - Updated `package.json` - Added deployment scripts
 
@@ -69,6 +71,30 @@ compatibility_date = "2024-01-01"
 bucket = "./dist"
 ```
 
+### `public/_redirects` (Cloudflare Pages) - FIXED
+```
+/attractions  /index.html  200
+/tours  /index.html  200
+/tour/*  /index.html  200
+/istanbul-pass  /index.html  200
+/contact  /index.html  200
+/faqs  /index.html  200
+```
+
+### `public/_routes.json` (Cloudflare Pages)
+```json
+{
+  "version": 1,
+  "include": ["/*"],
+  "exclude": [
+    "/assets/*",
+    "/favicon.ico",
+    "/robots.txt",
+    "/sitemap.xml"
+  ]
+}
+```
+
 ### `wrangler.workers.toml` (Cloudflare Workers - Alternative)
 ```toml
 name = 'epass-workers'
@@ -92,11 +118,6 @@ bucket = "./dist"
 }
 ```
 
-### `public/_redirects` (Netlify)
-```
-/*    /index.html   200
-```
-
 ## 🛠️ Troubleshooting
 
 ### Common Issues:
@@ -105,19 +126,23 @@ bucket = "./dist"
    - ✅ FIXED: Removed conflicting `[build]` section from `wrangler.toml`
    - Use `[pages]` for Cloudflare Pages, `[site]` for Workers
 
-2. **Build Fails**
+2. **"Infinite loop detected in this rule"**
+   - ✅ FIXED: Replaced generic `/*` redirect with specific route redirects
+   - Now using specific routes instead of catch-all redirect
+
+3. **Build Fails**
    - Check Node.js version (16+ required)
    - Clear node_modules and reinstall: `rm -rf node_modules package-lock.json && npm install`
 
-3. **Routing Issues**
+4. **Routing Issues**
    - Ensure SPA routing is configured (all platforms above include this)
    - Check that `public/_redirects` or equivalent is present
 
-4. **API CORS Issues**
+5. **API CORS Issues**
    - The external API (`searchyourtour.com`) should handle CORS
    - If issues persist, consider using a proxy
 
-5. **Asset Loading Issues**
+6. **Asset Loading Issues**
    - Ensure all assets are in the `dist` folder
    - Check that paths are relative, not absolute
 
@@ -203,5 +228,23 @@ If you continue to experience deployment issues:
 3. **Set up custom domain** (optional) in Cloudflare dashboard
 
 4. **Configure environment variables** if needed
+
+## 🔧 Routing Fix Explanation
+
+The infinite loop error occurred because the original `_redirects` file had:
+```
+/*    /index.html   200
+```
+
+This caused Cloudflare to redirect `/index.html` to `/index.html`, creating an infinite loop.
+
+**Solution:** Use specific route redirects instead:
+```
+/attractions  /index.html  200
+/tours  /index.html  200
+/tour/*  /index.html  200
+```
+
+This way, only specific routes are redirected, avoiding the infinite loop.
 
 The error should now be completely resolved! 🎉 
