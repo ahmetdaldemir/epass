@@ -37,7 +37,7 @@
             <nav class="main-menu">
               <ul>
             
-                <li><router-link to="/attractions">Attractions</router-link></li>
+                <li><router-link to="/attractions">İstanbul Attractions</router-link></li>
                 <li><router-link to="/tours">Tours</router-link></li>
                 <li><router-link to="/about">About</router-link></li>
               </ul>

@@ -5,7 +5,7 @@
       {{ getLanguageCode(currentLanguage) }}
     </span>
     <ul class="lang-dropdown" v-show="isDropdownOpen">
-      <li v-for="lang in languages" :key="lang.code">
+      <li v-for="lang in languages" :key="lang.id" >
         <a 
           :data-lang="lang.code" 
           :data-value="lang.name" 
@@ -13,8 +13,8 @@
           @click.prevent="changeLanguage(lang.code)"
           :style="{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }"
         >
-          <i :class="lang.icon"></i>
-          {{ lang.code.toUpperCase() }}
+          <i :class="`fi fi-${lang.flag}`"></i>
+          {{ lang.name }}
         </a>
       </li>
     </ul>
@@ -25,37 +25,43 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 
 // Reactive data
-const currentLanguage = ref('jp')
+const currentLanguage = ref('en')
 const isDropdownOpen = ref(false)
+const languages = ref([])
+const loading = ref(false)
+const error = ref(null)
 
-// Language data
-const languages = ref([
-  { code: 'ar', name: 'Arabic', icon: 'fi fi-arab' },
-  { code: 'bg', name: 'Bulgarian', icon: 'fi fi-bg' },
-  { code: 'zh-cn', name: 'Chinese', icon: 'fi fi-cn' },
-  { code: 'hr', name: 'Croatian', icon: 'fi fi-hr' },
-  { code: 'en', name: 'English', icon: 'fi fi-gb' },
-  { code: 'fr', name: 'French', icon: 'fi fi-fr' },
-  { code: 'de', name: 'German', icon: 'fi fi-de' },
-  { code: 'el', name: 'Greek', icon: 'fi fi-gr' },
-  { code: 'iw', name: 'Hebrew', icon: 'fi fi-il' },
-  { code: 'hu', name: 'Hungarian', icon: 'fi fi-hu' },
-  { code: 'hi', name: 'Indian', icon: 'fi fi-in' },
-  { code: 'id', name: 'Indonesian', icon: 'fi fi-id' },
-  { code: 'it', name: 'Italian', icon: 'fi fi-it' },
-  { code: 'ja', name: 'Japanese', icon: 'fi fi-jp' },
-  { code: 'ko', name: 'Korean', icon: 'fi fi-kr' },
-  { code: 'mk', name: 'Macedonian', icon: 'fi fi-mk' },
-  { code: 'fa', name: 'Persian', icon: 'fi fi-ir' },
-  { code: 'pl', name: 'Polish', icon: 'fi fi-pl' },
-  { code: 'pt', name: 'Portuguese', icon: 'fi fi-pt' },
-  { code: 'ro', name: 'Romanian', icon: 'fi fi-ro' },
-  { code: 'ru', name: 'Russian', icon: 'fi fi-ru' },
-  { code: 'es', name: 'Spanish', icon: 'fi fi-es' },
-  { code: 'zh-tw', name: 'Taiwanese', icon: 'fi fi-tw' },
-  { code: 'ur', name: 'Urdu', icon: 'fi fi-pk' },
-  { code: 'tr', name: 'Turkish', icon: 'fi fi-tr' }
-])
+// Fetch languages from API
+const fetchLanguages = async () => {
+  loading.value = true
+  error.value = null
+  
+  try {
+    const response = await fetch('https://searchyourtour.com/api/languages?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1')
+    if (!response.ok) {
+      throw new Error('Failed to fetch languages')
+    }
+    
+    const data = await response.json()
+    if (data && Array.isArray(data)) {
+      languages.value = data
+      
+      // Set default language to first available language if none is set
+      if (languages.value.length > 0 && !currentLanguage.value) {
+        const defaultLang = languages.value.find(lang => lang && lang.status) || languages.value[0]
+        if (defaultLang) {
+          currentLanguage.value = defaultLang.code
+        }
+      }
+    }
+  } catch (err) {
+    error.value = 'Failed to load languages'
+    console.error('Error fetching languages:', err)
+    // Keep the default languages if API fails
+  } finally {
+    loading.value = false
+  }
+}
 
 // Methods
 const toggleDropdown = () => {
@@ -66,26 +72,31 @@ const changeLanguage = (langCode) => {
   currentLanguage.value = langCode
   isDropdownOpen.value = false
   
+  // Save to localStorage
+  localStorage.setItem('selectedLanguage', langCode)
+  
   // Emit event for parent components
   emit('language-changed', langCode)
   
   // Call the original doGTranslate function if it exists
   if (typeof window.doGTranslate === 'function') {
-    window.doGTranslate({ dataset: { lang: langCode, value: getLanguageName(langCode) } })
+    const lang = languages.value.find(l => l && l.code === langCode)
+    window.doGTranslate({ dataset: { lang: langCode, value: lang ? lang.name : langCode } })
   }
 }
 
 const getLanguageIcon = (langCode) => {
-  const lang = languages.value.find(l => l.code === langCode)
-  return lang ? lang.icon : 'fi fi-gb'
+  const lang = languages.value.find(l => l && l.code === langCode)
+  return lang ? `fi fi-${lang.flag}` : 'fi fi-gb'
 }
 
 const getLanguageCode = (langCode) => {
-  return langCode.toUpperCase()
+  const lang = languages.value.find(l => l && l.code === langCode)
+  return lang ? lang.name : langCode.toUpperCase()
 }
 
 const getLanguageName = (langCode) => {
-  const lang = languages.value.find(l => l.code === langCode)
+  const lang = languages.value.find(l => l && l.code === langCode)
   return lang ? lang.name : 'English'
 }
 
@@ -113,6 +124,9 @@ onMounted(() => {
   if (savedLanguage) {
     currentLanguage.value = savedLanguage
   }
+  
+  // Fetch languages from API
+  fetchLanguages()
 })
 
 onUnmounted(() => {
@@ -155,6 +169,8 @@ onUnmounted(() => {
   margin: 0;
   min-width: 200px;
   z-index: 1000;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .lang-dropdown li {
@@ -170,9 +186,6 @@ onUnmounted(() => {
   align-items: center;
   justify-content: left;
   gap: 10px;
-  flex-direction: column;
-  flex-wrap: wrap;
-  align-content: flex-start;
   padding: 12px 16px;
   text-decoration: none;
   color: #333;

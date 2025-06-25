@@ -57,34 +57,53 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 
 const attractions = ref([])
 const loading = ref(false)
 const error = ref(null)
+const currentLanguage = ref('en')
+const currentCurrency = ref(5) // USD
 
-// Fetch Istanbul attractions from API
+// Fetch Istanbul attractions from API with language and currency parameters
 const fetchAttractions = async () => {
   loading.value = true
   error.value = null
   
   try {
-    const response = await fetch('https://searchyourtour.com/api/allTours')
+    const url = `https://searchyourtour.com/api/tours?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1&language_id=${getLanguageId(currentLanguage.value)}&currency_id=${currentCurrency.value}&limit=200&IpAdrress=78.177.166.135`
+    
+    const response = await fetch(url)
     if (!response.ok) {
       throw new Error('Failed to fetch attractions')
     }
     
     const data = await response.json()
-    // Filter for Istanbul tours (destination_id: 404)
-    attractions.value = (data.data || []).filter(tour => 
-      tour.destination?.id === 404 && tour.is_active
-    )
+    
+    // Filter for Istanbul tours (destination_id: 404) and active tours with content
+    const istanbulTours = (data || []).filter(tour => {
+      return tour.destination?.id === 404 && 
+             tour.is_active === true
+    })
+    console.log(istanbulTours)
+    attractions.value = istanbulTours
   } catch (err) {
     error.value = 'Failed to load attractions. Please try again later.'
     console.error('Error fetching attractions:', err)
   } finally {
     loading.value = false
   }
+}
+
+// Helper function to get language ID from language code
+const getLanguageId = (langCode) => {
+  const languageMap = {
+    'en': 1,
+    'tr': 2,
+    'de': 6,
+    'ru': 9
+  }
+  return languageMap[langCode] || 1
 }
 
 // Helper functions to extract data from API response
@@ -111,7 +130,7 @@ const getAttractionPrice = (attraction) => {
   const price = attraction.tour_price?.[0]
   if (!price) return 'FREE with Pass'
   
-  const currency = price.currency?.icon || '€'
+  const currency = price.currency_icon || '$'
   return `${currency}${price.price}`
 }
 
@@ -136,9 +155,32 @@ const addToWishlist = (attractionId) => {
   // Implement wishlist functionality
 }
 
+// Watch for language changes
+const updateLanguage = (newLanguage) => {
+  currentLanguage.value = newLanguage
+  fetchAttractions() // Refetch attractions with new language
+}
+
+// Expose method for parent components
+defineExpose({
+  updateLanguage
+})
+
 // Lifecycle
 onMounted(() => {
+  // Get language from localStorage or default to English
+  const savedLanguage = localStorage.getItem('selectedLanguage') || 'en'
+  currentLanguage.value = savedLanguage
+  
   fetchAttractions()
+})
+
+// Watch for language changes in localStorage
+watch(() => localStorage.getItem('selectedLanguage'), (newLanguage) => {
+  if (newLanguage && newLanguage !== currentLanguage.value) {
+    currentLanguage.value = newLanguage
+    fetchAttractions()
+  }
 })
 </script>
 

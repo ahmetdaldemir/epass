@@ -48,42 +48,28 @@
           <div class="tour-card" v-for="tour in filteredTours" :key="tour.id">
             <div class="tour-image">
               <img :src="getTourImage(tour)" :alt="getTourName(tour)">
-              <div class="tour-badge" v-if="tour.is_active">Active</div>
+              <div class="tour-overlay">
+                <button @click="addToWishlist(tour.id)" class="wishlist-btn">
+                  <i class="fas fa-heart"></i>
+                </button>
+              </div>
             </div>
             <div class="tour-content">
+              <h3>{{ getTourName(tour) }}</h3>
+              <p>{{ getTourDescription(tour) }}</p>
               <div class="tour-meta">
-                <span class="category">{{ getDestinationName(tour) }}</span>
+                <span class="destination">
+                  <i class="fas fa-map-marker-alt"></i>
+                  {{ getDestinationName(tour) }}
+                </span>
                 <span class="duration">
                   <i class="fas fa-clock"></i>
-                  {{ tour.tour_duraction }} {{ tour.tour_duraction_type }}{{ tour.tour_duraction > 1 ? 's' : '' }}
-                </span>
-              </div>
-              <h3 class="tour-title">{{ getTourName(tour) }}</h3>
-              <p class="tour-description">{{ getTourDescription(tour) }}</p>
-              <div class="tour-features">
-                <span v-for="service in tour.tour_include_service?.slice(0, 3)" :key="service.id" class="feature">
-                  <i class="fas fa-check"></i>
-                  {{ service.include_service }}
+                  {{ getTourDuration(tour) }}
                 </span>
               </div>
               <div class="tour-footer">
-                <div class="tour-rating">
-                  <i class="fas fa-star"></i>
-                  <span>4.5</span>
-                  <span class="review-count">(New)</span>
-                </div>
-                <div class="tour-price">
-                  <span class="price">{{ getTourPrice(tour) }}</span>
-                  <span class="price-note">per person</span>
-                </div>
-              </div>
-              <div class="tour-actions">
-                <router-link :to="`/tour/${tour.id}`" class="btn btn-primary">
-                  View Details
-                </router-link>
-                <button class="btn btn-secondary" @click="addToWishlist(tour.id)">
-                  <i class="fas fa-heart"></i>
-                </button>
+                <div class="tour-price">{{ getTourPrice(tour) }}</div>
+                <router-link :to="`/tour/${tour.id}`" class="btn btn-primary">View Details</router-link>
               </div>
             </div>
           </div>
@@ -100,33 +86,48 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 
 const selectedDestination = ref('')
 const selectedDuration = ref('')
 const tours = ref([])
 const loading = ref(false)
 const error = ref(null)
+const currentLanguage = ref('en')
+const currentCurrency = ref(5) // USD
 
-// Fetch tours from API
+// Fetch tours from API with language and currency parameters
 const fetchTours = async () => {
   loading.value = true
   error.value = null
   
   try {
-    const response = await fetch('https://searchyourtour.com/api/allTours')
+    const url = `https://searchyourtour.com/api/tours?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1&language_id=${getLanguageId(currentLanguage.value)}&currency_id=${currentCurrency.value}&limit=100&IpAdrress=78.177.166.135`
+    
+    const response = await fetch(url)
     if (!response.ok) {
       throw new Error('Failed to fetch tours')
     }
     
     const data = await response.json()
-    tours.value = data.data || []
+    tours.value = data || []
   } catch (err) {
     error.value = 'Failed to load tours. Please try again later.'
     console.error('Error fetching tours:', err)
   } finally {
     loading.value = false
   }
+}
+
+// Helper function to get language ID from language code
+const getLanguageId = (langCode) => {
+  const languageMap = {
+    'en': 1,
+    'tr': 2,
+    'de': 6,
+    'ru': 9
+  }
+  return languageMap[langCode] || 1
 }
 
 // Helper functions to extract data from API response
@@ -157,8 +158,23 @@ const getTourPrice = (tour) => {
   const price = tour.tour_price?.[0]
   if (!price) return 'Price on request'
   
-  const currency = price.currency?.icon || '€'
+  const currency = price.currency_icon || '$'
   return `${currency}${price.price}`
+}
+
+const getTourDuration = (tour) => {
+  const duration = tour.tour_duraction
+  const type = tour.tour_duraction_type || 'hour'
+  
+  if (!duration) return 'Duration not specified'
+  
+  if (type === 'hour') {
+    return `${duration} ${duration === 1 ? 'Hour' : 'Hours'}`
+  } else if (type === 'day') {
+    return `${duration} ${duration === 1 ? 'Day' : 'Days'}`
+  }
+  
+  return `${duration} ${type}s`
 }
 
 // Computed properties
@@ -198,9 +214,32 @@ const clearFilters = () => {
   selectedDuration.value = ''
 }
 
+// Watch for language changes
+const updateLanguage = (newLanguage) => {
+  currentLanguage.value = newLanguage
+  fetchTours() // Refetch tours with new language
+}
+
+// Expose method for parent components
+defineExpose({
+  updateLanguage
+})
+
 // Lifecycle
 onMounted(() => {
+  // Get language from localStorage or default to English
+  const savedLanguage = localStorage.getItem('selectedLanguage') || 'en'
+  currentLanguage.value = savedLanguage
+  
   fetchTours()
+})
+
+// Watch for language changes in localStorage
+watch(() => localStorage.getItem('selectedLanguage'), (newLanguage) => {
+  if (newLanguage && newLanguage !== currentLanguage.value) {
+    currentLanguage.value = newLanguage
+    fetchTours()
+  }
 })
 </script>
 
@@ -245,28 +284,23 @@ onMounted(() => {
 
 .tours-header h2 {
   font-size: 2.5rem;
-  color: #333;
+  color: #2c3e50;
   margin: 0;
 }
 
 .filters {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 
 .filter-select {
   padding: 0.75rem 1rem;
-  border: 2px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
   background: white;
   font-size: 1rem;
-  cursor: pointer;
-  transition: border-color 0.3s ease;
-}
-
-.filter-select:focus {
-  outline: none;
-  border-color: #e74c3c;
+  min-width: 150px;
 }
 
 /* Loading State */
@@ -302,22 +336,10 @@ onMounted(() => {
   font-size: 1.1rem;
 }
 
-/* No Results */
-.no-results {
-  text-align: center;
-  padding: 4rem 0;
-  color: #666;
-}
-
-.no-results p {
-  margin-bottom: 1rem;
-  font-size: 1.1rem;
-}
-
 /* Tours Grid */
 .tours-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
   gap: 2rem;
 }
 
@@ -330,7 +352,7 @@ onMounted(() => {
 }
 
 .tour-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
   box-shadow: 0 8px 30px rgba(0,0,0,0.15);
 }
 
@@ -351,132 +373,103 @@ onMounted(() => {
   transform: scale(1.05);
 }
 
-.tour-badge {
+.tour-overlay {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background: #27ae60;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-size: 0.8rem;
-  font-weight: 600;
+}
+
+.wishlist-btn {
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.wishlist-btn:hover {
+  background: white;
+  transform: scale(1.1);
 }
 
 .tour-content {
   padding: 1.5rem;
 }
 
-.tour-meta {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 1rem;
-}
-
-.category {
-  background: #f8f9fa;
-  color: #666;
-  padding: 0.25rem 0.75rem;
-  border-radius: 15px;
-  font-size: 0.8rem;
+.tour-content h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.75rem;
+  color: #2c3e50;
   font-weight: 600;
 }
 
-.duration {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #666;
-  font-size: 0.9rem;
-}
-
-.tour-title {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #333;
-  margin-bottom: 0.75rem;
-  line-height: 1.3;
-}
-
-.tour-description {
+.tour-content p {
   color: #666;
   line-height: 1.6;
   margin-bottom: 1rem;
 }
 
-.tour-features {
+.tour-meta {
   display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+  gap: 1.5rem;
   margin-bottom: 1.5rem;
+  font-size: 0.9rem;
+  color: #666;
 }
 
-.feature {
+.tour-meta span {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  color: #555;
-  font-size: 0.9rem;
-}
-
-.feature i {
-  color: #27ae60;
-  font-size: 0.8rem;
 }
 
 .tour-footer {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
-}
-
-.tour-rating {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #f39c12;
-  font-weight: 600;
-}
-
-.review-count {
-  color: #666;
-  font-weight: normal;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
 }
 
 .tour-price {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
-}
-
-.price {
   font-size: 1.5rem;
   font-weight: 700;
   color: #e74c3c;
 }
 
-.price-note {
-  font-size: 0.8rem;
-  color: #999;
+.btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
-.tour-actions {
-  display: flex;
-  gap: 1rem;
+.btn-primary {
+  background: #e74c3c;
+  color: white;
 }
 
-.tour-actions .btn {
-  flex: 1;
+.btn-primary:hover {
+  background: #c0392b;
+  transform: translateY(-2px);
+}
+
+/* No Results */
+.no-results {
   text-align: center;
-  padding: 0.75rem 1rem;
-}
-
-.tour-actions .btn-secondary {
-  flex: 0 0 auto;
-  width: 50px;
-  padding: 0.75rem;
+  padding: 4rem 0;
+  color: #666;
 }
 
 /* Responsive Design */
@@ -487,26 +480,26 @@ onMounted(() => {
   
   .tours-header {
     flex-direction: column;
-    align-items: flex-start;
+    align-items: stretch;
   }
   
   .filters {
-    width: 100%;
-    flex-direction: column;
+    justify-content: center;
   }
   
   .tours-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
   
   .tour-footer {
     flex-direction: column;
     gap: 1rem;
-    align-items: flex-start;
+    align-items: stretch;
   }
   
-  .tour-actions {
-    flex-direction: column;
+  .tour-price {
+    text-align: center;
   }
 }
 </style> 

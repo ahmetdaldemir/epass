@@ -15,6 +15,47 @@ The error you encountered was due to conflicting configuration fields in `wrangl
 - `vercel.json` - Vercel deployment configuration  
 - Updated `vite.config.js` - Optimized build settings
 - Updated `package.json` - Added deployment scripts
+- Updated `LanguageSwitcher.vue` - Now fetches languages from API
+- Updated `ToursView.vue` - Now uses new tours API with language/currency
+- Updated `AttractionsView.vue` - Now uses new tours API with language/currency
+- Updated `TourDetailView.vue` - Now uses new tours API with language/currency
+
+## 🌍 Language Switcher API Integration
+
+The language switcher now fetches real language data from the API:
+- **API Endpoint:** `https://searchyourtour.com/api/languages?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1`
+- **Features:** Real language names, proper flags, status filtering
+- **Fallback:** Default languages if API fails
+- **Storage:** Selected language saved to localStorage
+
+### Available Languages from API:
+- 🇹🇷 Türkçe (Turkish)
+- 🇩🇪 Deutsch (German) 
+- 🇺🇸 English
+- 🇷🇺 Русский (Russian)
+- And more based on API response
+
+## 🏛️ Tours API Integration
+
+All tour-related components now use the new API endpoint with language and currency support:
+- **API Endpoint:** `https://searchyourtour.com/api/tours?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1&language_id={id}&currency_id=5&limit=100&IpAdrress=78.177.166.135`
+- **Language Support:** Dynamic content based on selected language
+- **Currency Support:** USD pricing (currency_id=5)
+- **Real-time Updates:** Content updates when language changes
+
+### Language ID Mapping:
+- `en` → `language_id=1` (English)
+- `tr` → `language_id=2` (Turkish)
+- `de` → `language_id=6` (German)
+- `ru` → `language_id=9` (Russian)
+
+### Features:
+- **Multi-language Content:** Tour names, descriptions, and details in selected language
+- **Currency Display:** Proper currency symbols and pricing
+- **Istanbul Filtering:** Attractions page filters for Istanbul tours (destination_id: 404)
+- **Active Tours Only:** Only displays tours with `is_active: true`
+- **Real Images:** High-quality tour images from Cloudinary
+- **Dynamic Pricing:** Real-time pricing with currency conversion
 
 ## 📋 Deployment Options
 
@@ -75,7 +116,6 @@ bucket = "./dist"
 ```
 /attractions  /index.html  200
 /tours  /index.html  200
-/tour/*  /index.html  200
 /istanbul-pass  /index.html  200
 /contact  /index.html  200
 /faqs  /index.html  200
@@ -90,7 +130,8 @@ bucket = "./dist"
     "/assets/*",
     "/favicon.ico",
     "/robots.txt",
-    "/sitemap.xml"
+    "/sitemap.xml",
+    "/index.html"
   ]
 }
 ```
@@ -130,19 +171,29 @@ bucket = "./dist"
    - ✅ FIXED: Replaced generic `/*` redirect with specific route redirects
    - Now using specific routes instead of catch-all redirect
 
-3. **Build Fails**
+3. **Language API not loading**
+   - Check network connectivity
+   - Verify API endpoint is accessible
+   - Component has fallback to default languages
+
+4. **Tours API not loading**
+   - Verify API token is valid
+   - Check language_id and currency_id parameters
+   - Ensure IP address parameter is included
+
+5. **Build Fails**
    - Check Node.js version (16+ required)
    - Clear node_modules and reinstall: `rm -rf node_modules package-lock.json && npm install`
 
-4. **Routing Issues**
+6. **Routing Issues**
    - Ensure SPA routing is configured (all platforms above include this)
    - Check that `public/_redirects` or equivalent is present
 
-5. **API CORS Issues**
+7. **API CORS Issues**
    - The external API (`searchyourtour.com`) should handle CORS
    - If issues persist, consider using a proxy
 
-6. **Asset Loading Issues**
+8. **Asset Loading Issues**
    - Ensure all assets are in the `dist` folder
    - Check that paths are relative, not absolute
 
@@ -153,6 +204,9 @@ If you need to add environment variables for different environments:
 # .env.production
 VITE_API_URL=https://searchyourtour.com/api
 VITE_APP_TITLE=Istanbul Tourist Pass
+VITE_LANGUAGE_API_TOKEN=ad5257a5-efdd-4314-9e5e-b56aabe321f1
+VITE_TOURS_API_TOKEN=ad5257a5-efdd-4314-9e5e-b56aabe321f1
+VITE_DEFAULT_CURRENCY_ID=5
 ```
 
 ## 📱 Testing Deployment
@@ -160,11 +214,13 @@ VITE_APP_TITLE=Istanbul Tourist Pass
 After deployment, test these key features:
 
 1. **Homepage** - Should load without errors
-2. **Attractions Page** - Should fetch and display Istanbul tours
-3. **Tours Page** - Should show all available tours
-4. **Tour Details** - Should display individual tour information
-5. **Navigation** - All routes should work correctly
-6. **Mobile Responsiveness** - Should work on all devices
+2. **Language Switcher** - Should fetch and display languages from API
+3. **Attractions Page** - Should fetch and display Istanbul tours in selected language
+4. **Tours Page** - Should show all available tours in selected language
+5. **Tour Details** - Should display individual tour information in selected language
+6. **Navigation** - All routes should work correctly
+7. **Mobile Responsiveness** - Should work on all devices
+8. **Language Changes** - Content should update when language is changed
 
 ## 🔄 CI/CD Integration
 
@@ -208,6 +264,8 @@ If you continue to experience deployment issues:
 - [ ] All configuration files are present
 - [ ] SPA routing is configured
 - [ ] Environment variables are set (if needed)
+- [ ] Language API loads correctly
+- [ ] Tours API loads correctly with language/currency
 - [ ] API calls work in production
 - [ ] All pages load correctly
 - [ ] Mobile responsiveness works
@@ -246,5 +304,15 @@ This caused Cloudflare to redirect `/index.html` to `/index.html`, creating an i
 ```
 
 This way, only specific routes are redirected, avoiding the infinite loop.
+
+## 🌐 API Integration Summary
+
+Your application now has full API integration:
+
+1. **Languages API** - Dynamic language selection with real data
+2. **Tours API** - Multi-language tour content with currency support
+3. **Real-time Updates** - Content changes based on selected language
+4. **Fallback Support** - Graceful degradation if APIs are unavailable
+5. **Performance Optimized** - Efficient data fetching and caching
 
 The error should now be completely resolved! 🎉 

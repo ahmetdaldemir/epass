@@ -63,24 +63,51 @@
                   </li>
                 </ul>
               </div>
-              <div class="tour-price-section">
-                <div class="price-info">
-                  <div class="price">
-                    <span class="current-price">{{ getTourPrice(tour) }}</span>
-                  </div>
-                  <div class="price-per-person">per person</div>
+              <!-- Rezervasyon/Ödeme Kutusu Başlangıç -->
+              <div v-if="tour" class="pass-box">
+                <h2>Book this tour</h2>
+                <div class="pass-select-row">
+                  <div class="pass-select">{{ getTourName(tour) }}</div>
+                  <span class="pass-price">{{ getTourPrice(tour) }}<small> / person</small></span>
                 </div>
-                <div class="tour-actions">
-                  <button class="btn btn-primary book-btn" @click="bookTour">
-                    <i class="fas fa-calendar-check"></i>
-                    Book Now
-                  </button>
-                  <button class="btn btn-secondary" @click="addToWishlist">
-                    <i class="fas fa-heart"></i>
-                    Add to Wishlist
-                  </button>
+                <div class="quantity-row">
+                  <button @click="decrement" :disabled="quantity <= 1">-</button>
+                  <span>{{ quantity }}</span>
+                  <button @click="increment">+</button>
+                </div>
+                <div class="price-summary">
+                  <div class="old-price" v-if="getOldTourPrice(tour)">
+                    <s>{{ getOldTourPrice(tour) }}</s>
+                  </div>
+                  <div class="new-price">{{ getTourPrice(tour) }}</div>
+                  <div class="discount" v-if="getDiscount(tour)">
+                    <span>Sale Discount</span>
+                    <span>-{{ getDiscount(tour) }}</span>
+                  </div>
+                </div>
+                <hr />
+                <div class="fee-row">
+                  <span>Instant Access Fee <span class="info" title="You get your booking instantly after payment.">i</span></span>
+                  <span>{{ instantFee }}</span>
+                </div>
+                <div class="eco-row">
+                  <span class="eco-icon">🌱</span>
+                  <span>Eco-Friendly Green Technology</span>
+                </div>
+                <hr />
+                <div class="order-total-row">
+                  <span>Order Total</span>
+                  <span class="order-total">{{ orderTotal }}</span>
+                </div>
+                <div class="tax-note">All taxes and fees included</div>
+                <input type="email" placeholder="E-mail Address" class="input" v-model="email" />
+                <input type="date" placeholder="Tour Date" class="input" v-model="startDate" />
+                <button class="pay-btn" @click="proceedToBooking">Book Now</button>
+                <div class="save-note" v-if="getDiscount(tour)">
+                  <b>Save {{ getDiscount(tour) }}</b> on this tour versus original price.
                 </div>
               </div>
+              <!-- Rezervasyon/Ödeme Kutusu Son -->
             </div>
           </div>
         </div>
@@ -201,12 +228,22 @@
         </div>
       </section>
     </div>
+
+    <!-- Checkout Form Modal -->
+    <div v-if="showCheckout" class="checkout-modal">
+      <div class="checkout-content">
+        <span class="close-btn" @click="showCheckout = false">&times;</span>
+        <h2>Checkout</h2>
+        <CheckoutForm :tour="tour" :quantity="quantity" :email="email" :startDate="startDate" :instantFee="instantFee" :orderTotal="orderTotal" @close="showCheckout = false" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
+import CheckoutForm from '../components/CheckoutForm.vue'
 
 const route = useRoute()
 const activeTab = ref('overview')
@@ -214,37 +251,55 @@ const tour = ref(null)
 const loading = ref(false)
 const error = ref(null)
 
+// Rezervasyon kutusu için state
+const quantity = ref(1)
+const email = ref('')
+const startDate = ref('')
+const instantFee = '€10.00'
+const showCheckout = ref(false)
+
 // Fetch tour data from API
 const fetchTourData = async () => {
-  const tourId = route.params.id
-  if (!tourId) {
-    error.value = 'Tour ID not found'
-    return
-  }
-
   loading.value = true
   error.value = null
   
   try {
-    const response = await fetch(`https://searchyourtour.com/api/allTours`)
+    const currentLanguage = localStorage.getItem('selectedLanguage') || 'en'
+    const languageId = getLanguageId(currentLanguage)
+    
+    const url = `https://searchyourtour.com/api/tours?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1&language_id=${languageId}&currency_id=5&limit=100&IpAdrress=78.177.166.135`
+    
+    const response = await fetch(url)
     if (!response.ok) {
       throw new Error('Failed to fetch tour data')
     }
     
     const data = await response.json()
-    const foundTour = data.data?.find(t => t.id.toString() === tourId)
+    const tourData = data.find(t => t.id.toString() === route.params.id)
     
-    if (!foundTour) {
-      throw new Error('Tour not found')
+    if (!tourData) {
+      error.value = 'Tour not found'
+      return
     }
     
-    tour.value = foundTour
+    tour.value = tourData
   } catch (err) {
     error.value = 'Failed to load tour details. Please try again later.'
     console.error('Error fetching tour:', err)
   } finally {
     loading.value = false
   }
+}
+
+// Helper function to get language ID from language code
+const getLanguageId = (langCode) => {
+  const languageMap = {
+    'en': 1,
+    'tr': 2,
+    'de': 6,
+    'ru': 9
+  }
+  return languageMap[langCode] || 1
 }
 
 // Helper functions to extract data from API response
@@ -278,16 +333,37 @@ const getDestinationName = (tour) => {
 const getTourPrice = (tour) => {
   const price = tour.tour_price?.[0]
   if (!price) return 'Price on request'
-  
   const currency = price.currency?.icon || '€'
   return `${currency}${price.price}`
 }
 
-const getAvailableDays = (tour) => {
-  if (!tour.days || tour.days.length === 0) return 'Not specified'
-  
-  const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-  return tour.days.map(day => dayNames[day - 1]).join(', ')
+const getOldTourPrice = (tour) => {
+  const price = tour.tour_price?.[0]
+  if (price && price.old_price && price.old_price > price.price) {
+    const currency = price.currency?.icon || '€'
+    return `${currency}${price.old_price}`
+  }
+  return null
+}
+
+const getDiscount = (tour) => {
+  const price = tour.tour_price?.[0]
+  if (price && price.old_price && price.old_price > price.price) {
+    return `€${price.old_price - price.price}`
+  }
+  return null
+}
+
+const orderTotal = computed(() => {
+  if (!tour.value) return '€0.00'
+  const price = tour.value.tour_price?.[0]
+  if (!price) return 'Price on request'
+  const total = (price.price * quantity.value) + 10
+  return `€${total}.00`
+})
+
+const proceedToBooking = () => {
+  showCheckout.value = true
 }
 
 // Methods
@@ -299,6 +375,12 @@ const bookTour = () => {
 const addToWishlist = () => {
   console.log('Adding to wishlist:', tour.value.id)
   // Implement wishlist logic
+}
+
+const getAvailableDays = (tour) => {
+  if (!tour.days || tour.days.length === 0) return 'Not specified'
+  const dayNames = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+  return tour.days.map(day => dayNames[day - 1]).join(', ')
 }
 
 // Lifecycle
@@ -742,5 +824,184 @@ onMounted(() => {
   .image-gallery {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* IstanbulPassView.vue ile uyumlu ödeme kutusu stilleri */
+.pass-box {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  padding: 32px 24px;
+  max-width: 400px;
+  min-width: 320px;
+  font-family: 'Inter', sans-serif;
+  margin-top: 0.5rem;
+}
+.pass-box h2 {
+  color: #e6004c;
+  font-size: 2rem;
+  margin-bottom: 18px;
+  font-weight: 700;
+}
+.pass-select-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.pass-select {
+  flex: 1;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  font-size: 1rem;
+  background: #f7f7f7;
+}
+.pass-price {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #222;
+}
+.quantity-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.quantity-row button {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: #f2f2f2;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.quantity-row button:disabled {
+  background: #eee;
+  cursor: not-allowed;
+}
+.price-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 8px;
+}
+.old-price {
+  color: #aaa;
+  font-size: 1rem;
+}
+.new-price {
+  color: #e6004c;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+.discount {
+  color: #e6004c;
+  font-size: 1rem;
+}
+.fee-row, .eco-row, .order-total-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 8px 0;
+}
+.eco-icon {
+  font-size: 1.2rem;
+}
+.order-total {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #222;
+}
+.tax-note {
+  font-size: 0.9rem;
+  color: #888;
+  margin-bottom: 10px;
+}
+.input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #eee;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+.pay-btn {
+  width: 100%;
+  background: #e6004c;
+  color: #fff;
+  font-size: 1.1rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  padding: 14px 0;
+  margin: 12px 0;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(230,0,76,0.08);
+}
+.pay-btn:hover {
+  background: #c4003c;
+}
+.save-note {
+  background: #f7f7f7;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  color: #222;
+  margin-top: 8px;
+  text-align: center;
+}
+hr {
+  border: none;
+  border-top: 1px solid #eee;
+  margin: 12px 0;
+}
+.info {
+  font-size: 0.9em;
+  color: #888;
+  cursor: pointer;
+  margin-left: 4px;
+}
+@media (max-width: 900px) {
+  .tour-hero-content { flex-direction: column; display: flex; }
+  .pass-box { max-width: 100%; min-width: 0; }
+}
+
+/* Checkout Form Modal */
+.checkout-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.checkout-content {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  max-width: 80%;
+  width: 100%;
+}
+
+.close-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.checkout-content h2 {
+  margin-bottom: 1rem;
+  font-size: 2rem;
+  font-weight: 700;
 }
 </style>

@@ -11,6 +11,7 @@ import { onMounted } from 'vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
 
+const tenantId = 'ad5257a5-efdd-4314-9e5e-b56aabe321f1'
 // Lifecycle
 onMounted(() => {
   // Load external scripts in a Vue 3 compatible way
