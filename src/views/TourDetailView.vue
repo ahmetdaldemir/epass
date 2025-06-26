@@ -55,59 +55,30 @@
               <div class="tour-description">
                 <p>{{ getTourDescription(tour) }}</p>
               </div>
-              <div class="tour-highlights" v-if="tour.tour_include_service && tour.tour_include_service.length > 0">
-                <h3>Highlights</h3>
-                <ul>
-                  <li v-for="service in tour.tour_include_service.slice(0, 5)" :key="service.id">
-                    {{ service.include_service }}
-                  </li>
-                </ul>
-              </div>
-              <!-- Rezervasyon/Ödeme Kutusu Başlangıç -->
-              <div v-if="tour" class="pass-box">
-                <h2>Book this tour</h2>
-                <div class="pass-select-row">
-                  <div class="pass-select">{{ getTourName(tour) }}</div>
-                  <span class="pass-price">{{ getTourPrice(tour) }}<small> / person</small></span>
+           
+              <div class="info-card">
+                <h4>Tour Information</h4>
+                <div class="info-item">
+                  <i class="fas fa-map-marker-alt"></i>
+                  <span>Destination: {{ getDestinationName(tour) }}</span>
                 </div>
-                <div class="quantity-row">
-                  <button @click="decrement" :disabled="quantity <= 1">-</button>
-                  <span>{{ quantity }}</span>
-                  <button @click="increment">+</button>
+                <div class="info-item">
+                  <i class="fas fa-clock"></i>
+                  <span>Duration: {{ tour.tour_duraction }} {{ tour.tour_duraction_type }}{{ tour.tour_duraction > 1 ? 's' : '' }}</span>
                 </div>
-                <div class="price-summary">
-                  <div class="old-price" v-if="getOldTourPrice(tour)">
-                    <s>{{ getOldTourPrice(tour) }}</s>
-                  </div>
-                  <div class="new-price">{{ getTourPrice(tour) }}</div>
-                  <div class="discount" v-if="getDiscount(tour)">
-                    <span>Sale Discount</span>
-                    <span>-{{ getDiscount(tour) }}</span>
-                  </div>
+                <div class="info-item">
+                  <i class="fas fa-users"></i>
+                  <span>Max Group Size: {{ tour.pax || 'Not specified' }}</span>
                 </div>
-                <hr />
-                <div class="fee-row">
-                  <span>Instant Access Fee <span class="info" title="You get your booking instantly after payment.">i</span></span>
-                  <span>{{ instantFee }}</span>
+                <div class="info-item">
+                  <i class="fas fa-calendar"></i>
+                  <span>Available Days: {{ getAvailableDays(tour) }}</span>
                 </div>
-                <div class="eco-row">
-                  <span class="eco-icon">🌱</span>
-                  <span>Eco-Friendly Green Technology</span>
-                </div>
-                <hr />
-                <div class="order-total-row">
-                  <span>Order Total</span>
-                  <span class="order-total">{{ orderTotal }}</span>
-                </div>
-                <div class="tax-note">All taxes and fees included</div>
-                <input type="email" placeholder="E-mail Address" class="input" v-model="email" />
-                <input type="date" placeholder="Tour Date" class="input" v-model="startDate" />
-                <button class="pay-btn" @click="proceedToBooking">Book Now</button>
-                <div class="save-note" v-if="getDiscount(tour)">
-                  <b>Save {{ getDiscount(tour) }}</b> on this tour versus original price.
+                <div class="info-item" v-if="tour.min_age">
+                  <i class="fas fa-child"></i>
+                  <span>Minimum Age: {{ tour.min_age }}</span>
                 </div>
               </div>
-              <!-- Rezervasyon/Ödeme Kutusu Son -->
             </div>
           </div>
         </div>
@@ -116,115 +87,146 @@
       <!-- Tour Details Tabs -->
       <section class="tour-details">
         <div class="container">
-          <div class="tabs">
-            <button 
-              class="tab-btn" 
-              :class="{ active: activeTab === 'overview' }"
-              @click="activeTab = 'overview'"
-            >
-              Overview
-            </button>
-            <button 
-              class="tab-btn" 
-              :class="{ active: activeTab === 'inclusions' }"
-              @click="activeTab = 'inclusions'"
-            >
-              What's Included
-            </button>
-            <button 
-              class="tab-btn" 
-              :class="{ active: activeTab === 'additional' }"
-              @click="activeTab = 'additional'"
-            >
-              Additional Info
-            </button>
-          </div>
-
-          <div class="tab-content">
-            <!-- Overview Tab -->
-            <div v-if="activeTab === 'overview'" class="tab-panel">
-              <div class="overview-content">
-                <div class="overview-text">
-                  <h3>About This Tour</h3>
-                  <div v-html="getTourFullDescription(tour)"></div>
-                </div>
+          <div class="content-row">
+            <div class="content-row-tabs">
+              <div class="tabs">
+                <button 
+                  class="tab-btn" 
+                  :class="{ active: activeTab === 'overview' }"
+                  @click="activeTab = 'overview'"
+                >
+                  Overview
+                </button>
+                <button 
+                  class="tab-btn" 
+                  :class="{ active: activeTab === 'inclusions' }"
+                  @click="activeTab = 'inclusions'"
+                >
+                  What's Included
+                </button>
+                <button 
+                  class="tab-btn" 
+                  :class="{ active: activeTab === 'additional' }"
+                  @click="activeTab = 'additional'"
+                >
+                  Additional Info
+                </button>
+              </div>
+    
+              <div class="tab-content">
+                <!-- Overview Tab -->
+                <div v-if="activeTab === 'overview'" class="tab-panel">
+                  <div class="overview-content">
+                    <div class="overview-text">
+                      <h3>About This Tour</h3>
+                      <div v-html="getTourFullDescription(tour)"></div>
+                    </div>
+                    
+                    <div class="overview-sidebar">
                 
-                <div class="overview-sidebar">
-                  <div class="info-card">
-                    <h4>Tour Information</h4>
-                    <div class="info-item">
-                      <i class="fas fa-map-marker-alt"></i>
-                      <span>Destination: {{ getDestinationName(tour) }}</span>
+                    
                     </div>
-                    <div class="info-item">
-                      <i class="fas fa-clock"></i>
-                      <span>Duration: {{ tour.tour_duraction }} {{ tour.tour_duraction_type }}{{ tour.tour_duraction > 1 ? 's' : '' }}</span>
+                  </div>
+                </div>
+    
+                <!-- Inclusions Tab -->
+                <div v-if="activeTab === 'inclusions'" class="tab-panel">
+                  <div class="inclusions-grid">
+                    <div class="inclusions-section" v-if="tour.tour_include_service && tour.tour_include_service.length > 0">
+                      <h3>What's Included</h3>
+                      <ul class="inclusions-list">
+                        <li v-for="service in tour.tour_include_service" :key="service.id">
+                          <i class="fas fa-check"></i>
+                          {{ service.include_service }}
+                        </li>
+                      </ul>
                     </div>
-                    <div class="info-item">
-                      <i class="fas fa-users"></i>
-                      <span>Max Group Size: {{ tour.pax || 'Not specified' }}</span>
+                    <div class="inclusions-section" v-if="tour.tour_outside_service && tour.tour_outside_service.length > 0">
+                      <h3>Not Included</h3>
+                      <ul class="exclusions-list">
+                        <li v-for="service in tour.tour_outside_service" :key="service.id">
+                          <i class="fas fa-times"></i>
+                          {{ service.outside_service }}
+                        </li>
+                      </ul>
                     </div>
-                    <div class="info-item">
-                      <i class="fas fa-calendar"></i>
-                      <span>Available Days: {{ getAvailableDays(tour) }}</span>
-                    </div>
-                    <div class="info-item" v-if="tour.min_age">
-                      <i class="fas fa-child"></i>
-                      <span>Minimum Age: {{ tour.min_age }}</span>
+                  </div>
+                </div>
+    
+                <!-- Additional Info Tab -->
+                <div v-if="activeTab === 'additional'" class="tab-panel">
+                  <div class="additional-info">
+                    <div class="info-section">
+                      <h3>Tour Details</h3>
+                      <div class="detail-item">
+                        <strong>Tour Code:</strong> {{ tour.code }}
+                      </div>
+                      <div class="detail-item">
+                        <strong>Duration Type:</strong> {{ tour.tour_duraction_type }}
+                      </div>
+                      <div class="detail-item">
+                        <strong>Status:</strong> 
+                        <span :class="tour.is_active ? 'status-active' : 'status-inactive'">
+                          {{ tour.is_active ? 'Active' : 'Inactive' }}
+                        </span>
+                      </div>
+                      <div class="detail-item" v-if="tour.ask_for_price">
+                        <strong>Pricing:</strong> Price on request
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-
-            <!-- Inclusions Tab -->
-            <div v-if="activeTab === 'inclusions'" class="tab-panel">
-              <div class="inclusions-grid">
-                <div class="inclusions-section" v-if="tour.tour_include_service && tour.tour_include_service.length > 0">
-                  <h3>What's Included</h3>
-                  <ul class="inclusions-list">
-                    <li v-for="service in tour.tour_include_service" :key="service.id">
-                      <i class="fas fa-check"></i>
-                      {{ service.include_service }}
-                    </li>
-                  </ul>
-                </div>
-                <div class="inclusions-section" v-if="tour.tour_outside_service && tour.tour_outside_service.length > 0">
-                  <h3>Not Included</h3>
-                  <ul class="exclusions-list">
-                    <li v-for="service in tour.tour_outside_service" :key="service.id">
-                      <i class="fas fa-times"></i>
-                      {{ service.outside_service }}
-                    </li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-
-            <!-- Additional Info Tab -->
-            <div v-if="activeTab === 'additional'" class="tab-panel">
-              <div class="additional-info">
-                <div class="info-section">
-                  <h3>Tour Details</h3>
-                  <div class="detail-item">
-                    <strong>Tour Code:</strong> {{ tour.code }}
-                  </div>
-                  <div class="detail-item">
-                    <strong>Duration Type:</strong> {{ tour.tour_duraction_type }}
-                  </div>
-                  <div class="detail-item">
-                    <strong>Status:</strong> 
-                    <span :class="tour.is_active ? 'status-active' : 'status-inactive'">
-                      {{ tour.is_active ? 'Active' : 'Inactive' }}
-                    </span>
-                  </div>
-                  <div class="detail-item" v-if="tour.ask_for_price">
-                    <strong>Pricing:</strong> Price on request
-                  </div>
-                </div>
-              </div>
+            <div class="content-row-booking">
+                               <!-- Rezervasyon/Ödeme Kutusu Başlangıç -->
+                               <div v-if="tour" class="pass-box">
+                                <h2>Book this tour</h2>
+                                <div class="pass-select-row">
+                                  <div class="pass-select">{{ getTourName(tour) }}</div>
+                                  <span class="pass-price">{{ getTourPrice(tour) }}<small> / person</small></span>
+                                </div>
+                                <div class="quantity-row">
+                                  <button @click="decrement" :disabled="quantity <= 1">-</button>
+                                  <span>{{ quantity }}</span>
+                                  <button @click="increment">+</button>
+                                </div>
+                                <div class="price-summary">
+                                  <div class="old-price" v-if="getOldTourPrice(tour)">
+                                    <s>{{ getOldTourPrice(tour) }}</s>
+                                  </div>
+                                  <div class="new-price">{{ getTourPrice(tour) }}</div>
+                                  <div class="discount" v-if="getDiscount(tour)">
+                                    <span>Sale Discount</span>
+                                    <span>-{{ getDiscount(tour) }}</span>
+                                  </div>
+                                </div>
+                                <hr />
+                                <div class="fee-row">
+                                  <span>Instant Access Fee <span class="info" title="You get your booking instantly after payment.">i</span></span>
+                                  <span>{{ instantFee }}</span>
+                                </div>
+                                <div class="eco-row">
+                                  <span class="eco-icon">🌱</span>
+                                  <span>Eco-Friendly Green Technology</span>
+                                </div>
+                                <hr />
+                                <div class="order-total-row">
+                                  <span>Order Total</span>
+                                  <span class="order-total">{{ orderTotal }}</span>
+                                </div>
+                                <div class="tax-note">All taxes and fees included</div>
+                                <input type="email" placeholder="E-mail Address" class="input" v-model="email" />
+                                <input type="date" placeholder="Tour Date" class="input" v-model="startDate" />
+                                <button class="pay-btn" @click="proceedToBooking">Book Now</button>
+                                <div class="save-note" v-if="getDiscount(tour)">
+                                  <b>Save {{ getDiscount(tour) }}</b> on this tour versus original price.
+                                </div>
+                              </div>
+                              <!-- Rezervasyon/Ödeme Kutusu Son -->
             </div>
           </div>
+       
         </div>
       </section>
     </div>
@@ -439,6 +441,26 @@ onMounted(() => {
   gap: 3rem;
   align-items: start;
 }
+
+
+.content-row {
+  display: grid;
+  grid-template-columns: 2.5fr 1.5fr;
+  gap: 3rem;
+  align-items: start;
+}
+.content-row-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.content-row-booking {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
 
 .tour-images {
   display: flex;
@@ -832,19 +854,28 @@ onMounted(() => {
   border-radius: 18px;
   box-shadow: 0 2px 16px rgba(0,0,0,0.07);
   padding: 32px 24px;
-  max-width: 400px;
-  min-width: 320px;
+  max-width: 100%;
+  min-width: 100%;
   font-family: 'Inter', sans-serif;
   margin-top: 0.5rem;
+  border: 1px solid #F0034E;
 }
 .pass-box h2 {
-  color: #e6004c;
   font-size: 2rem;
   margin-bottom: 18px;
   font-weight: 700;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  background: #F0034E;
+  padding: 20px;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  font-size: 32px;
+  font-weight: 700;
+  height: 63px;
 }
 .pass-select-row {
-  display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;

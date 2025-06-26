@@ -38,6 +38,16 @@ const routes = [
     component: () => import('../views/FAQsView.vue')
   },
   {
+    path: '/my-pass',
+    name: 'my-pass',
+    component: () => import('../views/MyPassView.vue')
+  },
+  {
+    path: '/my-listing',
+    name: 'my-listing',
+    component: () => import('../views/MyListingView.vue')
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'not-found',
     component: () => import('../views/NotFoundView.vue')
