@@ -20,7 +20,8 @@
                 <li><router-link to="/guidebook">Tips & Guides</router-link></li>
                 <li><router-link to="/faqs">FAQs</router-link></li>
                 <li><router-link to="/contact">Contact Us</router-link></li>
-                <li><a href="https://myistanbul.istanbultouristpass.com/" target="_blank">Manage Your Pass</a></li>
+                <li><router-link to="/my-pass">Manage Your Pass</router-link></li>
+                <li><router-link to="/my-listing">Manage Your Listing</router-link></li>
                 <li>
                   <div class="hidden-mobile">
                     <LanguageSwitcher />
