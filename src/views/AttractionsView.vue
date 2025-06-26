@@ -38,7 +38,7 @@
                 </span>
               </div>
               <div class="attraction-actions">
-                <router-link :to="`/tour/${attraction.id}`" class="btn btn-primary">View Details</router-link>
+                <router-link :to="`/tour/${attraction.id}`" class="btn btn-primary">View</router-link>
                 <button @click="addToWishlist(attraction.id)" class="btn btn-secondary">
                   <i class="fas fa-heart"></i>
                 </button>
@@ -128,7 +128,7 @@ const getAttractionImage = (attraction) => {
 
 const getAttractionPrice = (attraction) => {
   const price = attraction.tour_price?.[0]
-  if (!price) return 'FREE with Pass'
+  if (!price) return 'CALL'
   
   const currency = price.currency_icon || '$'
   return `${currency}${price.price}`
@@ -136,14 +136,20 @@ const getAttractionPrice = (attraction) => {
 
 const getAttractionDuration = (attraction) => {
   const duration = attraction.tour_duraction
-  const type = attraction.tour_duraction_type || 'hour'
+  const type = attraction.tour_duraction_type
   
   if (!duration) return 'Duration not specified'
   
   if (type === 'hour') {
-    return `${duration} ${duration === 1 ? 'Hour' : 'Hours'}`
+    return `${duration} ${duration === 1 ? 'Hr' : 'Hr'}`
   } else if (type === 'day') {
-    return `${duration} ${duration === 1 ? 'Day' : 'Days'}`
+    return `${duration} ${duration === 1 ? 'Day' : 'Day'}`
+  } else if (type === 'week') {
+    return `${duration} ${duration === 1 ? 'Week' : 'Week'}`
+  } else if (type === 'month') {
+    return `${duration} ${duration === 1 ? 'Month' : 'Month'}`
+  } else if (type === 'minutes' || type === 'minute' || type === 'min') {
+    return `${duration} Min`
   }
   
   return `${duration} ${type}s`
@@ -357,24 +363,125 @@ watch(() => localStorage.getItem('selectedLanguage'), (newLanguage) => {
   .hero-section h1 {
     font-size: 2rem;
   }
-  
   .attractions-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    padding: 0 0.5rem;
   }
-  
+  .attraction-card {
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 4px 18px rgba(44,62,80,0.10);
+    margin: 0.5rem 0.1rem 1rem 0.1rem;
+    padding: 0.7rem 0.5rem 0.7rem 0.5rem;
+    background: #fff;
+    border: 1.5px solid #f2f2f2;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .attraction-image img {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 16px 16px 0 0;
+    margin-bottom: 0.5rem;
+    box-shadow: 0 2px 8px rgba(44,62,80,0.07);
+  }
+  .attraction-content {
+    padding: 0.1rem 0.1rem 0 0.1rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  .attraction-content h3 {
+    font-size: 1.09rem;
+    font-weight: 800;
+    margin-bottom: 0.18rem;
+    color: #222;
+    line-height: 1.18;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 2.2em;
+  }
+  .attraction-content p {
+    color: #8a8a8a;
+    font-size: 0.91rem;
+    line-height: 1.3;
+    margin-bottom: 0.35rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 2.3em;
+  }
   .attraction-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.4rem;
+    padding: 0.2rem 0;
+    border: none;
+    font-size: 0.97rem;
+    gap: 0.5rem;
+  }
+  .price {
+    color: #e6004c;
+    font-weight: 800;
+    font-size: 1.04rem;
+    letter-spacing: 0.01em;
+  }
+  .duration {
+    color: #666;
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.97rem;
+    font-weight: 500;
+  }
+  .attraction-actions {
+    display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    align-items: flex-start;
+    margin-top: auto;
   }
-  
+  .attraction-actions .btn-primary {
+    width: 100%;
+    font-size: 1.08rem;
+    border-radius: 12px;
+    margin-top: 0.2rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+  .attraction-actions .btn-secondary {
+    width: 100%;
+    font-size: 1.08rem;
+    padding: 0.8rem 0;
+    border-radius: 12px;
+    margin-top: 0.2rem;
+    background: #f7f7f7;
+    color: #e6004c;
+    font-weight: 700;
+  }
+  /* Kart altı buton ve favori hizası */
   .attraction-actions {
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    flex-direction: row;
+    gap: 0.7rem;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.7rem;
   }
-  
-  .btn-secondary {
-    align-self: flex-end;
+  .attraction-actions .btn-primary, .attraction-actions .btn-secondary {
+    flex: 1 1 60%;
+    min-width: 0;
   }
 }
 </style> 

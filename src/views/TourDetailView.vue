@@ -805,46 +805,140 @@ onMounted(() => {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .tour-hero {
+    padding: 1.2rem 0 0.5rem 0;
+  }
   .tour-hero-content {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.2rem;
   }
-  
-  .tour-title {
-    font-size: 2rem;
+  .main-image img {
+    height: 180px;
+    border-radius: 16px;
   }
-  
-  .tour-meta {
-    flex-direction: column;
-    gap: 1rem;
-    align-items: flex-start;
-  }
-  
-  .tour-actions {
-    flex-direction: column;
-  }
-  
-  .tabs {
-    flex-wrap: wrap;
-  }
-  
-  .tab-btn {
-    flex: 1;
-    min-width: 120px;
-  }
-  
-  .overview-content {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  
-  .inclusions-grid {
-    grid-template-columns: 1fr;
-    gap: 2rem;
-  }
-  
   .image-gallery {
     grid-template-columns: repeat(2, 1fr);
+    gap: 0.4rem;
+  }
+  .gallery-item img {
+    height: 60px;
+    border-radius: 10px;
+  }
+  .tour-title {
+    font-size: 1.35rem;
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+  .tour-meta {
+    flex-direction: row;
+    gap: 0.7rem;
+    font-size: 0.98rem;
+    margin-bottom: 0.7rem;
+    flex-wrap: wrap;
+  }
+  .tour-meta > div {
+    gap: 0.3rem;
+  }
+  .tour-description {
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 1rem;
+  }
+  .info-card {
+    padding: 1rem;
+    border-radius: 12px;
+    font-size: 0.98rem;
+    margin-bottom: 1.2rem;
+  }
+  .tour-details {
+    padding: 1.2rem 0 0.5rem 0;
+  }
+  .tabs {
+    flex-wrap: wrap;
+    border-bottom-width: 1.5px;
+    margin-bottom: 1.2rem;
+  }
+  .tab-btn {
+    flex: 1;
+    min-width: 100px;
+    font-size: 1rem;
+    padding: 0.7rem 0.5rem;
+  }
+  .tab-panel {
+    min-height: 200px;
+    padding: 0.5rem 0;
+  }
+  .overview-content {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+  .overview-text h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.7rem;
+  }
+  .inclusions-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+  .inclusions-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.7rem;
+  }
+  .inclusions-list li, .exclusions-list li {
+    font-size: 0.98rem;
+    padding-left: 1.1rem;
+  }
+  .additional-info {
+    padding: 1.1rem;
+    border-radius: 12px;
+    font-size: 0.98rem;
+  }
+  .info-section h3 {
+    font-size: 1.1rem;
+    margin-bottom: 1rem;
+  }
+  .detail-item {
+    font-size: 0.98rem;
+    padding: 0.5rem 0;
+  }
+  .pass-box {
+    padding: 18px 10px;
+    border-radius: 14px;
+    margin-top: 1.2rem;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .pass-box h2 {
+    font-size: 1.2rem;
+    padding: 12px;
+    height: auto;
+    border-top-right-radius: 8px;
+    border-top-left-radius: 8px;
+  }
+  .pass-select-row, .fee-row, .eco-row, .order-total-row {
+    font-size: 1rem;
+    gap: 0.5rem;
+  }
+  .input {
+    font-size: 1rem;
+    padding: 8px 10px;
+    border-radius: 7px;
+  }
+  .pay-btn {
+    font-size: 1rem;
+    padding: 10px 0;
+    border-radius: 8px;
+    margin: 10px 0;
+  }
+  .save-note {
+    font-size: 0.98rem;
+    padding: 6px 8px;
+    border-radius: 7px;
+  }
+  .checkout-content {
+    padding: 1rem;
+    border-radius: 8px;
+    max-width: 98vw;
   }
 }
 

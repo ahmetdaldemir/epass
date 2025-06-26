@@ -1,24 +1,67 @@
 <template>
   <div class="home">
-    <!-- Hero Section -->
+    <!-- Top Banner (Price & Buy Now) -->
+    <div class="top-banner">
+      <span>Starting from just €139</span>
+      <router-link to="/istanbul-pass" class="buy-now-btn">Buy Now</router-link>
+    </div>
+
+    <!-- Hero Section with Main Visual and Badge -->
     <section class="hero-section">
+      <div class="hero-img-wrap">
+        <img class="hero-img" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=800&q=80" alt="Basilica Cistern" />
+        <div class="hero-badge">NOW WITH <span>5GB</span> SIM FREE</div>
+        <div class="hero-label">Basilica Cistern / Included with pass</div>
+      </div>
       <div class="container">
         <div class="hero-content">
-          <h1 class="hero-title">Discover Istanbul with the Ultimate Tourist Pass</h1>
-          <p class="hero-subtitle">Access to 100+ attractions, museums, and tours with one convenient pass</p>
-          <div class="hero-buttons">
-            <router-link to="/istanbul-pass" class="btn btn-primary">Buy Now</router-link>
-            <a href="#attractions" class="btn btn-secondary">Explore Attractions</a>
+          <div class="quick-stats">
+            <div class="stat-box orange"><span>50%</span><small>HIGH SAVINGS</small></div>
+            <div class="stat-box pink"><span>7</span><small>ICONIC LANDMARKS</small></div>
+            <div class="stat-box blue"><span>100+</span><small>TOP ACTIVITIES</small></div>
           </div>
+          <div class="mini-stats-row">
+            <div class="mini-stat"><b>30 Years</b><br />Istanbul experts</div>
+            <div class="mini-stat"><b>750K+ Passes</b><br />Sold since 2015</div>
+            <div class="mini-stat"><b>150+ Countries</b><br />Nationalities served</div>
+            <div class="mini-stat"><b>98.6%</b><br />Customer Satisfaction</div>
+          </div>
+          <h1 class="hero-title">All Istanbul.<br /><span>All Yours!</span></h1>
+          <p class="hero-subtitle">
+            <b>ALL Istanbul's magic in ONE pass!</b><br />
+            <span class="highlight">FREE, FAST & EASY</span> entry to Istanbul's <b>top 7 iconic landmarks</b> and <b>100+ popular museums, attractions and activities</b> with skip the line <span class="highlight">instant e-tickets</span>.<br />
+            Explore Istanbul hassle-free and save over <span class="highlight">€270</span>.<br />
+            <span class="now-highlight">NOW! FREE entry to Hagia Sophia & Galata Tower!</span>
+          </p>
+          <router-link to="/istanbul-pass" class="cta-btn">Get Yours & Save Now</router-link>
         </div>
       </div>
     </section>
+
+    <!-- Why Choose Section (Yellow Info Bar) -->
+    <div class="why-choose-bar">
+      <span>Beat the heat with cool discoveries!</span> Istanbul's culture is always in season—<b>Save 40% on Istanbul Tourist Pass® Ends today!</b>
+    </div>
 
     <!-- Features Section -->
     <section class="features-section">
       <div class="container">
         <h2 class="section-title">Why Choose Istanbul Tourist Pass?</h2>
-        <div class="features-grid">
+        <div v-if="isMobile" class="features-slider">
+          <swiper :slides-per-view="1.2" :space-between="16" :centered-slides="true" :pagination="{ clickable: true }">
+            <swiper-slide v-for="feature in features" :key="feature.id">
+              <div class="feature-card slider-card">
+                <div class="feature-icon">
+                  <i :class="feature.icon"></i>
+                </div>
+                <h3>{{ feature.title }}</h3>
+                <p>{{ feature.description }}</p>
+              </div>
+            </swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
+          </swiper>
+        </div>
+        <div v-else class="features-grid">
           <div class="feature-card" v-for="feature in features" :key="feature.id">
             <div class="feature-icon">
               <i :class="feature.icon"></i>
@@ -34,7 +77,30 @@
     <section id="attractions" class="attractions-section">
       <div class="container">
         <h2 class="section-title">Popular Attractions</h2>
-        <div class="attractions-grid">
+        <div v-if="isMobile" class="attractions-slider">
+          <swiper :slides-per-view="1.2" :space-between="16" :centered-slides="true" :pagination="{ clickable: true }">
+            <swiper-slide v-for="attraction in attractions" :key="attraction.id">
+              <div class="attraction-card slider-card">
+                <div class="attraction-image">
+                  <img :src="attraction.image" :alt="attraction.name">
+                </div>
+                <div class="attraction-content">
+                  <h3>{{ attraction.name }}</h3>
+                  <p>{{ attraction.description }}</p>
+                  <div class="attraction-meta">
+                    <span class="price">{{ attraction.price }}</span>
+                    <span class="rating">
+                      <i class="fas fa-star"></i>
+                      {{ attraction.rating }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
+          </swiper>
+        </div>
+        <div v-else class="attractions-grid">
           <div class="attraction-card" v-for="attraction in attractions" :key="attraction.id">
             <div class="attraction-image">
               <img :src="attraction.image" :alt="attraction.name">
@@ -59,7 +125,28 @@
     <section class="pass-types-section">
       <div class="container">
         <h2 class="section-title">Choose Your Pass</h2>
-        <div class="pass-types-grid">
+        <div v-if="isMobile" class="pass-types-slider">
+          <swiper :slides-per-view="1.2" :space-between="16" :centered-slides="true" :pagination="{ clickable: true }">
+            <swiper-slide v-for="pass in passTypes" :key="pass.id">
+              <div class="pass-card slider-card">
+                <div class="pass-header">
+                  <h3>{{ pass.name }}</h3>
+                  <div class="pass-price">{{ pass.price }}</div>
+                </div>
+                <div class="pass-features">
+                  <ul>
+                    <li v-for="feature in pass.features" :key="feature">{{ feature }}</li>
+                  </ul>
+                </div>
+                <div class="pass-action">
+                  <router-link :to="pass.link" class="btn btn-primary">Select Pass</router-link>
+                </div>
+              </div>
+            </swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
+          </swiper>
+        </div>
+        <div v-else class="pass-types-grid">
           <div class="pass-card" v-for="pass in passTypes" :key="pass.id">
             <div class="pass-header">
               <h3>{{ pass.name }}</h3>
@@ -82,7 +169,26 @@
     <section class="testimonials-section">
       <div class="container">
         <h2 class="section-title">What Our Customers Say</h2>
-        <div class="testimonials-grid">
+        <div v-if="isMobile" class="testimonials-slider">
+          <swiper :slides-per-view="1.2" :space-between="16" :centered-slides="true" :pagination="{ clickable: true }">
+            <swiper-slide v-for="testimonial in testimonials" :key="testimonial.id">
+              <div class="testimonial-card slider-card">
+                <div class="testimonial-content">
+                  <p>"{{ testimonial.text }}"</p>
+                </div>
+                <div class="testimonial-author">
+                  <img :src="testimonial.avatar" :alt="testimonial.name">
+                  <div>
+                    <h4>{{ testimonial.name }}</h4>
+                    <span>{{ testimonial.location }}</span>
+                  </div>
+                </div>
+              </div>
+            </swiper-slide>
+            <div class="swiper-pagination" slot="pagination"></div>
+          </swiper>
+        </div>
+        <div v-else class="testimonials-grid">
           <div class="testimonial-card" v-for="testimonial in testimonials" :key="testimonial.id">
             <div class="testimonial-content">
               <p>"{{ testimonial.text }}"</p>
@@ -103,6 +209,8 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/swiper-bundle.css'
 
 // Reactive data
 const features = ref([
@@ -224,73 +332,226 @@ const testimonials = ref([
   }
 ])
 
-// Lifecycle
+const isMobile = ref(false)
+function checkMobile() {
+  isMobile.value = window.innerWidth <= 768
+}
 onMounted(() => {
-  console.log('HomeView component mounted')
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
 })
 </script>
 
 <style scoped>
+@import 'swiper/swiper-bundle.css';
+.features-slider, .attractions-slider, .pass-types-slider, .testimonials-slider {
+  width: 100%;
+  padding-bottom: 2.5rem;
+}
+.slider-card {
+  margin: 0 4px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.10);
+  border-radius: 14px;
+  padding: 1.2rem 1rem 1.2rem 1rem;
+  background: #fff;
+  min-width: 0;
+}
+@media (max-width: 768px) {
+  .slider-card {
+    min-width: 80vw;
+    max-width: 90vw;
+    margin: 0 8px;
+    padding: 1.1rem 0.7rem 1.1rem 0.7rem;
+  }
+  .attraction-image img {
+    height: 140px !important;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+  }
+}
+.swiper-pagination {
+  bottom: 0 !important;
+}
 .home {
   min-height: 100vh;
+  background: #f4f6fa;
 }
 
-/* Hero Section */
+.top-banner {
+  width: 100vw;
+  max-width: 100%;
+  background: #e6004c;
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.buy-now-btn {
+  background: #fff;
+  color: #e6004c;
+  border-radius: 6px;
+  padding: 0.5rem 1.2rem;
+  font-weight: 700;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  transition: background 0.2s, color 0.2s;
+}
+.buy-now-btn:hover {
+  background: #ffe6ef;
+  color: #b8003a;
+}
+
 .hero-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  padding: 6rem 0;
+  background: #fff;
+  padding: 0 0 1.5rem 0;
   text-align: center;
+  position: relative;
+}
+.hero-img-wrap {
+  position: relative;
+  width: 100vw;
+  max-width: 100%;
+  overflow: hidden;
+  height: 220px;
+}
+.hero-img {
+  width: 100vw;
+  height: 220px;
+  object-fit: cover;
+  filter: brightness(0.85);
+}
+.hero-badge {
+  position: absolute;
+  top: 18px;
+  left: 12px;
+  background: #e6004c;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.1rem;
+  border-radius: 30px;
+  padding: 0.4rem 1.1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  letter-spacing: 0.5px;
+}
+.hero-badge span {
+  color: #ffe600;
+  font-size: 1.2em;
+}
+.hero-label {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  background: rgba(44,62,80,0.92);
+  color: #fff;
+  font-size: 0.95rem;
+  border-radius: 8px;
+  padding: 0.3rem 0.9rem;
+}
+
+.quick-stats {
+  display: flex;
+  justify-content: center;
+  gap: 0.7rem;
+  margin: 1.2rem 0 0.7rem 0;
+}
+.stat-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  padding: 0.7rem 1.1rem;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+  min-width: 80px;
+}
+.stat-box.orange { background: #ffb347; color: #fff; }
+.stat-box.pink { background: #e6004c; color: #fff; }
+.stat-box.blue { background: #00b6e6; color: #fff; }
+.stat-box span { font-size: 1.3em; }
+.stat-box small { font-size: 0.8em; font-weight: 400; }
+
+.mini-stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 1.1rem;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+}
+.mini-stat {
+  background: #fff;
+  color: #2c3e50;
+  border-radius: 8px;
+  font-size: 0.93rem;
+  padding: 0.5rem 0.8rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  text-align: center;
+  min-width: 110px;
 }
 
 .hero-title {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
+  font-size: 2.1rem;
+  font-weight: 800;
+  color: #e6004c;
+  margin: 1.2rem 0 0.2rem 0;
+  line-height: 1.1;
 }
-
+.hero-title span {
+  color: #00b6e6;
+}
 .hero-subtitle {
+  font-size: 1.08rem;
+  color: #2c3e50;
+  margin-bottom: 1.2rem;
+  margin-top: 0.7rem;
+}
+.highlight {
+  color: #e6004c;
+  font-weight: 700;
+}
+.now-highlight {
+  color: #00b6e6;
+  font-weight: 700;
+}
+.cta-btn {
+  display: block;
+  width: 100%;
+  max-width: 350px;
+  margin: 0.7rem auto 0 auto;
+  background: #e6004c;
+  color: #fff;
   font-size: 1.2rem;
-  margin-bottom: 2rem;
-  opacity: 0.9;
-}
-
-.hero-buttons {
-  display: flex;
-  gap: 1rem;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-/* Buttons */
-.btn {
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
+  font-weight: 700;
+  border-radius: 8px;
+  padding: 0.9rem 0;
   text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+  transition: background 0.2s;
+}
+.cta-btn:hover {
+  background: #b8003a;
+}
+
+.why-choose-bar {
+  background: #ffe600;
+  color: #2c3e50;
+  font-size: 1.08rem;
   font-weight: 600;
-  transition: all 0.3s ease;
-  display: inline-block;
+  text-align: center;
+  padding: 0.7rem 1rem;
+  margin-bottom: 1.2rem;
+  border-radius: 0 0 12px 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }
-
-.btn-primary {
-  background: #e74c3c;
-  color: white;
-}
-
-.btn-primary:hover {
-  background: #c0392b;
-  transform: translateY(-2px);
-}
-
-.btn-secondary {
-  background: transparent;
-  color: white;
-  border: 2px solid white;
-}
-
-.btn-secondary:hover {
-  background: white;
-  color: #667eea;
+.why-choose-bar b {
+  color: #e6004c;
 }
 
 /* Sections */
@@ -490,14 +751,17 @@ onMounted(() => {
 
 /* Responsive Design */
 @media (max-width: 768px) {
-  .hero-title {
-    font-size: 2rem;
-  }
-  
-  .hero-buttons {
-    flex-direction: column;
-    align-items: center;
-  }
+  .top-banner { font-size: 0.98rem; padding: 0.6rem 0.7rem; }
+  .hero-img-wrap, .hero-img { height: 160px; }
+  .hero-badge { font-size: 0.95rem; padding: 0.3rem 0.7rem; top: 10px; }
+  .hero-label { font-size: 0.8rem; padding: 0.2rem 0.6rem; bottom: 5px; }
+  .quick-stats { gap: 0.4rem; }
+  .stat-box { font-size: 0.95rem; min-width: 65px; padding: 0.5rem 0.7rem; }
+  .mini-stats-row { gap: 0.5rem; }
+  .mini-stat { font-size: 0.85rem; min-width: 90px; padding: 0.4rem 0.5rem; }
+  .hero-title { font-size: 1.3rem; }
+  .cta-btn { font-size: 1rem; padding: 0.7rem 0; }
+  .why-choose-bar { font-size: 0.95rem; padding: 0.5rem 0.5rem; }
   
   .section-title {
     font-size: 2rem;

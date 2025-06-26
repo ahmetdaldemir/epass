@@ -197,11 +197,26 @@ function changePassword() {
 .success { color: #27ae60; margin-top: 8px; }
 .error { color: #e74c3c; margin-top: 8px; }
 @media (max-width: 900px) {
-  .dashboard-flex { flex-direction: column; box-shadow: none; border-radius: 0; }
+  .dashboard-flex { flex-direction: column; box-shadow: none; border-radius: 0; max-width: 100vw; margin: 0; }
   .side-menu { width: 100%; border-radius: 0; flex-direction: row; padding: 0; }
-  .side-menu ul { display: flex; flex-direction: row; }
-  .side-menu li { flex: 1; text-align: center; border-left: none; border-bottom: 4px solid transparent; }
+  .side-menu ul { display: flex; flex-direction: row; width: 100%; }
+  .side-menu li { flex: 1; text-align: center; border-left: none; border-bottom: 4px solid transparent; padding: 14px 0; font-size: 1.1rem; }
   .side-menu li.active, .side-menu li:hover { border-left: none; border-bottom: 4px solid #e6004c; }
-  .main-content { padding: 24px 8px; }
+  .logout-btn { margin: 16px 8px 0 8px; width: 100%; }
+  .main-content { padding: 18px 4px; }
+  .ticket-card, .info-form { max-width: 100vw; }
+  .ticket-card { flex-direction: column; align-items: flex-start; gap: 8px; padding: 14px; }
+  .ticket-actions { width: 100%; display: flex; gap: 8px; }
+  .info-form input, .info-form button { font-size: 1.05rem; padding: 14px; }
+}
+@media (max-width: 500px) {
+  .login-box {
+    min-width: 0;
+    max-width: 100vw;
+    padding: 32px 8px 24px 8px;
+  }
+  .main-content { padding: 8px 2px; }
+  .ticket-card { padding: 10px; }
+  .info-form { padding: 0 2px; }
 }
 </style> 

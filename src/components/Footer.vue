@@ -2,45 +2,37 @@
   <footer class="main-footer">
     <div class="container">
       <div class="footer-content">
-        <div class="footer-section">
-          <h3>About Istanbul Tourist Pass</h3>
-          <p>Discover Istanbul's most iconic attractions with our comprehensive tourist pass. Save time and money while exploring the city's rich history and culture.</p>
-        </div>
-        
-        <div class="footer-section">
-          <h3>Quick Links</h3>
-          <ul>
-            <li><router-link to="/istanbul-pass">Istanbul Pass</router-link></li>
-            <li><router-link to="/attractions">Attractions</router-link></li>
-            <li><router-link to="/tours">Tours</router-link></li>
-            <li><router-link to="/faqs">FAQs</router-link></li>
-          </ul>
-        </div>
-        
-        <div class="footer-section">
-          <h3>Support</h3>
-          <ul>
-            <li><router-link to="/contact">Contact Us</router-link></li>
-            <li><a href="https://myistanbul.istanbultouristpass.com/" target="_blank">Manage Your Pass</a></li>
-            <li><router-link to="/become-partner">Become a Partner</router-link></li>
-          </ul>
-        </div>
-        
-        <div class="footer-section">
-          <h3>Connect With Us</h3>
-          <div class="social-links">
-            <a href="#" class="social-link">
-              <i class="fab fa-facebook"></i>
-            </a>
-            <a href="#" class="social-link">
-              <i class="fab fa-twitter"></i>
-            </a>
-            <a href="#" class="social-link">
-              <i class="fab fa-instagram"></i>
-            </a>
-            <a href="#" class="social-link">
-              <i class="fab fa-youtube"></i>
-            </a>
+        <div class="footer-section" v-for="(section, i) in sections" :key="i">
+          <button class="footer-toggle" @click="toggleSection(i)">
+            <span>{{ section.title }}</span>
+            <span class="toggle-icon" v-if="isMobile">{{ openSection === i ? '▼' : '►' }}</span>
+          </button>
+          <div v-show="!isMobile || openSection === i" class="footer-section-content">
+            <template v-if="section.type === 'about'">
+              <p>{{ section.content }}</p>
+            </template>
+            <template v-else-if="section.type === 'links'">
+              <ul>
+                <li v-for="link in section.links" :key="link.text">
+                  <router-link :to="link.to">{{ link.text }}</router-link>
+                </li>
+              </ul>
+            </template>
+            <template v-else-if="section.type === 'support'">
+              <ul>
+                <li v-for="link in section.links" :key="link.text">
+                  <component :is="link.external ? 'a' : 'router-link'" :to="!link.external ? link.to : undefined" :href="link.external ? link.to : undefined" :target="link.external ? '_blank' : undefined">{{ link.text }}</component>
+                </li>
+              </ul>
+            </template>
+            <template v-else-if="section.type === 'social'">
+              <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
+              </div>
+            </template>
           </div>
         </div>
       </div>
@@ -60,10 +52,59 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, onMounted, onBeforeUnmount } from 'vue'
 
 // Computed properties
 const currentYear = computed(() => new Date().getFullYear())
+const openSection = ref(null)
+const isMobile = ref(false)
+
+const sections = [
+  {
+    title: 'About Istanbul Tourist Pass',
+    type: 'about',
+    content: "Discover Istanbul's most iconic attractions with our comprehensive tourist pass. Save time and money while exploring the city's rich history and culture."
+  },
+  {
+    title: 'Quick Links',
+    type: 'links',
+    links: [
+      { text: 'Istanbul Pass', to: '/istanbul-pass' },
+      { text: 'Attractions', to: '/attractions' },
+      { text: 'Tours', to: '/tours' },
+      { text: 'FAQs', to: '/faqs' }
+    ]
+  },
+  {
+    title: 'Support',
+    type: 'support',
+    links: [
+      { text: 'Contact Us', to: '/contact' },
+      { text: 'Manage Your Pass', to: 'https://myistanbul.istanbultouristpass.com/', external: true },
+      { text: 'Become a Partner', to: '/become-partner' }
+    ]
+  },
+  {
+    title: 'Connect With Us',
+    type: 'social'
+  }
+]
+
+function toggleSection(i) {
+  if (!isMobile.value) return
+  openSection.value = openSection.value === i ? null : i
+}
+
+function checkMobile() {
+  isMobile.value = window.innerWidth <= 768
+}
+onMounted(() => {
+  checkMobile()
+  window.addEventListener('resize', checkMobile)
+})
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', checkMobile)
+})
 </script>
 
 <style scoped>
@@ -81,11 +122,33 @@ const currentYear = computed(() => new Date().getFullYear())
   margin-bottom: 2rem;
 }
 
-.footer-section h3 {
+.footer-section h3, .footer-toggle {
   color: #ecf0f1;
   margin-bottom: 1rem;
   font-size: 1.2rem;
   font-weight: 600;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 0;
+}
+
+.footer-toggle:focus {
+  outline: 2px solid #e6004c;
+}
+
+.toggle-icon {
+  font-size: 1.1em;
+  margin-left: 8px;
+}
+
+.footer-section-content {
+  transition: max-height 0.2s;
 }
 
 .footer-section p {
@@ -173,6 +236,10 @@ const currentYear = computed(() => new Date().getFullYear())
   .footer-content {
     grid-template-columns: 1fr;
     gap: 1.5rem;
+  }
+  
+  .footer-section-content {
+    padding-bottom: 0.5rem;
   }
   
   .footer-bottom-content {

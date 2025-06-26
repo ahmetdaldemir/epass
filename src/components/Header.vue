@@ -1,5 +1,5 @@
 <template>
-  <header class="main-header mobile">
+  <header class="main-header">
     <div class="container">
       <div class="header">
         <div class="logo">
@@ -7,12 +7,38 @@
             <img alt="logo" src="https://static.istanbultouristpass.com/images/itp-logo.svg?v5.0.16"/>
             <span class="header-tursab">Cityberry Tourism is a member of TURSAB 11745</span>
           </router-link>
-  
         </div>
-        
+        <!-- Hamburger Menü Butonu (Mobil) -->
+        <button class="mobile-menu-toggle" @click="openMobileMenu">
+          <i class="fas fa-bars"></i>
+        </button>
+        <!-- Mobil Menü ve Overlay -->
+        <div v-if="showMobileMenu" class="mobile-menu-overlay" @click.self="closeMobileMenu">
+          <nav class="mobile-menu" @click.stop>
+            <div class="mobile-menu-header">
+              <router-link to="/" class="mobile-menu-logo" @click="closeMobileMenu">
+                <img alt="logo" src="https://static.istanbultouristpass.com/images/itp-logo.svg?v5.0.16"/>
+              </router-link>
+              <button class="mobile-menu-close" @click="closeMobileMenu" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+            <div class="mobile-menu-links">
+              <router-link to="/become-partner" @click="closeMobileMenu">Become a Partner</router-link>
+              <router-link to="/guidebook" @click="closeMobileMenu">Tips & Guides</router-link>
+              <router-link to="/faqs" @click="closeMobileMenu">FAQs</router-link>
+              <router-link to="/contact" @click="closeMobileMenu">Contact Us</router-link>
+              <router-link to="/my-pass" @click="closeMobileMenu">Manage Your Pass</router-link>
+              <router-link to="/my-listing" @click="closeMobileMenu">Manage Your Listing</router-link>
+              <router-link to="/attractions" @click="closeMobileMenu">İstanbul Attractions</router-link>
+              <router-link to="/tours" @click="closeMobileMenu">Tours</router-link>
+              <router-link to="/about" @click="closeMobileMenu">About</router-link>
+              <router-link to="/istanbul-pass" class="mobile-buy-btn" @click="closeMobileMenu">Buy Now</router-link>
+            </div>
+          </nav>
+        </div>
+        <!-- Masaüstü Menü -->
         <div class="mobile-flex">
-    
-          
           <div class="header-right">
             <div class="top-links">
               <ul>
@@ -34,10 +60,8 @@
                 </li>
               </ul>
             </div>
-            
             <nav class="main-menu">
               <ul>
-            
                 <li><router-link to="/attractions">İstanbul Attractions</router-link></li>
                 <li><router-link to="/tours">Tours</router-link></li>
                 <li><router-link to="/about">About</router-link></li>
@@ -51,21 +75,31 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import LanguageSwitcher from './LanguageSwitcher.vue'
 
-// Reactive data
-const isMobileMenuOpen = ref(false)
+const showMobileMenu = ref(false)
 
-// Methods
-const toggleMobileMenu = () => {
-  isMobileMenuOpen.value = !isMobileMenuOpen.value
+function openMobileMenu() {
+  showMobileMenu.value = true
+  document.body.style.overflow = 'hidden'
 }
-
-// Lifecycle
+function closeMobileMenu() {
+  showMobileMenu.value = false
+  document.body.style.overflow = ''
+}
+// Escape tuşu ile menüyü kapat
 onMounted(() => {
-  // Initialize any header-specific functionality
-  console.log('Header component mounted')
+  window.addEventListener('keydown', escClose)
+})
+function escClose(e) {
+  if (showMobileMenu.value && (e.key === 'Escape' || e.key === 'Esc')) {
+    closeMobileMenu()
+  }
+}
+// Temizlik
+watch(showMobileMenu, (val) => {
+  if (!val) document.body.style.overflow = ''
 })
 </script>
 
@@ -77,44 +111,37 @@ onMounted(() => {
   top: 0;
   z-index: 1000;
 }
-
 .header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem 0;
 }
-
 .logo img {
   height: 40px;
   width: auto;
 }
-
 .header-tursab {
   font-size: 7px;
   color: #666;
   margin-left: 10px;
 }
-
 .logo a {
   display: flex;
     flex-direction: column;
     align-items: center;
 }
-
 .mobile-flex {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
-
 .top-links ul {
   display: flex;
   list-style: none;
   gap: 1.5rem;
   align-items: center;
 }
-
 .top-links a {
   text-decoration: none;
   color: #333;
@@ -122,29 +149,24 @@ onMounted(() => {
   font-size: 12px;
   transition: color 0.3s ease;
 }
-
 .top-links a:hover {
   color: #e74c3c;
 }
-
 .main-menu ul {
   display: flex;
   list-style: none;
   gap: 1.5rem;
   align-items: center;
 }
-
 .main-menu a {
   text-decoration: none;
   color: #333;
   font-weight: 500;
   transition: color 0.3s ease;
 }
-
 .main-menu a:hover {
   color: #e74c3c;
 }
-
 .btn {
   padding: 0.5rem 1rem;
   border-radius: 4px;
@@ -152,35 +174,130 @@ onMounted(() => {
   font-weight: 600;
   transition: all 0.3s ease;
 }
-
 .btn-red {
   background: #e74c3c;
   color: white;
 }
-
 .btn-red:hover {
   background: #c0392b;
   color: white;
 }
-
-@media (max-width: 768px) {
-  .hidden-mobile {
-    display: none;
+.mobile-menu-toggle {
+  display: none;
+}
+@media (max-width: 700px) {
+  .main-header, header, .container {
+    width: 100vw !important;
+    min-width: 0 !important;
+    max-width: 100vw !important;
+    padding: 0 !important;
+    margin: 0 !important;
   }
-  
-  .mobile-flex {
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 0 0 8px 0;
+    position: relative;
+  }
+  .logo {
+    justify-content: center;
+    margin: 12px 0;
+    text-align: center;
+  }
+  .main-menu, .top-links, .header-right, .mobile-flex {
+    display: none !important;
+  }
+  .mobile-menu-toggle {
+    display: block;
+    position: absolute;
+    right: 16px;
+    top: 16px;
+    font-size: 2rem;
+    background: none;
+    border: none;
+    color: #e6004c;
+    z-index: 200;
+  }
+  .mobile-menu-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(44,62,80,0.65);
+    z-index: 9999;
+    display: flex;
+    justify-content: flex-end;
+    animation: fadeIn 0.2s;
+  }
+  .mobile-menu {
+    background: #fff;
+    width: 90vw;
+    max-width: 340px;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+    box-shadow: -2px 0 32px #0002;
+    animation: slideInRight 0.2s;
+    position: relative;
+  }
+  .mobile-menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.2rem 0.5rem 1.2rem;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .mobile-menu-logo img {
+    height: 36px;
+  }
+  .mobile-menu-close {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    color: #e6004c;
+    cursor: pointer;
+    margin-left: 8px;
+  }
+  .mobile-menu-links {
+    display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    padding: 1.2rem;
   }
-  
-  .top-links ul {
-    flex-direction: column;
-    gap: 0.5rem;
+  .mobile-menu-links a {
+    font-size: 1.1rem;
+    color: #2c3e50;
+    padding: 0.9rem 0.7rem;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.18s, color 0.18s;
   }
-  
-  .main-menu ul {
-    flex-direction: column;
-    gap: 0.5rem;
+  .mobile-menu-links a:hover {
+    background: #f7f7f7;
+    color: #e6004c;
   }
+  .mobile-buy-btn {
+    background: #e6004c;
+    color: #fff !important;
+    text-align: center;
+    margin-top: 1.2rem;
+    font-size: 1.15rem;
+    border-radius: 8px;
+    padding: 1rem 0;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+  }
+  .mobile-buy-btn:hover {
+    background: #b8003a;
+    color: #fff !important;
+  }
+}
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 </style>
