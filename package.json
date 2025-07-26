@@ -10,7 +10,12 @@
     "deploy:vercel": "vercel --prod"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^7.5.0",
+    "element-plus": "^2.10.3",
+    "pinia": "^3.0.3",
+    "slider": "^1.0.4",
     "swiper": "^11.2.8",
+    "v-calendar": "^3.1.2",
     "vue": "^3.4.0",
     "vue-router": "^4.5.1"
   },

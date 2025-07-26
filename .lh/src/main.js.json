@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/main.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1751965604157,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1751965604157,
+            "name": "Commit-0",
+            "content": "import { createApp } from 'vue'\r\nimport App from './App.vue'\r\nimport router from './router'\r\nimport './assets/main.css'\r\nimport { createPinia } from 'pinia'\r\n\r\nconst app = createApp(App)\r\napp.use(createPinia())\r\napp.use(router)\r\napp.mount('#app')\r\n"
+        }
+    ]
+}

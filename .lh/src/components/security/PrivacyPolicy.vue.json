@@ -1,0 +1,30 @@
+{
+    "sourceFile": "src/components/security/PrivacyPolicy.vue",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1751369299534,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1751369352431,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,1 +1,1 @@\n-<template>\\n  <div class=\\\"privacy-container\\\">\\n    <h1>Privacy Policy</h1>\\n    <div class=\\\"subtitle\\\">Privacy Policy | SearchYourTour</div>\\n    <div class=\\\"last-updated\\\">Last Updated: May 2024</div>\\n    <section>\\n      <p>Learn more about our privacy policy regarding the collection, use, and disclosure of personal data when you use SearchYourTour®.</p>\\n      <p>searchyourtour.com (\\\"us\\\", \\\"we\\\", or \\\"our\\\") operates the www.searchyourtour.com website (hereinafter referred to as the \\\"Service\\\").</p>\\n      <p>This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.</p>\\n      <p>We use your data to provide and improve the Service. By using the Service, you agree to the collection and use of information in accordance with this policy. Unless otherwise defined in this Privacy Policy, the terms used in this Privacy Policy have the same meanings as in our Terms \n\\ No newline at end of file\n+ \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1751369385058,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,1 +1,40 @@\n- \n\\ No newline at end of file\n+<template>\r\n+  <div class=\"privacy-container\">\r\n+    <h1>Privacy Policy</h1>\r\n+    <div class=\"subtitle\">Privacy Policy | SearchYourTour</div>\r\n+    <div class=\"last-updated\">Last Updated: May 2024</div>\r\n+    <!-- Content will be added here -->\r\n+  </div>\r\n+</template>\r\n+\r\n+<script setup>\r\n+</script>\r\n+\r\n+<style scoped>\r\n+.privacy-container {\r\n+  max-width: 900px;\r\n+  margin: 0 auto;\r\n+  padding: 2rem 1rem;\r\n+  background: white;\r\n+  border-radius: 12px;\r\n+  box-shadow: 0 2px 16px #0001;\r\n+  color: #222;\r\n+}\r\n+h1, h2, h3 {\r\n+  color: #c0392b;\r\n+}\r\n+.subtitle {\r\n+  font-size: 1.1rem;\r\n+  color: #555;\r\n+  opacity: 0.8;\r\n+  margin-bottom: 0.2rem;\r\n+  font-weight: 500;\r\n+}\r\n+.last-updated {\r\n+  font-size: 0.98rem;\r\n+  color: #888;\r\n+  opacity: 0.8;\r\n+  margin-bottom: 1.2rem;\r\n+  font-weight: 400;\r\n+}\r\n+</style> \n\\ No newline at end of file\n"
+                },
+                {
+                    "date": 1751391028511,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -20,9 +20,9 @@\n   box-shadow: 0 2px 16px #0001;\r\n   color: #222;\r\n }\r\n h1, h2, h3 {\r\n-  color: #c0392b;\r\n+  color: #FC6421;\r\n }\r\n .subtitle {\r\n   font-size: 1.1rem;\r\n   color: #555;\r\n"
+                }
+            ],
+            "date": 1751369299533,
+            "name": "Commit-0",
+            "content": "<template>\\n  <div class=\\\"privacy-container\\\">\\n    <h1>Privacy Policy</h1>\\n    <div class=\\\"subtitle\\\">Privacy Policy | SearchYourTour</div>\\n    <div class=\\\"last-updated\\\">Last Updated: May 2024</div>\\n    <section>\\n      <p>Learn more about our privacy policy regarding the collection, use, and disclosure of personal data when you use SearchYourTour®.</p>\\n      <p>searchyourtour.com (\\\"us\\\", \\\"we\\\", or \\\"our\\\") operates the www.searchyourtour.com website (hereinafter referred to as the \\\"Service\\\").</p>\\n      <p>This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our Service and the choices you have associated with that data.</p>\\n      <p>We use your data to provide and improve the Service. By using the Service, you agree to the collection and use of information in accordance with this policy. Unless otherwise defined in this Privacy Policy, the terms used in this Privacy Policy have the same meanings as in our Terms "
+        }
+    ]
+}
