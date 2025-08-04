@@ -2,8 +2,9 @@
   <div class="attractions">
     <section class="hero-section">
       <div class="container">
-        <h1>Istanbul Attractions</h1>
-        <p>Discover the most popular attractions and tours included in your pass</p>
+        <h1>Istanbul Attractions & Tours - Discover Top Cultural Sites</h1>
+        <h2>Explore Hagia Sophia, Topkapi Palace, Basilica Cistern & More</h2>
+        <p>Discover the most popular attractions and guided tours included in your Istanbul Tourist Pass. Visit iconic landmarks and hidden gems with expert guides.</p>
       </div>
     </section>
 

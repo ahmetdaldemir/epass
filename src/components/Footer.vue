@@ -13,11 +13,11 @@
           <div class="footer-social-row left-align">
             <h3>Connect With Us</h3>
             <div class="social-links">
-              <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
-              <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-              <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-              <a href="#" class="social-link"><i class="fab fa-youtube"></i></a>
-              <a href="#" class="social-link"><i class="fab fa-whatsapp"></i></a>
+              <a href="https://www.facebook.com/searchyourtour" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-facebook-f"></i></a>
+              <a href="https://twitter.com/searchyourtour" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-twitter"></i></a>
+              <a href="https://www.instagram.com/searchyourtour" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-instagram"></i></a>
+              <a href="https://www.youtube.com/searchyourtour" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-youtube"></i></a>
+              <a href="https://wa.me/905555555555" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-whatsapp"></i></a>
               <a href="mailto:info@searchyourtour.com" class="social-link"><i class="fas fa-envelope"></i></a>
             </div>
           </div>
@@ -37,6 +37,7 @@
           <h3>Support</h3>
           <ul>
             <li><router-link to="/contact">Contact Us</router-link></li>
+            <li><router-link to="/faqs">Frequently Asked Questions</router-link></li>
             <li><router-link to="/security/terms-conditions">General Terms and Conditions</router-link></li>
             <li><router-link to="/security/privacy-policy">Privacy Policy</router-link></li>
             <li><router-link to="/security/cookie-policy">Cookies and Marketing Preferences</router-link></li>
@@ -51,6 +52,9 @@
           <h3>Company</h3>
           <ul>
             <li><router-link to="/about">About Us</router-link></li>
+            <li><router-link to="/attractions">Istanbul Attractions</router-link></li>
+            <li><router-link to="/tours">Guided Tours</router-link></li>
+            <li><router-link to="/istanbul-pass">Istanbul Tourist Pass</router-link></li>
             <li><a href="#">Careers</a></li>
             <li><a href="#">Blog</a></li>
             <li><a href="#">Press</a></li>

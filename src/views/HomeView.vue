@@ -9,10 +9,18 @@
     <!-- Hero Section with Main Visual and Badge -->
     <section class="hero-section">
       <div class="hero-img-wrap">
-        <img class="hero-img" src="https://c4.wallpaperflare.com/wallpaper/683/300/1022/sunken-palace-or-basilica-cistern-istanbul-wallpaper-preview.jpg" alt="Basilica Cistern" />
+        <img 
+          class="hero-img" 
+          src="https://c4.wallpaperflare.com/wallpaper/683/300/1022/sunken-palace-or-basilica-cistern-istanbul-wallpaper-preview.jpg" 
+          alt="Basilica Cistern"
+          loading="eager"
+          fetchpriority="high"
+        />
         <div class="hero-img-gradient"></div>
         <div class="hero-badge">NOW WITH <span>5GB</span> SIM FREE</div>
         <div class="hero-label">Basilica Cistern / Included with pass</div>
+        <!-- Main H1 Heading for SEO -->
+        <h1 class="hero-title">Discover Istanbul with Tourist Pass - Save 40% on Top Attractions</h1>
         <!-- Kategori Butonları -->
         <div class="category-tabs">
           <button v-for="cat in categories" :key="cat.value" :class="['category-tab', { active: selectedCategory === cat.value }]" @click="selectedCategory = cat.value">
@@ -222,7 +230,8 @@
     <section class="pass-types-section">
       <div class="section-list-wrap">
         <div class="container swiper-no-padding">
-          <h2 class="section-title">Choose Your Pass</h2>
+          <h2 class="section-title">Choose Your Istanbul Tourist Pass</h2>
+          <p class="section-subtitle">Select the perfect pass for your Istanbul adventure. <router-link to="/istanbul-pass" class="inline-link">View all pass options</router-link> or <router-link to="/attractions" class="inline-link">browse attractions</router-link> to plan your visit.</p>
           <swiper
             class="pass-types-slider"
             :slides-per-view="3"
@@ -260,7 +269,8 @@
     <section class="testimonials-section">
       <div class="section-list-wrap">
         <div class="container swiper-no-padding">
-          <h2 class="section-title">What Our Customers Say</h2>
+          <h2 class="section-title">What Our Customers Say About Istanbul Tourist Pass</h2>
+          <p class="section-subtitle">Read reviews from travelers who experienced Istanbul with our pass. <router-link to="/tours" class="inline-link">Book guided tours</router-link> or <router-link to="/contact" class="inline-link">contact us</router-link> for personalized recommendations.</p>
           <swiper
             :slides-per-view="3"
             :space-between="16"
@@ -313,6 +323,82 @@
               <h4>{{ testimonials.find(t => t.id === activeTestimonialId).name }}</h4>
               <span>{{ testimonials.find(t => t.id === activeTestimonialId).location }}</span>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Media Section -->
+    <section class="social-media-section">
+      <div class="container">
+        <h2 class="section-title">Follow Us & Share Your Experience</h2>
+        <p class="section-subtitle">Connect with us on social media and share your Istanbul adventures with the world!</p>
+        
+        <div class="social-grid">
+          <div class="social-card">
+            <div class="social-icon">
+              <i class="fab fa-facebook-f"></i>
+            </div>
+            <h3>Facebook</h3>
+            <p>Get the latest updates and exclusive offers</p>
+            <a href="https://www.facebook.com/searchyourtour" target="_blank" rel="noopener noreferrer" class="social-btn">
+              Follow Us
+            </a>
+          </div>
+          
+          <div class="social-card">
+            <div class="social-icon">
+              <i class="fab fa-instagram"></i>
+            </div>
+            <h3>Instagram</h3>
+            <p>See amazing photos from Istanbul travelers</p>
+            <a href="https://www.instagram.com/searchyourtour" target="_blank" rel="noopener noreferrer" class="social-btn">
+              Follow Us
+            </a>
+          </div>
+          
+          <div class="social-card">
+            <div class="social-icon">
+              <i class="fab fa-twitter"></i>
+            </div>
+            <h3>Twitter</h3>
+            <p>Stay updated with travel tips and news</p>
+            <a href="https://twitter.com/searchyourtour" target="_blank" rel="noopener noreferrer" class="social-btn">
+              Follow Us
+            </a>
+          </div>
+          
+          <div class="social-card">
+            <div class="social-icon">
+              <i class="fab fa-youtube"></i>
+            </div>
+            <h3>YouTube</h3>
+            <p>Watch videos of Istanbul attractions and tours</p>
+            <a href="https://www.youtube.com/searchyourtour" target="_blank" rel="noopener noreferrer" class="social-btn">
+              Subscribe
+            </a>
+          </div>
+        </div>
+        
+        <div class="share-section">
+          <h3>Share This Page</h3>
+          <div class="share-buttons">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://searchyourtour.com" target="_blank" rel="noopener noreferrer" class="share-btn facebook">
+              <i class="fab fa-facebook-f"></i>
+              Share on Facebook
+            </a>
+            <a href="https://twitter.com/intent/tweet?url=https://searchyourtour.com&text=Discover%20Istanbul%20with%20SearchYourTour%20-%20Save%2040%%20on%20attractions%20and%20tours!" target="_blank" rel="noopener noreferrer" class="share-btn twitter">
+              <i class="fab fa-twitter"></i>
+              Share on Twitter
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://searchyourtour.com" target="_blank" rel="noopener noreferrer" class="share-btn linkedin">
+              <i class="fab fa-linkedin-in"></i>
+              Share on LinkedIn
+            </a>
+            <a href="https://wa.me/?text=Check%20out%20SearchYourTour%20for%20amazing%20Istanbul%20experiences!%20https://searchyourtour.com" target="_blank" rel="noopener noreferrer" class="share-btn whatsapp">
+              <i class="fab fa-whatsapp"></i>
+              Share on WhatsApp
+            </a>
           </div>
         </div>
       </div>
@@ -712,10 +798,10 @@ onBeforeUnmount(() => {
 
 // Kategoriler
 const categories = [
-  { value: 'culture', label: 'Kültür', icon: '<i class="fas fa-landmark"></i>' },
-  { value: 'food', label: 'Yemek', icon: '<i class="fas fa-utensils"></i>' },
-  { value: 'nature', label: 'Doğa', icon: '<i class="fas fa-mountain"></i>' },
-  { value: 'sport', label: 'Spor', icon: '<i class="fas fa-running"></i>' }
+  { value: 'culture', label: 'Culture', icon: '<i class="fas fa-landmark"></i>' },
+  { value: 'food', label: 'Food', icon: '<i class="fas fa-utensils"></i>' },
+  { value: 'nature', label: 'Nature', icon: '<i class="fas fa-mountain"></i>' },
+  { value: 'sport', label: 'Sports', icon: '<i class="fas fa-running"></i>' }
 ]
 const selectedCategory = ref('culture')
 
@@ -1912,6 +1998,206 @@ const cultureTours = attractions
     display: block;
   }
 }
+/* Hero Title Styles for SEO */
+.hero-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 2.5rem;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  z-index: 10;
+  max-width: 800px;
+  width: 90%;
+  margin: 0;
+  line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 1.8rem;
+    max-width: 90%;
+  }
+}
+
+/* Section subtitle styles for better SEO */
+.section-subtitle {
+  text-align: center;
+  color: #666;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+.inline-link {
+  color: #FC6421;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s;
+}
+
+.inline-link:hover {
+  color: #e6007a;
+  text-decoration: underline;
+}
+
+/* Social Media Section Styles */
+.social-media-section {
+  padding: 4rem 0;
+}
+
+.social-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.social-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.social-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.social-icon {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+  font-size: 1.5rem;
+  color: white;
+}
+
+.social-card:nth-child(1) .social-icon {
+  background: #1877f2;
+}
+
+.social-card:nth-child(2) .social-icon {
+  background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+}
+
+.social-card:nth-child(3) .social-icon {
+  background: #1da1f2;
+}
+
+.social-card:nth-child(4) .social-icon {
+  background: #ff0000;
+}
+
+.social-card h3 {
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.social-card p {
+  color: #666;
+  margin-bottom: 1.5rem;
+  font-size: 0.95rem;
+}
+
+.social-btn {
+  display: inline-block;
+  padding: 0.8rem 1.5rem;
+  background: #FC6421;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+.social-btn:hover {
+  background: #e6007a;
+  color: white;
+  text-decoration: none;
+}
+
+.share-section {
+  text-align: center;
+  padding-top: 2rem;
+  border-top: 1px solid #dee2e6;
+}
+
+.share-section h3 {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+.share-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.share-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.8rem 1.2rem;
+  border-radius: 6px;
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  transition: opacity 0.3s ease;
+}
+
+.share-btn:hover {
+  opacity: 0.8;
+  color: white;
+  text-decoration: none;
+}
+
+.share-btn.facebook {
+  background: #1877f2;
+}
+
+.share-btn.twitter {
+  background: #1da1f2;
+}
+
+.share-btn.linkedin {
+  background: #0077b5;
+}
+
+.share-btn.whatsapp {
+  background: #25d366;
+}
+
+@media (max-width: 768px) {
+  .social-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .share-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .share-btn {
+    width: 200px;
+    justify-content: center;
+  }
+}
+
 @media (max-width: 768px) {
   .testimonial-card {
     display: flex;

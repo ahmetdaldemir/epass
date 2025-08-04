@@ -4,8 +4,42 @@
       <div class="not-found-content">
         <h1>404</h1>
         <h2>Page Not Found</h2>
-        <p>The page you're looking for doesn't exist.</p>
-        <router-link to="/" class="btn btn-primary">Go Home</router-link>
+        <p>Sorry, the page you're looking for doesn't exist. But don't worry, we have plenty of amazing things to do in Istanbul!</p>
+        
+        <div class="helpful-links">
+          <h3>Popular Pages</h3>
+          <div class="links-grid">
+            <router-link to="/" class="helpful-link">
+              <i class="fas fa-home"></i>
+              <span>Home</span>
+            </router-link>
+            <router-link to="/istanbul-pass" class="helpful-link">
+              <i class="fas fa-ticket-alt"></i>
+              <span>Istanbul Tourist Pass</span>
+            </router-link>
+            <router-link to="/attractions" class="helpful-link">
+              <i class="fas fa-landmark"></i>
+              <span>Attractions</span>
+            </router-link>
+            <router-link to="/tours" class="helpful-link">
+              <i class="fas fa-map-marked-alt"></i>
+              <span>Guided Tours</span>
+            </router-link>
+            <router-link to="/contact" class="helpful-link">
+              <i class="fas fa-envelope"></i>
+              <span>Contact Us</span>
+            </router-link>
+            <router-link to="/faqs" class="helpful-link">
+              <i class="fas fa-question-circle"></i>
+              <span>FAQs</span>
+            </router-link>
+          </div>
+        </div>
+        
+        <div class="cta-section">
+          <p>Ready to explore Istanbul?</p>
+          <router-link to="/istanbul-pass" class="btn btn-primary">Get Your Tourist Pass</router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -41,5 +75,83 @@
   font-size: 1.2rem;
   margin-bottom: 2rem;
   opacity: 0.9;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.helpful-links {
+  margin: 3rem 0;
+}
+
+.helpful-links h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  opacity: 0.9;
+}
+
+.links-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.helpful-link {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.helpful-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+  color: white;
+  text-decoration: none;
+}
+
+.helpful-link i {
+  font-size: 1.2rem;
+  width: 20px;
+  text-align: center;
+}
+
+.cta-section {
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.cta-section p {
+  font-size: 1.3rem;
+  margin-bottom: 1.5rem;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .links-grid {
+    grid-template-columns: 1fr;
+    gap: 0.8rem;
+  }
+  
+  .helpful-link {
+    padding: 0.8rem;
+  }
+  
+  .not-found-content h1 {
+    font-size: 6rem;
+  }
+  
+  .not-found-content h2 {
+    font-size: 1.5rem;
+  }
 }
 </style> 

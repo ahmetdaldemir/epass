@@ -4,8 +4,9 @@
     <section class="hero-section">
       <div class="container">
         <div class="hero-content">
-          <h1 class="hero-title">Discover Istanbul with Our Guided Tours</h1>
-          <p class="hero-subtitle">Explore the city's rich history and culture with our expert guides</p>
+          <h1 class="hero-title">Istanbul Guided Tours - Expert-Led Cultural Experiences</h1>
+          <h2>Professional Tour Guides for Hagia Sophia, Topkapi Palace & More</h2>
+          <p class="hero-subtitle">Explore the city's rich history and culture with our expert guides. Visit iconic landmarks with skip-the-line access and insider knowledge.</p>
         </div>
       </div>
     </section>

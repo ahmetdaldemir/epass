@@ -1,0 +1,30 @@
+{
+    "sourceFile": "vite.config.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 3,
+            "patches": [
+                {
+                    "date": 1754295369015,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1754298675349,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,9 +27,9 @@\n     port: 5173,\r\n     host: true,\r\n     proxy: {\r\n       '/api': {\r\n-        target: 'http://localhost:8000', // Laravel backend'inizin çalıştığı port\r\n+        target: 'http://147.93.131.105', // Sunucudaki Laravel backend\r\n         changeOrigin: true,\r\n         secure: false\r\n       }\r\n     }\r\n"
+                },
+                {
+                    "date": 1754298729504,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -27,11 +27,12 @@\n     port: 5173,\r\n     host: true,\r\n     proxy: {\r\n       '/api': {\r\n-        target: 'http://147.93.131.105', // Sunucudaki Laravel backend\r\n+        target: 'http://147.93.131.105/searchyourtour', // searchyourtour projesine yönlendir\r\n         changeOrigin: true,\r\n-        secure: false\r\n+        secure: false,\r\n+        rewrite: (path) => path.replace(/^\\/api/, '/api') // /api prefix'ini koru\r\n       }\r\n     }\r\n   },\r\n   optimizeDeps: {\r\n"
+                },
+                {
+                    "date": 1754298875943,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -24,17 +24,9 @@\n     }\r\n   },\r\n   server: {\r\n     port: 5173,\r\n-    host: true,\r\n-    proxy: {\r\n-      '/api': {\r\n-        target: 'http://147.93.131.105/searchyourtour', // searchyourtour projesine yönlendir\r\n-        changeOrigin: true,\r\n-        secure: false,\r\n-        rewrite: (path) => path.replace(/^\\/api/, '/api') // /api prefix'ini koru\r\n-      }\r\n-    }\r\n+    host: true\r\n   },\r\n   optimizeDeps: {\r\n     include: ['vue', 'vue-router', 'swiper']\r\n   }\r\n"
+                }
+            ],
+            "date": 1754295369015,
+            "name": "Commit-0",
+            "content": "import { defineConfig } from 'vite'\r\nimport vue from '@vitejs/plugin-vue'\r\n\r\nexport default defineConfig({\r\n  plugins: [vue()],\r\n  build: {\r\n    outDir: 'dist',\r\n    assetsDir: 'assets',\r\n    sourcemap: false,\r\n    minify: 'terser',\r\n    rollupOptions: {\r\n      output: {\r\n        manualChunks: {\r\n          vendor: ['vue', 'vue-router'],\r\n          swiper: ['swiper']\r\n        }\r\n      }\r\n    },\r\n    terserOptions: {\r\n      compress: {\r\n        drop_console: true,\r\n        drop_debugger: true\r\n      }\r\n    }\r\n  },\r\n  server: {\r\n    port: 5173,\r\n    host: true,\r\n    proxy: {\r\n      '/api': {\r\n        target: 'http://localhost:8000', // Laravel backend'inizin çalıştığı port\r\n        changeOrigin: true,\r\n        secure: false\r\n      }\r\n    }\r\n  },\r\n  optimizeDeps: {\r\n    include: ['vue', 'vue-router', 'swiper']\r\n  }\r\n})\r\n"
+        }
+    ]
+}

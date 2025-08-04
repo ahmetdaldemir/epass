@@ -221,8 +221,21 @@ const selectedCountry = computed(() => countries.find(c => c.name === country.va
 const name = ref('')
 const email = ref(selectedTourStore.tour?.email || selectedTourStore.pass?.email || '')
 
+// Customer login bilgisini localStorage'dan al
+const customerLogin = ref(null)
+try {
+  const customerData = localStorage.getItem('customerLogin')
+  if (customerData) {
+    customerLogin.value = JSON.parse(customerData)
+  }
+} catch (error) {
+  console.error('Customer login data parse error:', error)
+  customerLogin.value = null
+}
+
 // Debug: Tour verilerini kontrol et
 console.log('Selected Tour Store:', selectedTourStore.tour)
+console.log('Customer Login:', customerLogin.value)
 const cardName = ref('')
 const loading = ref(false)
 const success = ref(false)
@@ -369,7 +382,8 @@ const handleStep = async () => {
             infant: selectedTourStore.tour?.infant || 0,
             roomNumber: 0,
             randomCode: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
-            type: 'tour'
+            type: 'tour',
+            customer_id: customerLogin.value?.id || 0
           }
         } : {
           pass: {

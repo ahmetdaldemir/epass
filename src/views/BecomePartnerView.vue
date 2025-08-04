@@ -2,7 +2,7 @@
   <div class="become-partner-page">
     
     <form class="partner-form" @submit.prevent="submitForm">
-      <!-- Logo Alanı -->
+      <!-- Logo Area -->
       <section class="form-section">
         <div class="logo-upload-grid">
           <div class="logo-upload-info">
@@ -16,7 +16,7 @@
                 <i class="fas fa-image"></i>
                 <div class="upload-desc">SVG, PNG, JPG</div>
                 <div class="upload-desc">(max. 800x400)</div>
-                <div v-if="logoPreview" class="upload-filename">Seçili dosya</div>
+                <div v-if="logoPreview" class="upload-filename">Selected file</div>
               </div>
             </label>
             <div v-if="logoPreview" class="logo-upload-preview" style="margin-top:4px; text-align:center;">
@@ -25,27 +25,27 @@
           </div>
         </div>
       </section>
-      <!-- Firma Bilgileri -->
+      <!-- Company Information -->
       <section class="form-section">
-        <div class="form-group-title">Firma Bilgileri *</div>
+        <div class="form-group-title">Company Information *</div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.username" type="text" placeholder="Kullanıcı Adı *" required />
-            <div class="input-desc">Sistem giriş kullanıcı adınız. Örn: acenta123</div>
+            <input v-model="form.username" type="text" placeholder="Username *" required />
+            <div class="input-desc">Your system login username. Ex: agency123</div>
           </div>
           <div class="form-group">
-            <input v-model="form.companyName" type="text" placeholder="Firma Adı *" required />
-            <div class="input-desc">Acentanızın resmi ticari unvanı. Örn: Harika Tur ve Seyahat Ltd. Şti.</div>
+            <input v-model="form.companyName" type="text" placeholder="Company Name *" required />
+            <div class="input-desc">Your agency's official trade name. Ex: Amazing Tours and Travel Ltd.</div>
           </div>
         </div>
       </section>
-      <!-- E-posta / Telefon -->
+      <!-- Email / Phone -->
       <section class="form-section">
-        <div class="form-group-title">E-posta / Telefon *</div>
+        <div class="form-group-title">Email / Phone *</div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.email" type="email" placeholder="E-posta *" required pattern="[^\s@]+@[^\s@]+\.[^\s@]+" />
-            <div class="input-desc">İletişim kuracağımız e-posta adresi. Örn: info@acentaniz.com</div>
+            <input v-model="form.email" type="email" placeholder="Email *" required pattern="[^\s@]+@[^\s@]+\.[^\s@]+" />
+            <div class="input-desc">Email address for communication. Ex: info@youragency.com</div>
           </div>
           <div class="form-group phone-group">
             <div class="phone-input-combined">
@@ -55,15 +55,15 @@
                   <option v-for="c in countryCodes" :key="c.code" :value="c.code">{{ c.flag }} {{ c.code }}</option>
                 </select>
               </div>
-              <input v-model="form.phone" type="tel" placeholder="Telefon *" required />
+              <input v-model="form.phone" type="tel" placeholder="Phone *" required />
             </div>
-            <div class="input-desc">İletişim kurabileceğimiz telefon numarası. Örn: 5XX XXX XX XX</div>
+            <div class="input-desc">Phone number for communication. Ex: 5XX XXX XX XX</div>
           </div>
         </div>
       </section>
-      <!-- Ülke / Bölge (Şehir) -->
+      <!-- Country / Region (City) -->
       <section class="form-section">
-        <div class="form-group-title">Ülke / Bölge (Şehir) *</div>
+        <div class="form-group-title">Country / Region (City) *</div>
         <div class="form-row">
           <div class="form-group">
             <div class="custom-country-select" ref="countryDropdownRef">
@@ -72,7 +72,7 @@
                   <img :src="selectedCountry.flagUrl" :alt="selectedCountry.name" class="lang-flag" />
                   <span>{{ selectedCountry.name }}</span>
                 </span>
-                <span v-else class="lang-placeholder">Ülke Seçiniz *</span>
+                <span v-else class="lang-placeholder">Select Country *</span>
                 <span class="dropdown-arrow">▼</span>
               </div>
               <div v-if="countryDropdownOpen" class="custom-country-dropdown">
@@ -82,82 +82,82 @@
                 </div>
               </div>
             </div>
-            <div class="input-desc">Acentanızın bulunduğu ülke</div>
+            <div class="input-desc">Country where your agency is located</div>
           </div>
           <div class="form-group">
             <select v-model="form.city" :disabled="!form.country" required>
-              <option value="">Şehir Seçiniz *</option>
+              <option value="">Select City *</option>
               <option v-for="city in cities" :key="city">{{ city }}</option>
             </select>
-            <div class="input-desc">Acentanızın bulunduğu şehir</div>
+            <div class="input-desc">City where your agency is located</div>
           </div>
         </div>
       </section>
-      <!-- Adres -->
+      <!-- Address -->
       <section class="form-section">
-        <div class="form-group-title">Adres *</div>
+        <div class="form-group-title">Address *</div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.address" type="text" placeholder="Adres *" required />
-            <div class="input-desc">Acentanızın tam adresi. Örn: Cumhuriyet Mah. Atatürk Cad. No:123 Daire:4</div>
+            <input v-model="form.address" type="text" placeholder="Address *" required />
+            <div class="input-desc">Complete address of your agency. Ex: Republic St. Ataturk Ave. No:123 Apt:4</div>
           </div>
         </div>
       </section>
-      <!-- Kuruluş Tarihi / Çalışan Sayısı -->
+      <!-- Foundation Date / Employee Count -->
       <section class="form-section">
-        <div class="form-group-title">Kuruluş Tarihi / Çalışan Sayısı *</div>
+        <div class="form-group-title">Foundation Date / Employee Count *</div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.foundationDate" type="date" placeholder="Kuruluş Tarihi *" required />
-            <div class="input-desc">Acentanızın resmi kuruluş tarihi</div>
+            <input v-model="form.foundationDate" type="date" placeholder="Foundation Date *" required />
+            <div class="input-desc">Official foundation date of your agency</div>
           </div>
           <div class="form-group">
-            <input v-model="form.employeeCount" type="number" min="1" placeholder="Çalışan Sayısı *" required />
-            <div class="input-desc">Acentanızda çalışan kişi sayısı. Örn: 5</div>
+            <input v-model="form.employeeCount" type="number" min="1" placeholder="Employee Count *" required />
+            <div class="input-desc">Number of employees in your agency. Ex: 5</div>
           </div>
         </div>
       </section>
-      <!-- Aylık Ciro / Websitesi -->
+      <!-- Monthly Revenue / Website -->
       <section class="form-section">
-        <div class="form-group-title">Aylık Ciro / Websitesi *</div>
+        <div class="form-group-title">Monthly Revenue / Website *</div>
         <div class="form-row">
           <div class="form-group ciro-group">
             <div class="ciro-input-row">
-              <input v-model="form.monthlyRevenue" type="text" placeholder="Aylık Ciro *" required />
+              <input v-model="form.monthlyRevenue" type="text" placeholder="Monthly Revenue *" required />
               <select v-model="form.currency" class="currency-select">
                 <option v-for="opt in currencyOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
               </select>
             </div>
-            <div class="input-desc">Acentanızın yaklaşık aylık cirosu. Örn: 100.000</div>
+            <div class="input-desc">Approximate monthly revenue of your agency. Ex: 100,000</div>
           </div>
           <div class="form-group">
             <input v-model="form.website" type="url" placeholder="Website" />
-            <div class="input-desc">Acentanızın web sitesi. Örn: www.acentaniz.com</div>
+            <div class="input-desc">Your agency's website. Ex: www.youragency.com</div>
           </div>
         </div>
       </section>
-      <!-- Vergi Dairesi / Numarası -->
-      <section class="form-section" v-if="form.country !== 'Karadağ'">
-        <div class="form-group-title">Vergi Dairesi / Numarası *</div>
+      <!-- Tax Office / Number -->
+      <section class="form-section" v-if="form.country !== 'Montenegro'">
+        <div class="form-group-title">Tax Office / Number *</div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.taxOffice" type="text" placeholder="Vergi Dairesi *" required />
-            <div class="input-desc">Acentanızın bağlı olduğu vergi dairesi. Örn: Kadıköy Vergi Dairesi</div>
+            <input v-model="form.taxOffice" type="text" placeholder="Tax Office *" required />
+            <div class="input-desc">Tax office your agency is registered with. Ex: Kadikoy Tax Office</div>
           </div>
           <div class="form-group">
-            <input v-model="form.taxNumber" type="text" placeholder="Vergi Numarası *" required />
-            <div class="input-desc">10 veya 11 haneli vergi numaranız. Örn: 1234567890</div>
+            <input v-model="form.taxNumber" type="text" placeholder="Tax Number *" required />
+            <div class="input-desc">Your 10 or 11-digit tax number. Ex: 1234567890</div>
           </div>
         </div>
       </section>
 
-      <!-- PIB Numarası for Karadağ -->
+      <!-- PIB Number for Montenegro -->
       <section class="form-section" v-else>
-        <div class="form-group-title">PIB Numarası *</div>
+        <div class="form-group-title">PIB Number *</div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.pibNumber" type="text" placeholder="PIB Numarası *" required />
-            <div class="input-desc">P.I.B. Numarası örnek: 1234567890</div>
+            <input v-model="form.pibNumber" type="text" placeholder="PIB Number *" required />
+            <div class="input-desc">P.I.B. Number example: 1234567890</div>
           </div>
         </div>
       </section>
@@ -168,40 +168,40 @@
         <div class="form-row">
           <div class="form-group">
             <input v-model="form.iban" type="text" placeholder="IBAN *" required />
-            <div class="input-desc">IBAN numaranız. Örn: TR12 3456 7890 1234 5678 9012 34</div>
+            <div class="input-desc">Your IBAN number. Ex: TR12 3456 7890 1234 5678 9012 34</div>
           </div>
           <div class="form-group">
-            <input v-model="form.accountHolder" type="text" placeholder="İsim Soyisim *" required />
-            <div class="input-desc">Hesap sahibinin adı. Örn: Harika Tur ve Seyahat Ltd. Şti.</div>
+            <input v-model="form.accountHolder" type="text" placeholder="Full Name *" required />
+            <div class="input-desc">Account holder's name. Ex: Amazing Tours and Travel Ltd.</div>
           </div>
           <div class="form-group">
-            <input v-model="form.bank" type="text" placeholder="Banka *" required />
-            <div class="input-desc">Banka adı. Örn: Ziraat Bankası</div>
+            <input v-model="form.bank" type="text" placeholder="Bank *" required />
+            <div class="input-desc">Bank name. Ex: Ziraat Bank</div>
           </div>
         </div>
       </section>
-      <!-- Swift Kodu / Hesap Numarası -->
+      <!-- Swift Code / Account Number -->
       <section class="form-section">
-        <div class="form-group-title">Swift Kodu / Hesap Numarası</div>
+        <div class="form-group-title">Swift Code / Account Number</div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.swiftCode" type="text" placeholder="Swift Kodu" />
-            <div class="input-desc">Uluslararası banka işlemleri için Swift/BIC kodu. Örn: TGBATRISXXX</div>
+            <input v-model="form.swiftCode" type="text" placeholder="Swift Code" />
+            <div class="input-desc">Swift/BIC code for international bank transactions. Ex: TGBATRISXXX</div>
           </div>
           <div class="form-group">
-            <input v-model="form.accountNumber" type="text" placeholder="Hesap Numarası" />
-            <div class="input-desc">Banka hesap numaranız. Örn: 12345678</div>
+            <input v-model="form.accountNumber" type="text" placeholder="Account Number" />
+            <div class="input-desc">Your bank account number. Ex: 12345678</div>
           </div>
         </div>
       </section>
-      <!-- Hizmet Alanı / Dil / Bizi Nereden Duydunuz -->
+      <!-- Service Area / Language / How Did You Hear About Us -->
       <section class="form-section">
-        <div class="form-group-title">Hizmet Alanı / Dil / Bizi Nereden Duydunuz *</div>
+        <div class="form-group-title">Service Area / Language / How Did You Hear About Us *</div>
         <div class="form-row">
           <div class="form-group" style="position:relative;">
             <div class="multi-select-input" @click="toggleServiceAreaDropdown" :class="{open: serviceAreaDropdownOpen}" ref="dropdownRef">
               <div class="chips">
-                <span v-if="!form.serviceAreas.length" class="placeholder">Hizmet Alanı Seçiniz *</span>
+                <span v-if="!form.serviceAreas.length" class="placeholder">Select Service Area *</span>
                 <span v-for="area in form.serviceAreas" :key="area" class="chip">{{ area }} <span class="remove-chip" @click.stop="toggleServiceArea(area)">&times;</span></span>
               </div>
               <span class="dropdown-arrow">▼</span>
@@ -215,7 +215,7 @@
                 </div>
               </div>
             </div>
-            <div class="input-desc">Acentanızın sunduğu hizmet kategorileri. Birden fazla seçebilirsiniz.</div>
+            <div class="input-desc">Service categories your agency offers. You can select multiple options.</div>
           </div>
           <div class="form-group">
             <div class="custom-language-select" ref="languageDropdownRef">
@@ -224,7 +224,7 @@
                   <img :src="selectedLanguage.flagUrl" :alt="selectedLanguage.name" class="lang-flag" />
                   <span>{{ selectedLanguage.name }}</span>
                 </span>
-                <span v-else class="lang-placeholder">🌐 Dil Seçiniz</span>
+                <span v-else class="lang-placeholder">🌐 Select Language</span>
                 <span class="dropdown-arrow">▼</span>
               </div>
               <div v-if="languageDropdownOpen" class="custom-language-dropdown">
@@ -234,22 +234,22 @@
                 </div>
               </div>
             </div>
-            <div class="input-desc">Acentanızın öncelikli iletişim dili</div>
+            <div class="input-desc">Your agency's preferred communication language</div>
           </div>
           <div class="form-group">
             <select v-model="form.heardFrom" required>
-              <option value="">Bizi Nereden Duydunuz? *</option>
+              <option value="">How Did You Hear About Us? *</option>
               <option v-for="h in heardFromOptions" :key="h">{{ h }}</option>
             </select>
-            <div class="input-desc">Bizi nereden duydunuz?</div>
+            <div class="input-desc">How did you hear about us?</div>
           </div>
         </div>
       </section>
-      <!-- Dosya Yükleme Alanları -->
+      <!-- Document Upload Areas -->
       <section class="form-section">
-        <div class="form-group-title">Belgeler</div>
+        <div class="form-group-title">Documents</div>
         <div class="form-row file-upload-row">
-          <label>{{ form.country === 'Karadağ' ? 'Lisans Belgesi *' : 'Vergi Levhası *' }}</label>
+          <label>{{ form.country === 'Montenegro' ? 'License Document *' : 'Tax Certificate *' }}</label>
           <div class="file-upload-box custom-upload-box">
             <label class="upload-label">
               <input type="file" @change="onFileChange($event, 'taxDocument')" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx" required />
@@ -260,118 +260,118 @@
                 <div v-if="form.taxDocument" class="upload-filename">{{ form.taxDocument.name }}</div>
               </div>
             </label>
-            <div class="input-desc">{{ form.country === 'Karadağ' ? 'Lisans belgenizin PDF veya resim dosyası. Zorunlu belge.' : 'Vergi levhanızın (güncel tarihli) PDF veya resim dosyası. Zorunlu belge.' }}</div>
+            <div class="input-desc">{{ form.country === 'Montenegro' ? 'Your license document in PDF or image format. Required document.' : 'Your tax certificate (current dated) in PDF or image format. Required document.' }}</div>
           </div>
         </div>
-        <div class="form-row file-upload-row" v-if="form.country !== 'Karadağ'">
-          <label>TÜRSAB Belgesi</label>
+        <div class="form-row file-upload-row" v-if="form.country !== 'Montenegro'">
+          <label>TÜRSAB Certificate</label>
           <div class="file-upload-box custom-upload-box">
             <label class="upload-label">
               <input type="file" @change="onFileChange($event, 'tursabDocument')" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx" />
               <div class="upload-placeholder">
                 <i class="fas fa-file-upload"></i>
                 <div class="upload-desc">PDF, JPG, PNG, DOC, DOCX, XLS, XLSX</div>
-                <div class="upload-desc">(varsa)</div>
+                <div class="upload-desc">(if available)</div>
                 <div v-if="form.tursabDocument" class="upload-filename">{{ form.tursabDocument.name }}</div>
               </div>
             </label>
-            <div class="input-desc">TÜRSAB belgenizin PDF veya resim dosyası (varsa)</div>
+            <div class="input-desc">Your TÜRSAB certificate in PDF or image format (if available)</div>
           </div>
         </div>
-        <div class="form-row file-upload-row" v-if="form.country !== 'Karadağ'">
-          <label>İş / Uzmanlık Belgesi</label>
+        <div class="form-row file-upload-row" v-if="form.country !== 'Montenegro'">
+          <label>Business / Expertise Certificate</label>
           <div class="file-upload-box custom-upload-box">
             <label class="upload-label">
               <input type="file" @change="onFileChange($event, 'expertiseDocument')" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx" />
               <div class="upload-placeholder">
                 <i class="fas fa-file-upload"></i>
                 <div class="upload-desc">PDF, JPG, PNG, DOC, DOCX, XLS, XLSX</div>
-                <div class="upload-desc">(varsa)</div>
+                <div class="upload-desc">(if available)</div>
                 <div v-if="form.expertiseDocument" class="upload-filename">{{ form.expertiseDocument.name }}</div>
               </div>
             </label>
-            <div class="input-desc">Uzmanlık belgenizin PDF veya resim dosyası (varsa)</div>
+            <div class="input-desc">Your expertise certificate in PDF or image format (if available)</div>
           </div>
         </div>
         <div class="form-row file-upload-row">
-          <label>Diğer Belgeler</label>
+          <label>Other Documents</label>
           <div class="file-upload-box custom-upload-box">
             <label class="upload-label">
               <input type="file" @change="onFileChange($event, 'otherDocuments')" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx" multiple />
               <div class="upload-placeholder">
                 <i class="fas fa-file-upload"></i>
                 <div class="upload-desc">PDF, JPG, PNG, DOC, DOCX, XLS, XLSX</div>
-                <div class="upload-desc">(varsa)</div>
+                <div class="upload-desc">(if available)</div>
                 <div v-if="form.otherDocuments && form.otherDocuments.length" class="upload-filename">
                   <div v-for="file in form.otherDocuments" :key="file.name">{{ file.name }}</div>
                 </div>
               </div>
             </label>
-            <div class="input-desc">Diğer belgeleriniz (varsa)</div>
+            <div class="input-desc">Other documents (if available)</div>
           </div>
         </div>
       </section>
-      <!-- Yönetici Bilgileri -->
+      <!-- Manager Information -->
       <section class="form-section">
-        <div class="form-group-title">Yönetici</div>
+        <div class="form-group-title">Manager</div>
         <div class="form-row">
           <div class="form-group">
             <select v-model="form.managerGender" required>
-              <option value="">Cinsiyet Seçiniz *</option>
-              <option value="Erkek">Erkek</option>
-              <option value="Kadın">Kadın</option>
-              <option value="Belirtmek istemiyorum">Belirtmek istemiyorum</option>
+              <option value="">Select Gender *</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Prefer not to specify">Prefer not to specify</option>
             </select>
           </div>
           <div class="form-group">
-            <input v-model="form.managerTitle" type="text" placeholder="Ünvan *" required />
+            <input v-model="form.managerTitle" type="text" placeholder="Title *" required />
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.managerName" type="text" placeholder="Ad *" required />
+            <input v-model="form.managerName" type="text" placeholder="First Name *" required />
           </div>
           <div class="form-group">
-            <input v-model="form.managerSurname" type="text" placeholder="Soyad *" required />
+            <input v-model="form.managerSurname" type="text" placeholder="Last Name *" required />
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.managerPhone" type="tel" placeholder="Telefon Numaranız *" required />
+            <input v-model="form.managerPhone" type="tel" placeholder="Phone Number *" required />
           </div>
           <div class="form-group">
-            <input v-model="form.managerBirthDate" type="date" placeholder="Doğum Tarihi *" required />
+            <input v-model="form.managerBirthDate" type="date" placeholder="Date of Birth *" required />
           </div>
         </div>
       </section>
-      <!-- Şifre Alanı -->
+      <!-- Password Field -->
       <section class="form-section">
-        <div class="form-group-title">Şifre</div>
+        <div class="form-group-title">Password</div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.password" type="password" placeholder="Şifreniz *" required minlength="6" />
-            <div class="input-desc">Şifre en az 6 karakter uzunluğunda olmalı ve en az bir rakam içermelidir.</div>
+            <input v-model="form.password" type="password" placeholder="Your Password *" required minlength="6" />
+            <div class="input-desc">Password must be at least 6 characters long and contain at least one number.</div>
           </div>
           <div class="form-group">
-            <input v-model="form.passwordRepeat" type="password" placeholder="Şifre Tekrar *" required minlength="6" />
+            <input v-model="form.passwordRepeat" type="password" placeholder="Repeat Password *" required minlength="6" />
           </div>
         </div>
       </section>
-      <!-- Sözleşmeler -->
+      <!-- Agreements -->
       <section class="form-section">
-        <div class="form-group-title">Sözleşmeler</div>
+        <div class="form-group-title">Agreements</div>
         <div class="form-row agreements">
-          <label><input type="checkbox" v-model="form.agreeCookies" required /> SearchYourTour Çerez Politikasını okudum ve kabul ediyorum.
+          <label><input type="checkbox" v-model="form.agreeCookies" required /> I have read and accept the SearchYourTour Cookie Policy.
             <br>
-            <a href="/docs/cerez-politikasi.pdf" target="_blank" style="color:#3498db;">SearchYourTour Çerez Politikasını Oku</a>
+            <a href="/docs/cookie-policy.pdf" target="_blank" style="color:#3498db;">Read SearchYourTour Cookie Policy</a>
           </label>
-          <label><input type="checkbox" v-model="form.agreeContract" required /> SearchYourTour E-Ticaret Aracılık Sözleşmesini okudum ve kabul ediyorum.
+          <label><input type="checkbox" v-model="form.agreeContract" required /> I have read and accept the SearchYourTour E-Commerce Intermediary Agreement.
             <br>
-            <a href="/docs/e-ticaret-sozlesmesi.pdf" target="_blank" style="color:#3498db;">E-Ticaret Aracılık Sözleşmesini Oku</a>
+            <a href="/docs/e-commerce-agreement.pdf" target="_blank" style="color:#3498db;">Read E-Commerce Intermediary Agreement</a>
           </label>
         </div>
       </section>
-      <button class="submit-btn" type="submit">Başvuruyu Tamamla</button>
+      <button class="submit-btn" type="submit">Complete Application</button>
     </form>
   </div>
 </template>
@@ -442,14 +442,14 @@ const selectedCountryFlag = computed(() => {
   return found ? found.flagUrl : countryCodes[0].flagUrl
 })
 const countries = [
-  { code: 'TR', name: 'Türkiye', flagUrl: 'https://flagsapi.com/TR/flat/32.png' },
-  { code: 'CY', name: 'Kuzey Kıbrıs', flagUrl: 'https://flagsapi.com/CY/flat/32.png' },
-  { code: 'AE', name: 'Birleşik Arap Emirlikleri', flagUrl: 'https://flagsapi.com/AE/flat/32.png' },
-  { code: 'ME', name: 'Karadağ', flagUrl: 'https://flagsapi.com/ME/flat/32.png' },
-  { code: 'GE', name: 'Gürcistan', flagUrl: 'https://flagsapi.com/GE/flat/32.png' },
+  { code: 'TR', name: 'Turkey', flagUrl: 'https://flagsapi.com/TR/flat/32.png' },
+  { code: 'CY', name: 'Northern Cyprus', flagUrl: 'https://flagsapi.com/CY/flat/32.png' },
+  { code: 'AE', name: 'United Arab Emirates', flagUrl: 'https://flagsapi.com/AE/flat/32.png' },
+  { code: 'ME', name: 'Montenegro', flagUrl: 'https://flagsapi.com/ME/flat/32.png' },
+  { code: 'GE', name: 'Georgia', flagUrl: 'https://flagsapi.com/GE/flat/32.png' },
 ]
 const countryCities = {
-  'Türkiye': [
+  'Turkey': [
     'Adana', 'Adıyaman', 'Afyonkarahisar', 'Ağrı', 'Aksaray', 'Amasya', 'Ankara', 'Antalya', 'Ardahan', 'Artvin', 'Aydın',
     'Balıkesir', 'Bartın', 'Batman', 'Bayburt', 'Bilecik', 'Bingöl', 'Bitlis', 'Bolu', 'Burdur', 'Bursa',
     'Çanakkale', 'Çankırı', 'Çorum', 'Denizli', 'Diyarbakır', 'Düzce', 'Edirne', 'Elazığ', 'Erzincan', 'Erzurum',
@@ -459,18 +459,18 @@ const countryCities = {
     'Niğde', 'Ordu', 'Osmaniye', 'Rize', 'Sakarya', 'Samsun', 'Şanlıurfa', 'Siirt', 'Sinop', 'Sivas',
     'Şırnak', 'Tekirdağ', 'Tokat', 'Trabzon', 'Tunceli', 'Uşak', 'Van', 'Yalova', 'Yozgat', 'Zonguldak'
   ],
-  'Kuzey Kıbrıs': ['Lefkoşa', 'Gazimağusa', 'Girne', 'Güzelyurt', 'İskele', 'Lefke'],
-  'Birleşik Arap Emirlikleri': [
-    'Abu Dabi', 'Al-Ain', 'Al-Khabb', 'Arada', 'Dasah', 'Dibba', 'Dubai', 'Fujairah', 'Ghewelfat', 'Hamim',
-    'Jabal Dhanna', 'Liwa Oasis', 'Mizaira\'a', 'Ras al-Khaimah', 'Şarika', 'Tarif', 'Ümmü\'l-Kayveyn'
+  'Northern Cyprus': ['Lefkoşa', 'Gazimağusa', 'Girne', 'Güzelyurt', 'İskele', 'Lefke'],
+  'United Arab Emirates': [
+    'Abu Dhabi', 'Al-Ain', 'Al-Khabb', 'Arada', 'Dasah', 'Dibba', 'Dubai', 'Fujairah', 'Ghewelfat', 'Hamim',
+    'Jabal Dhanna', 'Liwa Oasis', 'Mizaira\'a', 'Ras al-Khaimah', 'Sharjah', 'Tarif', 'Umm al-Quwain'
   ],
-  'Karadağ': [
+  'Montenegro': [
     'Akova', 'Andrijevica', 'Bar', 'Bečići', 'Berane', 'Bijela', 'Budva', 'Çetine', 'Danilovgrad', 'Dobrota',
     'Donja Lastva', 'Gradac', 'Gusinje', 'Herceg Novi', 'Igalo', 'Kolaşin', 'Kotor', 'Mojkovac', 'Nikšić', 'Perast',
     'Petrovaç', 'Plav', 'Plužine', 'Podgorica', 'Prčanj', 'Rijeka Crnojevića', 'Risan', 'Rožaje', 'Šavnik', 'Spuž',
     'Stari Bar', 'Sutomore', 'Sveti Stefan', 'Taşlıca', 'Tivat', 'Tuz', 'Ülgün', 'Virpazar', 'Žabljak', 'Zelenika'
   ],
-  'Gürcistan': [
+  'Georgia': [
     'Ahılkelek', 'Ahıska', 'Ahmeta', 'Ambrolauri', 'Batum', 'Bolnisi', 'Borcomi', 'Çiatura', 'Duşeti', 'Gagra',
     'Gori', 'Gudauta', 'Cava', 'Cvari', 'Kobuleti', 'Kutaisi', 'Kazreti', 'Haşuri', 'Kvareli', 'Lagodehi',
     'Marneuli', 'Mtsheta', 'Ninotsminda', 'Oçamçire', 'Ozurgeti', 'Pasanauri', 'Poti', 'Rustavi', 'Samtredia', 'Senaki',
@@ -480,16 +480,16 @@ const countryCities = {
 }
 const cities = computed(() => countryCities[form.country] || [])
 const languages = [
-  { code: 'tr', name: 'Türkçe', flagUrl: 'https://flagsapi.com/TR/flat/32.png' },
-  { code: 'en', name: 'İngilizce', flagUrl: 'https://flagsapi.com/GB/flat/32.png' },
-  { code: 'de', name: 'Almanca', flagUrl: 'https://flagsapi.com/DE/flat/32.png' },
-  { code: 'ru', name: 'Rusça', flagUrl: 'https://flagsapi.com/RU/flat/32.png' },
-  { code: 'ar', name: 'Arapça', flagUrl: 'https://flagsapi.com/SA/flat/32.png' },
-  { code: 'fr', name: 'Fransızca', flagUrl: 'https://flagsapi.com/FR/flat/32.png' },
-  { code: 'es', name: 'İspanyolca', flagUrl: 'https://flagsapi.com/ES/flat/32.png' },
-  { code: 'it', name: 'İtalyanca', flagUrl: 'https://flagsapi.com/IT/flat/32.png' },
-  { code: 'ka', name: 'Gürcüce', flagUrl: 'https://flagsapi.com/GE/flat/32.png' },
-  { code: 'me', name: 'Karadağca', flagUrl: 'https://flagsapi.com/ME/flat/32.png' },
+  { code: 'tr', name: 'Turkish', flagUrl: 'https://flagsapi.com/TR/flat/32.png' },
+  { code: 'en', name: 'English', flagUrl: 'https://flagsapi.com/GB/flat/32.png' },
+  { code: 'de', name: 'German', flagUrl: 'https://flagsapi.com/DE/flat/32.png' },
+  { code: 'ru', name: 'Russian', flagUrl: 'https://flagsapi.com/RU/flat/32.png' },
+  { code: 'ar', name: 'Arabic', flagUrl: 'https://flagsapi.com/SA/flat/32.png' },
+  { code: 'fr', name: 'French', flagUrl: 'https://flagsapi.com/FR/flat/32.png' },
+  { code: 'es', name: 'Spanish', flagUrl: 'https://flagsapi.com/ES/flat/32.png' },
+  { code: 'it', name: 'Italian', flagUrl: 'https://flagsapi.com/IT/flat/32.png' },
+  { code: 'ka', name: 'Georgian', flagUrl: 'https://flagsapi.com/GE/flat/32.png' },
+  { code: 'me', name: 'Montenegrin', flagUrl: 'https://flagsapi.com/ME/flat/32.png' },
 ]
 const heardFromOptions = [
   'Instagram',
@@ -500,31 +500,31 @@ const heardFromOptions = [
   'TikTok',
   'WhatsApp',
   'Telegram',
-  'Web Sitesi',
-  'Bölge Temsilcisi',
-  'Diğer'
+  'Website',
+  'Regional Representative',
+  'Other'
 ]
 
 const currencyOptions = [
   { value: 'TL', label: '₺ TL' },
-  { value: 'USD', label: '$ Dolar' },
+  { value: 'USD', label: '$ Dollar' },
   { value: 'EUR', label: '€ Euro' },
-  { value: 'GBP', label: '£ Sterlin' },
+  { value: 'GBP', label: '£ Sterling' },
   { value: 'SAR', label: '﷼ Riyal' },
 ]
 
 const serviceAreaOptions = [
-  { group: 'Tur Kategorileri', options: [
-    'Kültür', 'Günübirlik', 'Gemi', 'Deneyim', 'Doğa', 'Konaklamalı', 'Hac / Umre', 'Kutsal Yerler', 'Macera', 'Tadım', 'Rehberli', 'VIP', 'Vizeli', 'Vizesiz', 'Yurtdışı', 'Paket', 'Trekking'
+  { group: 'Tour Categories', options: [
+    'Culture', 'Day Trip', 'Ship', 'Experience', 'Nature', 'Accommodation', 'Hajj / Umrah', 'Sacred Places', 'Adventure', 'Tasting', 'Guided', 'VIP', 'With Visa', 'Visa Free', 'International', 'Package', 'Trekking'
   ]},
-  { group: 'Aktivite Kategorileri', options: [
-    'Golf', 'Kürek', 'Airsoft', 'Helikopter', 'Microlight', 'Hamam', 'Planör', 'Yelken Kanat', 'Parasailing', 'Jetski', 'Yamaç Paraşütü', 'Bungee Jumping', 'Balon', 'Dalış', 'Binicilik', 'Rafting', 'Serbest Paraşüt', 'Tekne', 'Sup', 'Zipline', 'Workshop', 'Buggy', 'Macera Park', 'Kamp', 'Spa & Masaj', 'Golf Aracı', 'Poligon', 'ATV-UTV', 'Jeep Safari', 'Kayak', 'Kano', 'Salıncak', 'Atlı Safari', 'Kanal'
+  { group: 'Activity Categories', options: [
+    'Golf', 'Rowing', 'Airsoft', 'Helicopter', 'Microlight', 'Turkish Bath', 'Glider', 'Paragliding', 'Parasailing', 'Jetski', 'Paragliding', 'Bungee Jumping', 'Balloon', 'Diving', 'Horseback Riding', 'Rafting', 'Skydiving', 'Boat', 'SUP', 'Zipline', 'Workshop', 'Buggy', 'Adventure Park', 'Camping', 'Spa & Massage', 'Golf Cart', 'Shooting Range', 'ATV-UTV', 'Jeep Safari', 'Skiing', 'Canoe', 'Swing', 'Horse Safari', 'Canal'
   ]},
-  { group: 'Kurs Kategorileri', options: [
-    'Yamaç Paraşütü', 'Planör', 'Yelken Kanat', 'Paten', 'Airsoft', 'Tenis', 'Atölye', 'Binicilik', 'Yüzme', 'Golf', 'Kürek', 'Yoga', 'Yelkenli', 'Dalış', 'Sörf', 'Serbest Paraşüt', 'Kayak', 'Dans', 'Kiteboard', 'Motorsiklet', 'Doğa', 'Macera', 'Yat Kaptanlığı'
+  { group: 'Course Categories', options: [
+    'Paragliding', 'Glider', 'Paragliding', 'Skating', 'Airsoft', 'Tennis', 'Workshop', 'Horseback Riding', 'Swimming', 'Golf', 'Rowing', 'Yoga', 'Sailing', 'Diving', 'Surfing', 'Skydiving', 'Skiing', 'Dance', 'Kiteboarding', 'Motorcycle', 'Nature', 'Adventure', 'Yacht Captain'
   ]},
-  { group: 'Diğer Kategoriler', options: [
-    'Transfer', 'Araç Kiralama', 'Müze Bileti', 'E-sim', 'Feribot', 'Giriş Bileti', 'Etkinlik', 'Organizasyon'
+  { group: 'Other Categories', options: [
+    'Transfer', 'Car Rental', 'Museum Ticket', 'E-sim', 'Ferry', 'Entrance Ticket', 'Event', 'Organization'
   ]}
 ]
 
