@@ -2,7 +2,7 @@
   <div class="privacy-container">
     <h1>Privacy Policy</h1>
     <div class="subtitle">Privacy Policy | SearchYourTour</div>
-    <div class="last-updated">Last Updated: July 2025</div>
+    <div class="last-updated">Last Updated: May 2024</div>
 
     <!-- Privacy Policy Content -->
     <h2>1. Information We Collect</h2>
@@ -45,7 +45,7 @@
       <li>Request deletion of your data</li>
       <li>Opt out of marketing communications</li>
     </ul>
-    <p>To exercise your rights, please contact us at <strong>info@searchyourtour.com</strong>.</p>
+    <p>To exercise your rights, please contact us at <strong>[your contact email]</strong>.</p>
 
     <h2>7. Third-Party Links</h2>
     <p>Our website may contain links to external sites. We are not responsible for the privacy practices or content of those websites.</p>
@@ -57,8 +57,8 @@
     <p>If you have any questions about this Privacy Policy or your personal data, please contact us at:</p>
     <p>
       <strong>SearchYourTour (by TLG Turizm)</strong><br />
-      Email: <strong>info@searchyourtour.com</strong><br />
-      Address: <strong></strong>
+      Email: <strong>[Insert Email]</strong><br />
+      Address: <strong>[Insert Business Address]</strong>
     </p>
   </div>
 </template>

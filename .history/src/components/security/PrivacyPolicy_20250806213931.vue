@@ -58,7 +58,7 @@
     <p>
       <strong>SearchYourTour (by TLG Turizm)</strong><br />
       Email: <strong>info@searchyourtour.com</strong><br />
-      Address: <strong></strong>
+      Address: <strong>[Insert Business Address]</strong>
     </p>
   </div>
 </template>

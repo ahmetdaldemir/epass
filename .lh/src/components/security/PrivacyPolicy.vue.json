@@ -1,0 +1,38 @@
+{
+    "sourceFile": "src/components/security/PrivacyPolicy.vue",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 5,
+            "patches": [
+                {
+                    "date": 1754505471992,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1754505527004,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -67,11 +67,11 @@\n </script>\r\n \r\n <style scoped>\r\n .privacy-container {\r\n-  max-width: 900px;\r\n+  max-width: 1000px;\r\n   margin: 0 auto;\r\n-  padding: 2rem 1rem;\r\n+  padding: 2rem 2rem;\r\n   background: white;\r\n   border-radius: 12px;\r\n   box-shadow: 0 2px 16px #0001;\r\n   color: #222;\r\n"
+                },
+                {
+                    "date": 1754505532630,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -56,9 +56,9 @@\n     <h2>9. Contact Us</h2>\r\n     <p>If you have any questions about this Privacy Policy or your personal data, please contact us at:</p>\r\n     <p>\r\n       <strong>SearchYourTour (by TLG Turizm)</strong><br />\r\n-      Email: <strong>[Insert Email]</strong><br />\r\n+      Email: <strong>info@searchyourtour.com</strong><br />\r\n       Address: <strong>[Insert Business Address]</strong>\r\n     </p>\r\n   </div>\r\n </template>\r\n"
+                },
+                {
+                    "date": 1754505551430,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,9 +1,9 @@\n <template>\r\n   <div class=\"privacy-container\">\r\n     <h1>Privacy Policy</h1>\r\n     <div class=\"subtitle\">Privacy Policy | SearchYourTour</div>\r\n-    <div class=\"last-updated\">Last Updated: May 2024</div>\r\n+    <div class=\"last-updated\">Last Updated: July 2025</div>\r\n \r\n     <!-- Privacy Policy Content -->\r\n     <h2>1. Information We Collect</h2>\r\n     <p>We may collect the following types of personal information:</p>\r\n"
+                },
+                {
+                    "date": 1754505571671,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -44,9 +44,9 @@\n       <li>Access and update your personal information</li>\r\n       <li>Request deletion of your data</li>\r\n       <li>Opt out of marketing communications</li>\r\n     </ul>\r\n-    <p>To exercise your rights, please contact us at <strong>[your contact email]</strong>.</p>\r\n+    <p>To exercise your rights, please contact us at <strong>info@searchyourtour.com</strong>.</p>\r\n \r\n     <h2>7. Third-Party Links</h2>\r\n     <p>Our website may contain links to external sites. We are not responsible for the privacy practices or content of those websites.</p>\r\n \r\n"
+                },
+                {
+                    "date": 1754505586517,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -57,9 +57,9 @@\n     <p>If you have any questions about this Privacy Policy or your personal data, please contact us at:</p>\r\n     <p>\r\n       <strong>SearchYourTour (by TLG Turizm)</strong><br />\r\n       Email: <strong>info@searchyourtour.com</strong><br />\r\n-      Address: <strong>[Insert Business Address]</strong>\r\n+      Address: <strong></strong>\r\n     </p>\r\n   </div>\r\n </template>\r\n \r\n"
+                }
+            ],
+            "date": 1754505471992,
+            "name": "Commit-0",
+            "content": "<template>\r\n  <div class=\"privacy-container\">\r\n    <h1>Privacy Policy</h1>\r\n    <div class=\"subtitle\">Privacy Policy | SearchYourTour</div>\r\n    <div class=\"last-updated\">Last Updated: May 2024</div>\r\n\r\n    <!-- Privacy Policy Content -->\r\n    <h2>1. Information We Collect</h2>\r\n    <p>We may collect the following types of personal information:</p>\r\n    <ul>\r\n      <li><strong>Contact Information:</strong> Name, email address, phone number, etc.</li>\r\n      <li><strong>Booking Information:</strong> Tour selections, dates, number of participants, preferences.</li>\r\n      <li><strong>Payment Information:</strong> Credit/debit card details (processed securely via third-party payment processors).</li>\r\n      <li><strong>Technical Information:</strong> IP address, browser type, device information, cookies, and usage data.</li>\r\n    </ul>\r\n\r\n    <h2>2. How We Use Your Information</h2>\r\n    <p>We use your information to:</p>\r\n    <ul>\r\n      <li>Process bookings and payments</li>\r\n      <li>Provide customer support</li>\r\n      <li>Improve our website and services</li>\r\n      <li>Send important updates, offers, and newsletters (with your consent)</li>\r\n      <li>Comply with legal obligations</li>\r\n    </ul>\r\n\r\n    <h2>3. Sharing Your Information</h2>\r\n    <p>We do <strong>not sell or rent</strong> your personal data to third parties. We may share information with:</p>\r\n    <ul>\r\n      <li>Service providers (e.g. payment processors, tour operators)</li>\r\n      <li>Legal authorities if required by law</li>\r\n      <li>Analytics providers to help us improve user experience</li>\r\n    </ul>\r\n\r\n    <h2>4. Data Security</h2>\r\n    <p>We take reasonable and appropriate measures to protect your information from unauthorized access, loss, or misuse. All payment transactions are encrypted and handled by secure payment gateways.</p>\r\n\r\n    <h2>5. Cookies</h2>\r\n    <p>We use cookies and similar technologies to improve your browsing experience. You can choose to disable cookies through your browser settings, but this may affect the functionality of our site.</p>\r\n\r\n    <h2>6. Your Rights</h2>\r\n    <p>You have the right to:</p>\r\n    <ul>\r\n      <li>Access and update your personal information</li>\r\n      <li>Request deletion of your data</li>\r\n      <li>Opt out of marketing communications</li>\r\n    </ul>\r\n    <p>To exercise your rights, please contact us at <strong>[your contact email]</strong>.</p>\r\n\r\n    <h2>7. Third-Party Links</h2>\r\n    <p>Our website may contain links to external sites. We are not responsible for the privacy practices or content of those websites.</p>\r\n\r\n    <h2>8. Changes to This Policy</h2>\r\n    <p>We may update this Privacy Policy from time to time. We will notify users of significant changes by posting a notice on our website.</p>\r\n\r\n    <h2>9. Contact Us</h2>\r\n    <p>If you have any questions about this Privacy Policy or your personal data, please contact us at:</p>\r\n    <p>\r\n      <strong>SearchYourTour (by TLG Turizm)</strong><br />\r\n      Email: <strong>[Insert Email]</strong><br />\r\n      Address: <strong>[Insert Business Address]</strong>\r\n    </p>\r\n  </div>\r\n</template>\r\n\r\n<script setup>\r\n</script>\r\n\r\n<style scoped>\r\n.privacy-container {\r\n  max-width: 900px;\r\n  margin: 0 auto;\r\n  padding: 2rem 1rem;\r\n  background: white;\r\n  border-radius: 12px;\r\n  box-shadow: 0 2px 16px #0001;\r\n  color: #222;\r\n}\r\nh1, h2, h3 {\r\n  color: #FC6421;\r\n}\r\n.subtitle {\r\n  font-size: 1.1rem;\r\n  color: #555;\r\n  opacity: 0.8;\r\n  margin-bottom: 0.2rem;\r\n  font-weight: 500;\r\n}\r\n.last-updated {\r\n  font-size: 0.98rem;\r\n  color: #888;\r\n  opacity: 0.8;\r\n  margin-bottom: 1.2rem;\r\n  font-weight: 400;\r\n}\r\n</style>\r\n"
+        }
+    ]
+}

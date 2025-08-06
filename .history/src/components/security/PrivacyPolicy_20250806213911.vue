@@ -45,7 +45,7 @@
       <li>Request deletion of your data</li>
       <li>Opt out of marketing communications</li>
     </ul>
-    <p>To exercise your rights, please contact us at <strong>info@searchyourtour.com</strong>.</p>
+    <p>To exercise your rights, please contact us at <strong>[your contact email]</strong>.</p>
 
     <h2>7. Third-Party Links</h2>
     <p>Our website may contain links to external sites. We are not responsible for the privacy practices or content of those websites.</p>
@@ -58,7 +58,7 @@
     <p>
       <strong>SearchYourTour (by TLG Turizm)</strong><br />
       Email: <strong>info@searchyourtour.com</strong><br />
-      Address: <strong></strong>
+      Address: <strong>[Insert Business Address]</strong>
     </p>
   </div>
 </template>

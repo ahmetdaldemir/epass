@@ -5,7 +5,7 @@
     <div class="last-updated">Last Updated: May 2024</div>
     <section>
       <h3>Introduction</h3>
-      <p>SearchYourTour® is a brand of TLG Turizm Tourism Agency ("TLG Turizm"), a TURSAB-registered member. Purchase of the SearchYourTour® and any associated services constitutes acceptance of the terms and conditions established by TLG Turizm.</p>
+      <p>SearchYourTour® is a brand of TLG Turizm Tourism Agency ("TLG Turizm"), a TURSAB-registered member (License Number: 11745). Purchase of the SearchYourTour® and any associated services constitutes acceptance of the terms and conditions established by TLG Turizm.</p>
     </section>
     <section>
       <h3>General Terms</h3>
