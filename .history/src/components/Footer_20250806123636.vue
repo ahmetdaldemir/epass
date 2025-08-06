@@ -41,7 +41,7 @@
             <li><router-link to="/security/terms-conditions">General Terms and Conditions</router-link></li>
             <li><router-link to="/security/privacy-policy">Privacy Policy</router-link></li>
             <li><router-link to="/security/cookie-policy">Cookies and Marketing Preferences</router-link></li>
-            <li><router-link to="/my-pass" >Manage Your Pass</router-link></li>
+            <li><router-link to="/my-pass" >Manage Your Pass</a></li>
             <li><router-link to="/become-partner">Become a Partner</router-link></li>
             <li><router-link to="/my-listing">Manage Your Listings</router-link></li>
             <li><a href="#">Information according to the Digital Services Act</a></li>
@@ -59,7 +59,7 @@
             <li><a href="#">Blog</a></li>
             <li><a href="#">Press</a></li>
             <li><a href="#">Gift Cards</a></li>
-            <li><router-link to="/attractions">Explorer</router-link></li>
+            <li><a href="#">Explorer</a></li>
           </ul>
         </div>
         <!-- 5. Sütun: Work With Us & Payment -->

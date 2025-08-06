@@ -41,7 +41,7 @@
             <li><router-link to="/security/terms-conditions">General Terms and Conditions</router-link></li>
             <li><router-link to="/security/privacy-policy">Privacy Policy</router-link></li>
             <li><router-link to="/security/cookie-policy">Cookies and Marketing Preferences</router-link></li>
-            <li><router-link to="/my-pass" >Manage Your Pass</router-link></li>
+            <li><a href="https://myistanbul.istanbultouristpass.com/" target="_blank">Manage Your Pass</a></li>
             <li><router-link to="/become-partner">Become a Partner</router-link></li>
             <li><router-link to="/my-listing">Manage Your Listings</router-link></li>
             <li><a href="#">Information according to the Digital Services Act</a></li>
@@ -54,12 +54,12 @@
             <li><router-link to="/about">About Us</router-link></li>
             <li><router-link to="/attractions">Istanbul Attractions</router-link></li>
             <li><router-link to="/tours">Guided Tours</router-link></li>
-            <li><router-link to="/istanbul-pass">SearchYourTour Pass</router-link></li>
+            <li><router-link to="/istanbul-pass">Istanbul Tourist Pass</router-link></li>
             <li><a href="#">Careers</a></li>
             <li><a href="#">Blog</a></li>
             <li><a href="#">Press</a></li>
             <li><a href="#">Gift Cards</a></li>
-            <li><router-link to="/attractions">Explorer</router-link></li>
+            <li><a href="#">Explorer</a></li>
           </ul>
         </div>
         <!-- 5. Sütun: Work With Us & Payment -->
@@ -75,6 +75,11 @@
             <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/PayPal_logo.svg" alt="PayPal" />
             <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard" />
             <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/3/30/American_Express_logo_%282018%29.svg" alt="American Express" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Google_Pay_Logo.svg" alt="Google Pay" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Apple_Pay_logo.svg" alt="Apple Pay" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Discover_Card_logo.svg" alt="Discover" />
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5b/Klarna_Payment_Badge.svg" alt="Klarna" />
           </div>
         </div>
       </div>

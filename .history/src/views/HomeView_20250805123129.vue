@@ -20,7 +20,7 @@
         <div class="hero-badge">NOW WITH <span>5GB</span> SIM FREE</div>
         <div class="hero-label">Basilica Cistern / Included with pass</div>
         <!-- Main H1 Heading for SEO -->
-        <h1 class="hero-title">Discover Istanbul with SearchYourTour Pass - Save 40% on Top Attractions</h1>
+        <h1 class="hero-title">Discover Istanbul with Tourist Pass - Save 40% on Top Attractions</h1>
         <!-- Kategori Butonları -->
         <div class="category-tabs">
           <button v-for="cat in categories" :key="cat.value" :class="['category-tab', { active: selectedCategory === cat.value }]" @click="selectedCategory = cat.value">

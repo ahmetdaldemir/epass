@@ -20,7 +20,7 @@
         <div class="hero-badge">NOW WITH <span>5GB</span> SIM FREE</div>
         <div class="hero-label">Basilica Cistern / Included with pass</div>
         <!-- Main H1 Heading for SEO -->
-        <h1 class="hero-title">Discover Istanbul with SearchYourTour Pass - Save 40% on Top Attractions</h1>
+        <h1 class="hero-title">Discover Istanbul with Tourist Pass - Save 40% on Top Attractions</h1>
         <!-- Kategori Butonları -->
         <div class="category-tabs">
           <button v-for="cat in categories" :key="cat.value" :class="['category-tab', { active: selectedCategory === cat.value }]" @click="selectedCategory = cat.value">
@@ -230,7 +230,7 @@
     <section class="pass-types-section">
       <div class="section-list-wrap">
         <div class="container swiper-no-padding">
-          <h2 class="section-title">Choose Your SearchYourTour Pass</h2>
+          <h2 class="section-title">Choose Your Istanbul Tourist Pass</h2>
           <p class="section-subtitle">Select the perfect pass for your Istanbul adventure. <router-link to="/istanbul-pass" class="inline-link">View all pass options</router-link> or <router-link to="/attractions" class="inline-link">browse attractions</router-link> to plan your visit.</p>
           <swiper
             class="pass-types-slider"

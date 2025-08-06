@@ -5,6 +5,7 @@
         <h1>Istanbul Attractions & Tours - Discover Top Cultural Sites</h1>
         <h2>Explore Hagia Sophia, Topkapi Palace, Basilica Cistern & More</h2>
         <p>Discover the most popular attractions and guided tours included in your Istanbul Tourist Pass. Visit iconic landmarks and hidden gems with expert guides.</p>
+        <p style="color: yellow; font-weight: bold;">DEBUG: AttractionsView is loading!</p>
       </div>
     </section>
 
@@ -64,7 +65,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed ,onBeforeUnmount } from 'vue'
+import { ref, onMounted, watch, computed, onBeforeUnmount } from 'vue'
 
 const attractions = ref([])
 const loading = ref(false)

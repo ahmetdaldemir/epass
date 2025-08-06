@@ -26,7 +26,7 @@
         <div class="footer-section">
           <h3>Mobile</h3>
           <a href="#" class="app-btn google-play dark-bg">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" />
+            <img src="/images/apps/google-play-badge.png" alt="Google Play" />
           </a>
           <a href="#" class="app-btn app-store dark-bg">
             <img src="https://developer.apple.com/assets/elements/badges/download-on-the-app-store.svg" alt="App Store" />
@@ -41,7 +41,7 @@
             <li><router-link to="/security/terms-conditions">General Terms and Conditions</router-link></li>
             <li><router-link to="/security/privacy-policy">Privacy Policy</router-link></li>
             <li><router-link to="/security/cookie-policy">Cookies and Marketing Preferences</router-link></li>
-            <li><router-link to="/my-pass" >Manage Your Pass</router-link></li>
+            <li><a href="https://myistanbul.istanbultouristpass.com/" target="_blank">Manage Your Pass</a></li>
             <li><router-link to="/become-partner">Become a Partner</router-link></li>
             <li><router-link to="/my-listing">Manage Your Listings</router-link></li>
             <li><a href="#">Information according to the Digital Services Act</a></li>
@@ -54,12 +54,12 @@
             <li><router-link to="/about">About Us</router-link></li>
             <li><router-link to="/attractions">Istanbul Attractions</router-link></li>
             <li><router-link to="/tours">Guided Tours</router-link></li>
-            <li><router-link to="/istanbul-pass">SearchYourTour Pass</router-link></li>
+            <li><router-link to="/istanbul-pass">Istanbul Tourist Pass</router-link></li>
             <li><a href="#">Careers</a></li>
             <li><a href="#">Blog</a></li>
             <li><a href="#">Press</a></li>
             <li><a href="#">Gift Cards</a></li>
-            <li><router-link to="/attractions">Explorer</router-link></li>
+            <li><a href="#">Explorer</a></li>
           </ul>
         </div>
         <!-- 5. Sütun: Work With Us & Payment -->
@@ -72,9 +72,14 @@
           </ul>
           <h3>Ways You Can Pay</h3>
           <div class="payment-icons">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/PayPal_logo.svg" alt="PayPal" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard" />
-            <img src="https://upload.wikimedia.org/wikipedia/commons/4/41/Visa_Logo.png" alt="Visa" />
+            <img src="/images/payment/paypal.svg" alt="PayPal" />
+            <img src="/images/payment/mastercard.png" alt="Mastercard" />
+            <img src="/images/payment/visa.png" alt="Visa" />
+            <img src="/images/payment/amex.svg" alt="American Express" />
+            <img src="/images/payment/google-pay.svg" alt="Google Pay" />
+            <img src="/images/payment/apple-pay.svg" alt="Apple Pay" />
+            <img src="/images/payment/discover.svg" alt="Discover" />
+            <img src="/images/payment/klarna.svg" alt="Klarna" />
           </div>
         </div>
       </div>

@@ -20,7 +20,7 @@
         <div class="hero-badge">NOW WITH <span>5GB</span> SIM FREE</div>
         <div class="hero-label">Basilica Cistern / Included with pass</div>
         <!-- Main H1 Heading for SEO -->
-        <h1 class="hero-title">Discover Istanbul with SearchYourTour Pass - Save 40% on Top Attractions</h1>
+        <h1 class="hero-title">Discover Istanbul with Tourist Pass - Save 40% on Top Attractions</h1>
         <!-- Kategori Butonları -->
         <div class="category-tabs">
           <button v-for="cat in categories" :key="cat.value" :class="['category-tab', { active: selectedCategory === cat.value }]" @click="selectedCategory = cat.value">
@@ -230,7 +230,7 @@
     <section class="pass-types-section">
       <div class="section-list-wrap">
         <div class="container swiper-no-padding">
-          <h2 class="section-title">Choose Your SearchYourTour Pass</h2>
+          <h2 class="section-title">Choose Your Istanbul Tourist Pass</h2>
           <p class="section-subtitle">Select the perfect pass for your Istanbul adventure. <router-link to="/istanbul-pass" class="inline-link">View all pass options</router-link> or <router-link to="/attractions" class="inline-link">browse attractions</router-link> to plan your visit.</p>
           <swiper
             class="pass-types-slider"
@@ -323,6 +323,82 @@
               <h4>{{ testimonials.find(t => t.id === activeTestimonialId).name }}</h4>
               <span>{{ testimonials.find(t => t.id === activeTestimonialId).location }}</span>
             </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social Media Section -->
+    <section class="social-media-section">
+      <div class="container">
+        <h2 class="section-title">Follow Us & Share Your Experience</h2>
+        <p class="section-subtitle">Connect with us on social media and share your Istanbul adventures with the world!</p>
+        
+        <div class="social-grid">
+          <div class="social-card">
+            <div class="social-icon">
+              <i class="fab fa-facebook-f"></i>
+            </div>
+            <h3>Facebook</h3>
+            <p>Get the latest updates and exclusive offers</p>
+            <a href="https://www.facebook.com/searchyourtour" target="_blank" rel="noopener noreferrer" class="social-btn">
+              Follow Us
+            </a>
+          </div>
+          
+          <div class="social-card">
+            <div class="social-icon">
+              <i class="fab fa-instagram"></i>
+            </div>
+            <h3>Instagram</h3>
+            <p>See amazing photos from Istanbul travelers</p>
+            <a href="https://www.instagram.com/searchyourtour" target="_blank" rel="noopener noreferrer" class="social-btn">
+              Follow Us
+            </a>
+          </div>
+          
+          <div class="social-card">
+            <div class="social-icon">
+              <i class="fab fa-twitter"></i>
+            </div>
+            <h3>Twitter</h3>
+            <p>Stay updated with travel tips and news</p>
+            <a href="https://twitter.com/searchyourtour" target="_blank" rel="noopener noreferrer" class="social-btn">
+              Follow Us
+            </a>
+          </div>
+          
+          <div class="social-card">
+            <div class="social-icon">
+              <i class="fab fa-youtube"></i>
+            </div>
+            <h3>YouTube</h3>
+            <p>Watch videos of Istanbul attractions and tours</p>
+            <a href="https://www.youtube.com/searchyourtour" target="_blank" rel="noopener noreferrer" class="social-btn">
+              Subscribe
+            </a>
+          </div>
+        </div>
+        
+        <div class="share-section">
+          <h3>Share This Page</h3>
+          <div class="share-buttons">
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https://searchyourtour.com" target="_blank" rel="noopener noreferrer" class="share-btn facebook">
+              <i class="fab fa-facebook-f"></i>
+              Share on Facebook
+            </a>
+            <a href="https://twitter.com/intent/tweet?url=https://searchyourtour.com&text=Discover%20Istanbul%20with%20SearchYourTour%20-%20Save%2040%%20on%20attractions%20and%20tours!" target="_blank" rel="noopener noreferrer" class="share-btn twitter">
+              <i class="fab fa-twitter"></i>
+              Share on Twitter
+            </a>
+            <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://searchyourtour.com" target="_blank" rel="noopener noreferrer" class="share-btn linkedin">
+              <i class="fab fa-linkedin-in"></i>
+              Share on LinkedIn
+            </a>
+            <a href="https://wa.me/?text=Check%20out%20SearchYourTour%20for%20amazing%20Istanbul%20experiences!%20https://searchyourtour.com" target="_blank" rel="noopener noreferrer" class="share-btn whatsapp">
+              <i class="fab fa-whatsapp"></i>
+              Share on WhatsApp
+            </a>
           </div>
         </div>
       </div>

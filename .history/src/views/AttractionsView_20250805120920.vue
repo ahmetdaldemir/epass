@@ -64,7 +64,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, watch, computed ,onBeforeUnmount } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 
 const attractions = ref([])
 const loading = ref(false)

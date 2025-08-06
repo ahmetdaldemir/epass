@@ -16,7 +16,7 @@
               <i class="fas fa-envelope"></i>
               <div>
                 <h3>Email</h3>
-                <p>info@searchyourtour.com</p>
+                <p>support@istanbultouristpass.com</p>
               </div>
             </div>
             <div class="contact-item">

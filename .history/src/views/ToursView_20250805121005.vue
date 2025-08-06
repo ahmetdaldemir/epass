@@ -4,7 +4,9 @@
     <section class="hero-section">
       <div class="container">
         <div class="hero-content">
-          <h2>Explore the city's rich history and culture with our expert guides. Visit iconic landmarks with skip-the-line access and insider knowledge.</h2>
+          <h1 class="hero-title">Istanbul Guided Tours - Expert-Led Cultural Experiences</h1>
+          <h2>Professional Tour Guides for Hagia Sophia, Topkapi Palace & More</h2>
+          <p class="hero-subtitle">Explore the city's rich history and culture with our expert guides. Visit iconic landmarks with skip-the-line access and insider knowledge.</p>
         </div>
       </div>
     </section>
@@ -90,7 +92,7 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted, watch, onBeforeUnmount} from 'vue'
+import { ref, computed, onMounted, watch } from 'vue'
 
 const selectedDestination = ref('')
 const selectedDuration = ref('')

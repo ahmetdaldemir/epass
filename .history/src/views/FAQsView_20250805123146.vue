@@ -36,8 +36,8 @@ import { ref } from 'vue'
 const faqs = ref([
   {
     id: 1,
-    question: 'What is included in the SearchYourTour Pass?',
-    answer: 'The SearchYourTour Pass includes access to 100+ attractions, museums, and tours across Istanbul. You also get skip-the-line entry, free guided tours, and a mobile ticket.',
+    question: 'What is included in the Istanbul Tourist Pass?',
+    answer: 'The Istanbul Tourist Pass includes access to 100+ attractions, museums, and tours across Istanbul. You also get skip-the-line entry, free guided tours, and a mobile ticket.',
     isOpen: false
   },
   {

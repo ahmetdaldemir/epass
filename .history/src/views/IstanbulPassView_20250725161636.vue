@@ -2,7 +2,7 @@
   <div class="istanbul-pass">
     <section class="hero-section">
       <div class="container">
-        <h1>SearchYourTour Pass</h1>
+        <h1>Istanbul Tourist Pass</h1>
         <p>Choose the perfect pass for your Istanbul adventure</p>
       </div>
     </section>
