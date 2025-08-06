@@ -1257,12 +1257,7 @@ const cultureTours = attractions
   .stat-box { font-size: 0.95rem; min-width: 65px; padding: 0.5rem 0.7rem; }
   .mini-stats-row { gap: 0.5rem; }
   .mini-stat { font-size: 0.85rem; min-width: 90px; padding: 0.4rem 0.5rem; }
-  .hero-title { 
-    font-size: 1.1rem; 
-    line-height: 1.1;
-    top: 45%;
-    z-index: 5;
-  }
+  .hero-title { font-size: 1.1rem; }
   .cta-btn { font-size: 1rem; padding: 0.7rem 0; }
   .why-choose-bar { font-size: 0.95rem; padding: 0.5rem 0.5rem; }
   
@@ -1539,16 +1534,11 @@ const cultureTours = attractions
   .category-tabs {
     gap: 6px;
     padding-bottom: 2px;
-    z-index: 15;
   }
   .category-tab {
     font-size: 0.85rem;
     padding: 7px 10px 6px 10px;
     border-radius: 10px 10px 0 0;
-    min-height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
   .cat-icon {
     font-size: 0.95em;
