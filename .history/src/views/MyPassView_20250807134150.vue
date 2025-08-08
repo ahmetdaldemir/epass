@@ -641,7 +641,7 @@ function getUserName() {
 /* Side Menu */
 .side-menu {
   width: 280px;
-  background: linear-gradient(135deg, #ff0000 0%, #ff5e00 100%);
+  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
   color: white;
   display: flex;
   flex-direction: column;
