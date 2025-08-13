@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 3,
+            "activePatchIndex": 4,
             "patches": [
                 {
                     "date": 1754384789305,
@@ -20,6 +20,10 @@
                 {
                     "date": 1754524304577,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1256,9 +1256,14 @@\n   .quick-stats { gap: 0.4rem; }\n   .stat-box { font-size: 0.95rem; min-width: 65px; padding: 0.5rem 0.7rem; }\n   .mini-stats-row { gap: 0.5rem; }\n   .mini-stat { font-size: 0.85rem; min-width: 90px; padding: 0.4rem 0.5rem; }\n-  .hero-title { font-size: 1.3rem; }\n+  .hero-title { \n+    font-size: 1.1rem; \n+    line-height: 1.1;\n+    top: 45%;\n+    z-index: 5;\n+  }\n   .cta-btn { font-size: 1rem; padding: 0.7rem 0; }\n   .why-choose-bar { font-size: 0.95rem; padding: 0.5rem 0.5rem; }\n   \n   .section-title {\n@@ -1332,9 +1337,9 @@\n   position: absolute;\n   left: 50%;\n   bottom: 0;\n   transform: translateX(-50%) translateY(10%);\n-  z-index: 2;\n+  z-index: 10;\n   margin: 0;\n   width: auto;\n   padding-bottom: 8px;\n }\n@@ -1533,13 +1538,18 @@\n @media (max-width: 600px) {\n   .category-tabs {\n     gap: 6px;\n     padding-bottom: 2px;\n+    z-index: 15;\n   }\n   .category-tab {\n     font-size: 0.85rem;\n     padding: 7px 10px 6px 10px;\n     border-radius: 10px 10px 0 0;\n+    min-height: 44px;\n+    display: flex;\n+    align-items: center;\n+    justify-content: center;\n   }\n   .cat-icon {\n     font-size: 0.95em;\n   }\n@@ -1941,10 +1951,12 @@\n }\n \n @media (max-width: 768px) {\n   .hero-title {\n-    font-size: 1.8rem;\n+    font-size: 1.1rem;\n     max-width: 90%;\n+    line-height: 1.1;\n+    top: 45%;\n   }\n }\n \n /* Section subtitle styles for better SEO */\n"
+                },
+                {
+                    "date": 1755080740515,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -268,10 +268,10 @@\n     <!-- Testimonials Section -->\n     <section class=\"testimonials-section\">\n       <div class=\"section-list-wrap\">\n         <div class=\"container swiper-no-padding\">\n-          <h2 class=\"section-title\">What Our Customers Say About Istanbul Tourist Pass</h2>\n-          <p class=\"section-subtitle\">Read reviews from travelers who experienced Istanbul with our pass. <router-link to=\"/tours\" class=\"inline-link\">Book guided tours</router-link> or <router-link to=\"/contact\" class=\"inline-link\">contact us</router-link> for personalized recommendations.</p>\n+          <h2 class=\"section-title\">What Our Customers Say About SearchYourTour</h2>\n+          <p class=\"section-subtitle\">Read reviews from travelers who experienced Istanbul with SearchYourTour. <router-link to=\"/tours\" class=\"inline-link\">Book guided tours</router-link> or <router-link to=\"/contact\" class=\"inline-link\">contact us</router-link> for personalized recommendations.</p>\n           <swiper\n             :slides-per-view=\"3\"\n             :space-between=\"16\"\n             :centered-slides=\"false\"\n"
                 }
             ],
             "date": 1754384789305,

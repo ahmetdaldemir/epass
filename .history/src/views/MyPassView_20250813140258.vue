@@ -6,11 +6,11 @@
         <form @submit.prevent="login">
           <input v-model="email" type="email" placeholder="E-mail" required />
           <input v-model="password" type="password" placeholder="Password" required />
+          <button class="btn btn-primary login-btn" type="submit">Login</button>
+          <button class="btn btn-secondary signup-btn" type="button" style="margin-top: 10px;" @click="$router.push('/signup')">Sign Up</button>
           <div class="forgot-password">
             <a href="#" @click.prevent="showForgotPassword = true">Forgot Password?</a>
           </div>
-          <button class="btn btn-primary login-btn" type="submit">Login</button>
-          <button class="btn btn-secondary signup-btn" type="button" style="margin-top: 10px;" @click="$router.push('/signup')">Sign Up</button>
         </form>
         <div v-if="loginError" class="error">{{ loginError }}</div>
       </div>
@@ -592,49 +592,6 @@ function getUserName() {
   const lastName = userInfo.value.lastName || ''
   return (firstName + ' ' + lastName).trim() || 'User'
 }
-
-// Send password reset link
-async function sendResetLink() {
-  try {
-    resetLoading.value = true
-    resetMessage.value = ''
-    resetSuccess.value = false
-    
-    const response = await fetch('https://searchyourtour.com/api/customer/password/email', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'X-Requested-With': 'XMLHttpRequest'
-      },
-      body: JSON.stringify({
-        email: resetEmail.value
-      })
-    })
-
-    const result = await response.json()
-    
-    if (result.status) {
-      resetSuccess.value = true
-      resetMessage.value = result.message || 'Password reset link sent successfully!'
-      resetEmail.value = ''
-      // 3 saniye sonra modal'ı kapat
-      setTimeout(() => {
-        showForgotPassword.value = false
-        resetMessage.value = ''
-      }, 3000)
-    } else {
-      resetSuccess.value = false
-      resetMessage.value = result.message || 'Failed to send reset link'
-    }
-  } catch (error) {
-    console.error('Error sending reset link:', error)
-    resetSuccess.value = false
-    resetMessage.value = 'An error occurred. Please try again.'
-  } finally {
-    resetLoading.value = false
-  }
-}
 </script>
 
 <style scoped>
@@ -705,147 +662,6 @@ async function sendResetLink() {
   margin-top: 16px;
   text-align: center;
   font-size: 1rem;
-}
-
-.forgot-password {
-
-}
-
-.forgot-password a {
-  color: #FC6421;
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.3s ease;
-}
-
-.forgot-password a:hover {
-  color: #e55a1a;
-  text-decoration: underline;
-}
-
-/* Modal Styles */
-.modal-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1000;
-}
-
-.modal-content {
-  background: white;
-  border-radius: 12px;
-  padding: 0;
-  max-width: 400px;
-  width: 90%;
-  max-height: 90vh;
-  overflow-y: auto;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-}
-
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 24px 24px 0;
-  border-bottom: 1px solid #e5e7eb;
-  margin-bottom: 24px;
-}
-
-.modal-header h3 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 600;
-  color: #1f2937;
-}
-
-.close-btn {
-  background: none;
-  border: none;
-  font-size: 24px;
-  cursor: pointer;
-  color: #6b7280;
-  padding: 0;
-  width: 30px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-}
-
-.close-btn:hover {
-  background: #f3f4f6;
-  color: #374151;
-}
-
-.reset-form {
-  padding: 0 24px 24px;
-}
-
-.reset-form .form-group {
-  margin-bottom: 20px;
-}
-
-.reset-form label {
-  display: block;
-  margin-bottom: 8px;
-  font-weight: 500;
-  color: #374151;
-  font-size: 14px;
-}
-
-.reset-form input {
-  width: 100%;
-  padding: 12px 16px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  font-size: 16px;
-  transition: all 0.3s ease;
-}
-
-.reset-form input:focus {
-  outline: none;
-  border-color: #FC6421;
-  box-shadow: 0 0 0 3px rgba(252, 100, 33, 0.1);
-}
-
-.reset-form .btn {
-  width: 100%;
-  padding: 12px;
-  font-size: 16px;
-  font-weight: 500;
-}
-
-.reset-form .btn:disabled {
-  opacity: 0.6;
-  cursor: not-allowed;
-}
-
-.reset-form .message {
-  margin-top: 16px;
-  padding: 12px 16px;
-  border-radius: 8px;
-  font-size: 14px;
-  text-align: center;
-}
-
-.reset-form .message.success {
-  background: #dcfce7;
-  color: #166534;
-  border: 1px solid #bbf7d0;
-}
-
-.reset-form .message.error {
-  background: #fef2f2;
-  color: #dc2626;
-  border: 1px solid #fecaca;
 }
 
 /* Dashboard Layout */

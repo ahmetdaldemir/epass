@@ -1,0 +1,18 @@
+{
+    "sourceFile": "src/router/index.js",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1755083491990,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1755083491990,
+            "name": "Commit-0",
+            "content": "import { createRouter, createWebHistory } from 'vue-router'\r\nimport HomeView from '../views/HomeView.vue'\r\n\r\nconst routes = [\r\n  {\r\n    path: '/',\r\n    name: 'home',\r\n    component: HomeView\r\n  },\r\n  {\r\n    path: '/istanbul-pass',\r\n    name: 'istanbul-pass',\r\n    component: () => import('../views/IstanbulPassView.vue')\r\n  },\r\n  {\r\n    path: '/attractions',\r\n    name: 'attractions',\r\n    component: () => import('../views/AttractionsView.vue')\r\n  },\r\n  {\r\n    path: '/tours',\r\n    name: 'tours',\r\n    component: () => import('../views/ToursView.vue')\r\n  },\r\n  {\r\n    path: '/tour/:id',\r\n    name: 'tour-detail',\r\n    component: () => import('../views/TourDetailView.vue')\r\n  },\r\n  {\r\n    path: '/contact',\r\n    name: 'contact',\r\n    component: () => import('../views/ContactView.vue')\r\n  },\r\n  {\r\n    path: '/faqs',\r\n    name: 'faqs',\r\n    component: () => import('../views/FAQsView.vue')\r\n  },\r\n  {\r\n    path: '/my-pass',\r\n    name: 'my-pass',\r\n    component: () => import('../views/MyPassView.vue')\r\n  },\r\n  {\r\n    path: '/my-listing',\r\n    name: 'my-listing',\r\n    component: () => import('../views/MyListingView.vue')\r\n  },\r\n  {\r\n    path: '/become-partner',\r\n    name: 'become-partner',\r\n    component: () => import('../views/BecomePartnerView.vue')\r\n  },\r\n  {\r\n    path: '/signup',\r\n    name: 'signup',\r\n    component: () => import('../views/SignUpView.vue')\r\n  },\r\n  {\r\n    path: '/checkout',\r\n    name: 'Checkout',\r\n    component: () => import('../views/CheckoutView.vue')\r\n  },\r\n  {\r\n    path: '/payment-success',\r\n    name: 'payment-success',\r\n    component: () => import('../views/PaymentSuccessView.vue')\r\n  },\r\n  {\r\n    path: '/security/terms-conditions',\r\n    name: 'terms-conditions',\r\n    component: () => import('../components/security/TermsAndConditions.vue')\r\n  },\r\n  {\r\n    path: '/security/cookie-policy',\r\n    name: 'cookie-policy',\r\n    component: () => import('../components/security/CookiePolicy.vue')\r\n  },\r\n  {\r\n    path: '/security/privacy-policy',\r\n    name: 'privacy-policy',\r\n    component: () => import('../components/security/PrivacyPolicy.vue')\r\n  },\r\n  {\r\n    path: '/about',\r\n    name: 'about',\r\n    component: () => import('../components/security/AboutUs.vue')\r\n  },\r\n  {\r\n    path: '/things-to-do-in-istanbul',\r\n    name: 'things-to-do-in-istanbul',\r\n    component: () => import('../components/pages/ThingsToDoInIstanbul.vue')\r\n  },\r\n  {\r\n    path: '/plan-save',\r\n    name: 'plan-save',\r\n    component: () => import('../views/PlanSaveView.vue')\r\n  },\r\n  {\r\n    path: '/reset-password',\r\n    name: 'reset-password',\r\n    component: () => import('../views/ResetPasswordView.vue')\r\n  },\r\n  {\r\n    path: '/:pathMatch(.*)*',\r\n    name: 'not-found',\r\n    component: () => import('../views/NotFoundView.vue')\r\n  }\r\n]\r\n\r\nconst router = createRouter({\r\n  history: createWebHistory(),\r\n  routes,\r\n  scrollBehavior() {\r\n    // Her route değişiminde en başa kaydır\r\n    return { top: 0 }\r\n  }\r\n})\r\n\r\nexport default router "
+        }
+    ]
+}

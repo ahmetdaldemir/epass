@@ -708,7 +708,8 @@ async function sendResetLink() {
 }
 
 .forgot-password {
-
+  text-align: center;
+  margin-top: 16px;
 }
 
 .forgot-password a {

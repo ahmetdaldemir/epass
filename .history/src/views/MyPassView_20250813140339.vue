@@ -6,11 +6,11 @@
         <form @submit.prevent="login">
           <input v-model="email" type="email" placeholder="E-mail" required />
           <input v-model="password" type="password" placeholder="Password" required />
+          <button class="btn btn-primary login-btn" type="submit">Login</button>
+          <button class="btn btn-secondary signup-btn" type="button" style="margin-top: 10px;" @click="$router.push('/signup')">Sign Up</button>
           <div class="forgot-password">
             <a href="#" @click.prevent="showForgotPassword = true">Forgot Password?</a>
           </div>
-          <button class="btn btn-primary login-btn" type="submit">Login</button>
-          <button class="btn btn-secondary signup-btn" type="button" style="margin-top: 10px;" @click="$router.push('/signup')">Sign Up</button>
         </form>
         <div v-if="loginError" class="error">{{ loginError }}</div>
       </div>
@@ -708,7 +708,8 @@ async function sendResetLink() {
 }
 
 .forgot-password {
-
+  text-align: center;
+  margin-top: 16px;
 }
 
 .forgot-password a {
