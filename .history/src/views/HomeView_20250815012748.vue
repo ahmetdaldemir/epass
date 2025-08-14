@@ -23,9 +23,9 @@
         <h1 class="hero-title">Discover Istanbul with SearchYourTour Pass - Save 40% on Top Attractions</h1>
         <!-- Kategori Butonları -->
         <div class="category-tabs">
-          <button v-for="cat in categories" :key="cat.value" :class="['category-tab', { active: selectedCategory === cat.value }]" @click="selectedCategory = cat.value">
+          <button v-for="cat in responsiveCategories" :key="cat.value" :class="['category-tab', { active: selectedCategory === cat.value }]" @click="selectedCategory = cat.value">
             <span class="cat-icon" v-html="cat.icon"></span>
-            <span>{{ cat.label }}</span>
+            <span>{{ cat.displayLabel }}</span>
           </button>
         </div>
       </div>
@@ -689,8 +689,11 @@ function shortText(text, maxLength = 120) {
 }
 
 const isMobile = ref(false)
+const windowWidth = ref(window.innerWidth)
+
 function checkMobile() {
   isMobile.value = window.innerWidth <= 768
+  windowWidth.value = window.innerWidth
 }
 // Currency change event listener is already defined above
 
@@ -722,12 +725,21 @@ onBeforeUnmount(() => {
 
 // Kategoriler
 const categories = [
-  { value: 'culture', label: 'Culture', icon: '<i class="fas fa-landmark"></i>' },
-  { value: 'food', label: 'Food', icon: '<i class="fas fa-utensils"></i>' },
-  { value: 'nature', label: 'Nature', icon: '<i class="fas fa-mountain"></i>' },
-  { value: 'sport', label: 'Sports', icon: '<i class="fas fa-running"></i>' }
+  { value: 'culture', label: 'Culture', shortLabel: 'Culture', icon: '<i class="fas fa-landmark"></i>' },
+  { value: 'food', label: 'Food', shortLabel: 'Food', icon: '<i class="fas fa-utensils"></i>' },
+  { value: 'nature', label: 'Nature', shortLabel: 'Nature', icon: '<i class="fas fa-mountain"></i>' },
+  { value: 'sport', label: 'Sports', shortLabel: 'Sports', icon: '<i class="fas fa-running"></i>' }
 ]
 const selectedCategory = ref('culture')
+
+// Responsive kategori etiketleri
+const responsiveCategories = computed(() => {
+  const isSmallScreen = window.innerWidth <= 768
+  return categories.map(cat => ({
+    ...cat,
+    displayLabel: isSmallScreen ? cat.shortLabel : cat.label
+  }))
+})
 
 // Kültür kategorisi için turlar (şimdilik tüm attractions)
 const cultureTours = attractions
@@ -1342,7 +1354,15 @@ const cultureTours = attractions
   margin: 0;
   width: auto;
   padding-bottom: 8px;
+  flex-wrap: wrap;
   max-width: 90vw;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.category-tabs::-webkit-scrollbar {
+  display: none;
 }
 .category-tab {
   background: transparent;
@@ -1361,6 +1381,7 @@ const cultureTours = attractions
   position: relative;
   transition: background 0.2s, color 0.2s;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 .category-tab.active {
   background: #FC6421;
@@ -1704,83 +1725,14 @@ const cultureTours = attractions
   }
 }
 
-/* Tablet boyutları için mobil slider'la aynı ayarlar */
+/* Tablet boyutları için swiper ayarları */
 @media (max-width: 1199px) and (min-width: 769px) {
-  .tour-card-swiper {
-    width: 100vw !important;
-    margin-left: calc(-50vw + 50%) !important;
-  }
+  .tour-card-swiper .tour-card,
   .tour-card-swiper .swiper-slide {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 100vw !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    display: flex;
-    justify-content: center;
-  }
-  .tour-card-swiper .tour-card {
-    width: 92vw !important;
-    max-width: 92vw !important;
-    min-width: 92vw !important;
-    margin: 0 auto !important;
-  }
-  .category-section,
-  .container {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-  /* Tablet boyutları için mobil kart stilleri */
-  .tour-card {
-    width: 96vw !important;
-    max-width: 96vw !important;
-    min-width: 96vw !important;
-    margin: 0 auto 1.2rem auto !important;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.10);
-  }
-  .tour-card-content {
-    padding: 1.2rem 1.2rem 1.4rem 1.2rem !important;
-  }
-  .tour-card-img-wrap {
-    height: 200px !important;
-    min-height: 200px !important;
-    max-height: 200px !important;
-    overflow: hidden;
-    border-radius: 16px 16px 0 0;
-  }
-  .tour-card-img-wrap img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    display: block;
-  }
-  .tour-card-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: block;
-  }
-  .tour-card-action-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    margin-top: 12px;
-  }
-  .tour-card-book-btn {
-    width: 100%;
-    text-align: center;
-    padding: 0.8rem 0;
-    font-size: 1.12rem;
-    height: 48px;
-  }
-  .tour-card {
-    min-height: 480px;
-    height: 480px;
-  }
-  .tour-card-content {
-    padding: 1rem 1rem 1.2rem 1rem;
-    height: 60%;
+    width: 80vw !important;
+    max-width: 80vw !important;
+    min-width: 80vw !important;
+    margin: 0 auto;
   }
 }
 @media (max-width: 768px) {
@@ -2052,21 +2004,29 @@ const cultureTours = attractions
 /* Tablet boyutları için kategori butonları responsive */
 @media (max-width: 1024px) {
   .category-tabs {
-    gap: 20px;
+    gap: 16px;
+    max-width: 95vw;
   }
   .category-tab {
-    font-size: 1.2rem;
-    padding: 14px 28px 10px 28px;
+    font-size: 1.1rem;
+    padding: 12px 20px 8px 20px;
+  }
+  .cat-icon {
+    font-size: 1.2em;
   }
 }
 
 @media (max-width: 900px) {
   .category-tabs {
-    gap: 16px;
+    gap: 12px;
+    max-width: 98vw;
   }
   .category-tab {
-    font-size: 1.1rem;
-    padding: 12px 24px 8px 24px;
+    font-size: 1rem;
+    padding: 10px 16px 6px 16px;
+  }
+  .cat-icon {
+    font-size: 1.1em;
   }
 }
 
@@ -2078,57 +2038,46 @@ const cultureTours = attractions
     top: 45%;
   }
   .category-tabs {
-    gap: 12px;
+    gap: 8px;
+    max-width: 100vw;
+    padding: 0 10px 8px 10px;
   }
   .category-tab {
-    font-size: 1rem;
-    padding: 10px 20px 6px 20px;
+    font-size: 0.9rem;
+    padding: 6px 12px 2px 12px;
+  }
+  .cat-icon {
+    font-size: 0.9em;
+  }
+}
+
+/* Çok küçük ekranlar için */
+@media (max-width: 480px) {
+  .category-tabs {
+    gap: 6px;
+    padding: 0 5px 8px 5px;
+  }
+  .category-tab {
+    font-size: 0.8rem;
+    padding: 4px 8px 0px 8px;
+  }
+  .cat-icon {
+    font-size: 0.8em;
   }
 }
 
 /* iPad Mini ve benzeri küçük tablet'ler için */
 @media (max-width: 820px) and (min-width: 769px) {
   .category-tabs {
-    gap: 14px;
-  }
-  .category-tab {
-    font-size: 1.05rem;
-    padding: 11px 22px 7px 22px;
-  }
-}
-
-/* 500px altı için kategori butonları optimize et */
-@media (max-width: 500px) {
-  .category-tabs {
-    gap: 8px;
-    max-width: 95vw;
-  }
-  .category-tab {
-    font-size: 0.9rem;
-    padding: 8px 12px 4px 12px;
-  }
-  .cat-icon {
-    font-size: 1.2em;
-  }
-}
-
-/* 400px altı için sadece ikonlar */
-@media (max-width: 400px) {
-  .category-tabs {
-    gap: 6px;
+    gap: 10px;
     max-width: 98vw;
   }
   .category-tab {
-    font-size: 0.8rem;
-    padding: 6px 8px 2px 8px;
-    min-width: 40px;
-    justify-content: center;
+    font-size: 0.95rem;
+    padding: 8px 14px 4px 14px;
   }
   .cat-icon {
-    font-size: 1.3em;
-  }
-  .category-tab span:not(.cat-icon) {
-    display: none;
+    font-size: 1em;
   }
 }
 

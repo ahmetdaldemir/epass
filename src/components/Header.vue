@@ -107,10 +107,24 @@ watch(showMobileMenu, (val) => {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 0;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 .logo img {
   height: 70px;
   width: auto;
+}
+
+@media (max-width: 1024px) {
+  .logo img {
+    height: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .logo img {
+    height: 50px;
+  }
 }
 .header-tursab {
   font-size: 10px;
@@ -125,16 +139,19 @@ watch(showMobileMenu, (val) => {
   display: flex;
   align-items: center;
   gap: 1rem;
+  flex-wrap: wrap;
 }
 .header-right .top-links ul {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 .top-links ul {
   display: flex;
   list-style: none;
   gap: 1.5rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 .top-links a {
   text-decoration: none;
@@ -142,6 +159,7 @@ watch(showMobileMenu, (val) => {
   font-weight: 500;
   font-size: 12px;
   transition: color 0.3s ease;
+  white-space: nowrap;
 }
 .top-links a:hover {
   color: #FC6421;
@@ -151,12 +169,14 @@ watch(showMobileMenu, (val) => {
   list-style: none;
   gap: 1.5rem;
   align-items: center;
+  flex-wrap: wrap;
 }
 .main-menu a {
   text-decoration: none;
   color: #333;
   font-weight: 500;
   transition: color 0.3s ease;
+  white-space: nowrap;
 }
 .main-menu a:hover {
   color: #FC6421;
@@ -187,6 +207,70 @@ watch(showMobileMenu, (val) => {
 .price-btn.buy-btn span {
   color: #fff !important;
 }
+/* Tablet ve orta boyutlu ekranlar için responsive düzenlemeler */
+@media (max-width: 1024px) {
+  .top-links ul {
+    gap: 1rem;
+  }
+  .main-menu ul {
+    gap: 1rem;
+  }
+  .top-links a {
+    font-size: 11px;
+  }
+  .main-menu a {
+    font-size: 14px;
+  }
+  .container {
+    padding: 0 15px;
+  }
+}
+
+/* iPad Mini ve benzeri küçük tablet'ler için */
+@media (max-width: 768px) and (min-width: 701px) {
+  .top-links ul {
+    gap: 0.6rem;
+  }
+  .main-menu ul {
+    gap: 0.6rem;
+  }
+  .top-links a {
+    font-size: 9px;
+  }
+  .main-menu a {
+    font-size: 12px;
+  }
+  .header-right {
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .container {
+    padding: 0 8px;
+  }
+}
+
+@media (max-width: 900px) {
+  .top-links ul {
+    gap: 0.8rem;
+  }
+  .main-menu ul {
+    gap: 0.8rem;
+  }
+  .top-links a {
+    font-size: 10px;
+  }
+  .main-menu a {
+    font-size: 13px;
+  }
+  .header-right {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+  .container {
+    padding: 0 10px;
+  }
+}
+
 @media (max-width: 700px) {
   .main-header, header, .container {
     width: 100vw !important;

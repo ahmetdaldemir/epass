@@ -1704,83 +1704,14 @@ const cultureTours = attractions
   }
 }
 
-/* Tablet boyutları için mobil slider'la aynı ayarlar */
+/* Tablet boyutları için swiper ayarları */
 @media (max-width: 1199px) and (min-width: 769px) {
-  .tour-card-swiper {
-    width: 100vw !important;
-    margin-left: calc(-50vw + 50%) !important;
-  }
+  .tour-card-swiper .tour-card,
   .tour-card-swiper .swiper-slide {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 100vw !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    display: flex;
-    justify-content: center;
-  }
-  .tour-card-swiper .tour-card {
-    width: 92vw !important;
-    max-width: 92vw !important;
-    min-width: 92vw !important;
-    margin: 0 auto !important;
-  }
-  .category-section,
-  .container {
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-  }
-  /* Tablet boyutları için mobil kart stilleri */
-  .tour-card {
-    width: 96vw !important;
-    max-width: 96vw !important;
-    min-width: 96vw !important;
-    margin: 0 auto 1.2rem auto !important;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.10);
-  }
-  .tour-card-content {
-    padding: 1.2rem 1.2rem 1.4rem 1.2rem !important;
-  }
-  .tour-card-img-wrap {
-    height: 200px !important;
-    min-height: 200px !important;
-    max-height: 200px !important;
-    overflow: hidden;
-    border-radius: 16px 16px 0 0;
-  }
-  .tour-card-img-wrap img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    display: block;
-  }
-  .tour-card-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: block;
-  }
-  .tour-card-action-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    margin-top: 12px;
-  }
-  .tour-card-book-btn {
-    width: 100%;
-    text-align: center;
-    padding: 0.8rem 0;
-    font-size: 1.12rem;
-    height: 48px;
-  }
-  .tour-card {
-    min-height: 480px;
-    height: 480px;
-  }
-  .tour-card-content {
-    padding: 1rem 1rem 1.2rem 1rem;
-    height: 60%;
+    width: 80vw !important;
+    max-width: 80vw !important;
+    min-width: 80vw !important;
+    margin: 0 auto;
   }
 }
 @media (max-width: 768px) {

@@ -1730,58 +1730,6 @@ const cultureTours = attractions
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
-  /* Tablet boyutları için mobil kart stilleri */
-  .tour-card {
-    width: 96vw !important;
-    max-width: 96vw !important;
-    min-width: 96vw !important;
-    margin: 0 auto 1.2rem auto !important;
-    border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.10);
-  }
-  .tour-card-content {
-    padding: 1.2rem 1.2rem 1.4rem 1.2rem !important;
-  }
-  .tour-card-img-wrap {
-    height: 200px !important;
-    min-height: 200px !important;
-    max-height: 200px !important;
-    overflow: hidden;
-    border-radius: 16px 16px 0 0;
-  }
-  .tour-card-img-wrap img {
-    width: 100%;
-    height: 200px;
-    object-fit: cover;
-    display: block;
-  }
-  .tour-card-title {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: block;
-  }
-  .tour-card-action-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-    margin-top: 12px;
-  }
-  .tour-card-book-btn {
-    width: 100%;
-    text-align: center;
-    padding: 0.8rem 0;
-    font-size: 1.12rem;
-    height: 48px;
-  }
-  .tour-card {
-    min-height: 480px;
-    height: 480px;
-  }
-  .tour-card-content {
-    padding: 1rem 1rem 1.2rem 1rem;
-    height: 60%;
-  }
 }
 @media (max-width: 768px) {
   .tour-card-swiper {
