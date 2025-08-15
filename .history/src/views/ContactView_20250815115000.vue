@@ -177,13 +177,10 @@ const submitForm = () => {
   border: 1px solid #FC6421;
   border-radius: 4px;
   font-size: 1rem;
-  box-sizing: border-box;
-  font-family: inherit;
 }
 
 .form-group textarea {
   resize: vertical;
-  min-height: 120px;
 }
 
 @media (max-width: 768px) {

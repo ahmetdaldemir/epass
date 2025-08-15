@@ -30,7 +30,7 @@
               <i class="fas fa-map-marker-alt"></i>
               <div>
                 <h3>Address</h3>
-                <p>Search Your Tour LLC <br> 30 N Gould St Ste N <br> Sheridan, WY 82801 <br> USA</p>
+                <p>Sultanahmet, Istanbul, Turkey</p>
               </div>
             </div>
           </div>
@@ -177,13 +177,10 @@ const submitForm = () => {
   border: 1px solid #FC6421;
   border-radius: 4px;
   font-size: 1rem;
-  box-sizing: border-box;
-  font-family: inherit;
 }
 
 .form-group textarea {
   resize: vertical;
-  min-height: 120px;
 }
 
 @media (max-width: 768px) {
