@@ -929,63 +929,6 @@ const cultureTours = attractions
   z-index: 3;
 }
 
-/* Responsive hero badge and label sizing */
-@media (max-width: 1200px) {
-  .hero-badge {
-    font-size: 1rem;
-    padding: 0.35rem 1rem;
-  }
-  .hero-label {
-    font-size: 0.9rem;
-    padding: 0.25rem 0.8rem;
-  }
-}
-
-@media (max-width: 900px) {
-  .hero-badge {
-    font-size: 0.95rem;
-    padding: 0.3rem 0.9rem;
-    top: 15px;
-    left: 10px;
-  }
-  .hero-label {
-    font-size: 0.85rem;
-    padding: 0.2rem 0.7rem;
-    top: 12px;
-    right: 12px;
-  }
-}
-
-@media (max-width: 768px) {
-  .hero-badge {
-    font-size: 0.95rem;
-    padding: 0.3rem 0.7rem;
-    top: 10px;
-    left: 7px;
-  }
-  .hero-label {
-    font-size: 0.75rem;
-    padding: 0.18rem 0.6rem;
-    top: 8px;
-    right: 8px;
-  }
-}
-
-@media (max-width: 480px) {
-  .hero-badge {
-    font-size: 0.8rem;
-    padding: 0.25rem 0.6rem;
-    top: 8px;
-    left: 6px;
-  }
-  .hero-label {
-    font-size: 0.6rem;
-    padding: 0.15rem 0.5rem;
-    top: 6px;
-    right: 6px;
-  }
-}
-
 .quick-stats {
   display: flex;
   justify-content: center;
@@ -1308,10 +1251,18 @@ const cultureTours = attractions
 @media (max-width: 768px) {
   .top-banner { font-size: 0.98rem; padding: 0.6rem 0.7rem; }
   .hero-img-wrap, .hero-img { height: 160px; }
+  .hero-badge { font-size: 0.95rem; padding: 0.3rem 0.7rem; top: 10px; }
+  .hero-label { font-size: 0.75rem; padding: 0.18rem 0.6rem; top: 8px; right: 8px; }
   .quick-stats { gap: 0.4rem; }
   .stat-box { font-size: 0.95rem; min-width: 65px; padding: 0.5rem 0.7rem; }
   .mini-stats-row { gap: 0.5rem; }
   .mini-stat { font-size: 0.85rem; min-width: 90px; padding: 0.4rem 0.5rem; }
+  .hero-title { 
+    font-size: 1.1rem; 
+    line-height: 1.1;
+    top: 45%;
+    z-index: 5;
+  }
   .cta-btn { font-size: 1rem; padding: 0.7rem 0; }
   .why-choose-bar { font-size: 0.95rem; padding: 0.5rem 0.5rem; }
   
@@ -2113,7 +2064,14 @@ const cultureTours = attractions
   }
 }
 
-
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 1.1rem;
+    max-width: 90%;
+    line-height: 1.1;
+    top: 45%;
+  }
+}
 
 @media (max-width: 480px) {
   .hero-title {

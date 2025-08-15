@@ -36,14 +36,17 @@
         </div>
         <!-- Masaüstü Menü -->
         <div class="mobile-flex">
-                      <div class="header-right">
-              <div class="top-links">
-                <ul>
-                  <li><router-link to="/faqs">FAQs</router-link></li>
-                  <li><router-link to="/contact">Contact Us</router-link></li>
-                  <li><router-link to="/my-pass">Manage Your Pass</router-link></li>
-                </ul>
-              </div>
+          <div class="header-right">
+            <div class="top-links">
+              <ul>
+                <li><router-link to="/become-partner">Become a Partner</router-link></li>
+                <li><router-link to="/faqs">FAQs</router-link></li>
+                <li><router-link to="/contact">Contact Us</router-link></li>
+                <li><router-link to="/my-pass">Manage Your Pass</router-link></li>
+                <li><router-link to="/my-listing">Manage Your Listing</router-link></li>
+
+              </ul>
+            </div>
             <nav class="main-menu">
               <ul>
                 <li><router-link to="/attractions">İstanbul Attractions</router-link></li>

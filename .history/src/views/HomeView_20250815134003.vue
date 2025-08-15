@@ -2113,7 +2113,14 @@ const cultureTours = attractions
   }
 }
 
-
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 1.1rem;
+    max-width: 90%;
+    line-height: 1.1;
+    top: 45%;
+  }
+}
 
 @media (max-width: 480px) {
   .hero-title {

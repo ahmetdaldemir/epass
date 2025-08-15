@@ -1704,7 +1704,7 @@ hr {
 
 .desktop-only { display: block; }
 .mobile-only { display: none; }
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .desktop-only { display: none !important; }
   .mobile-only { display: block !important; }
   .mobile-carousel {
@@ -1951,7 +1951,7 @@ html, body {
   transition: opacity 0.2s;
   display: none;
 }
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .sticky-book-btn {
     display: block;
   }

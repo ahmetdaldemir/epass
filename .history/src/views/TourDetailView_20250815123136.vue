@@ -817,7 +817,7 @@ function handleScroll() {
 
 onMounted(() => {
   const checkMobile = () => {
-    isMobile.value = window.innerWidth <= 900;
+    isMobile.value = window.innerWidth <= 768;
   };
   checkMobile();
   window.addEventListener('resize', checkMobile);
@@ -1272,7 +1272,7 @@ onUnmounted(() => {
 }
 
 /* Responsive Design */
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .tour-detail {
     min-height: 100vh;
     padding: 0;
@@ -1704,7 +1704,7 @@ hr {
 
 .desktop-only { display: block; }
 .mobile-only { display: none; }
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .desktop-only { display: none !important; }
   .mobile-only { display: block !important; }
   .mobile-carousel {
@@ -1951,7 +1951,7 @@ html, body {
   transition: opacity 0.2s;
   display: none;
 }
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .sticky-book-btn {
     display: block;
   }

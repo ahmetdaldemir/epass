@@ -1,1 +1,0 @@
-import{e as s}from"./index-DDXjtA1A.js";const l=s("selectedTour",{state:()=>({tour:null,pass:null}),actions:{setTour(s){this.tour=s,this.pass=null},setPass(s){this.pass=s,this.tour=null},clearTour(){this.tour=null},clearPass(){this.pass=null},clearAll(){this.tour=null,this.pass=null}}});export{l as u};

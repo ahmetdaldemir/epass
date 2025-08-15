@@ -470,7 +470,7 @@ const fetchTourData = async () => {
     const languageId = getLanguageId(currentLanguage)
     const currencyId = getCurrencyId(currentCurrency)
     
-    const url = `https://backend.searchyourtour.com/api/tours?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1&language_id=${languageId}&currency_id=${currencyId}&limit=100&IpAdrress=78.177.166.135`
+    const url = `https://searchyourtour.com/api/tours?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1&language_id=${languageId}&currency_id=${currencyId}&limit=100&IpAdrress=78.177.166.135`
     
     const response = await fetch(url)
     if (!response.ok) {
@@ -817,7 +817,7 @@ function handleScroll() {
 
 onMounted(() => {
   const checkMobile = () => {
-    isMobile.value = window.innerWidth <= 900;
+    isMobile.value = window.innerWidth <= 768;
   };
   checkMobile();
   window.addEventListener('resize', checkMobile);
@@ -1272,7 +1272,7 @@ onUnmounted(() => {
 }
 
 /* Responsive Design */
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .tour-detail {
     min-height: 100vh;
     padding: 0;
@@ -1704,7 +1704,7 @@ hr {
 
 .desktop-only { display: block; }
 .mobile-only { display: none; }
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .desktop-only { display: none !important; }
   .mobile-only { display: block !important; }
   .mobile-carousel {
@@ -1951,7 +1951,7 @@ html, body {
   transition: opacity 0.2s;
   display: none;
 }
-@media (max-width: 900px) {
+@media (max-width: 768px) {
   .sticky-book-btn {
     display: block;
   }
