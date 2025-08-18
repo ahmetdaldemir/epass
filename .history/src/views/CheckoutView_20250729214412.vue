@@ -351,7 +351,7 @@ const handleStep = async () => {
     }
 
     // 1. Sadece rezervasyonu ve ödeme bilgilerini backend'e gönder
-    const response = await fetch('https://backend.searchyourtour.com/api/submit-booking', {
+    const response = await fetch('https://searchyourtour.com/api/submit-booking', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -437,7 +437,7 @@ const handleStep = async () => {
           console.error('Ödeme hatası:', result.error.message);
           errorMsg.value = result.error.message || 'Payment failed. Please try again.';
           if (data.reservation_id && payment_intent_id) {
-            await fetch('https://backend.searchyourtour.com/api/check_payment_status', {
+            await fetch('https://searchyourtour.com/api/check_payment_status', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -451,7 +451,7 @@ const handleStep = async () => {
           // Başarılı ödeme
           success.value = true;
           if (data.reservation_id && payment_intent_id) {
-            await fetch('https://backend.searchyourtour.com/api/check_payment_status', {
+            await fetch('https://searchyourtour.com/api/check_payment_status', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
@@ -476,7 +476,7 @@ const handleStep = async () => {
           // Beklemede veya başka bir durum (ör. 3D Secure)
           errorMsg.value = 'Ödeme işlemi tamamlanmadı, ek onay gerekebilir.';
           if (data.reservation_id && payment_intent_id) {
-            await fetch('https://backend.searchyourtour.com/api/check_payment_status', {
+            await fetch('https://searchyourtour.com/api/check_payment_status', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({
