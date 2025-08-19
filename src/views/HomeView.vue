@@ -150,8 +150,18 @@
       <div class="section-list-wrap">
         <div class="container swiper-no-padding">
           <h2 class="section-title">Popular Attractions</h2>
-          <div v-if="loading">Loading...</div>
-          <div v-else-if="error">{{ error }}</div>
+          <div v-if="loading" class="loading-state">
+            <div class="loading-spinner"></div>
+            <p>Loading attraction information...</p>
+          </div>
+          <div v-else-if="error" class="error-state">
+            <div class="error-icon">⚠️</div>
+            <h3>Failed to Load Data</h3>
+            <p>{{ error }}</p>
+            <button @click="fetchAttractions" class="retry-button">
+              <i class="fas fa-redo"></i> Try Again
+            </button>
+          </div>
           <!-- Masaüstü Swiper -->
           <swiper
             class="desktop-only"
@@ -433,44 +443,56 @@ const getCurrencyCodeFromId = (currencyId) => {
 const fetchAttractions = async () => {
   loading.value = true
   error.value = null
-  try {
-    // Güvenli değer alma
-    const language = currentLanguage.value || 'en'
-    const languageId = getLanguageId(language)
-    
-    // Her zaman EUR fiyatları al (currency_id=4)
-    const currencyId = 4 // EUR
-    
-    const url = `https://backend.searchyourtour.com/api/tours?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1&language_id=${languageId}&currency_id=${currencyId}&limit=200&IpAdrress=78.177.166.135`
-    
-    const response = await fetch(url)
-    if (!response.ok) {
-      throw new Error('Failed to fetch attractions')
-    }
-    const data = await response.json()
-        const istanbulTours = (data || []).filter(tour => tour.destination?.id === 404 && tour.is_active === true)
-    
-    // Debug: API'den gelen tour verilerini kontrol et
-    console.log('=== API RESPONSE DEBUG ===')
-    console.log('Total tours found:', istanbulTours.length)
-    console.log('API called with currency_id:', currencyId, '(EUR)')
-    istanbulTours.slice(0, 5).forEach((tour, index) => {
-      console.log(`\n${index + 1}. Tour ID: ${tour.id}`)
-      console.log(`   Name: ${tour.content?.[0]?.name}`)
-      console.log(`   Price data:`, tour.tour_price?.[0])
-      console.log(`   Raw price: ${tour.tour_price?.[0]?.price}`)
-      console.log(`   Price type: ${typeof tour.tour_price?.[0]?.price}`)
-      console.log(`   Currency code: ${tour.tour_price?.[0]?.currency_code}`)
+  
+  // Güvenli değer alma
+  const language = currentLanguage.value || 'en'
+  const languageId = getLanguageId(language)
+  
+  // Her zaman EUR fiyatları al (currency_id=4)
+  const currencyId = 4 // EUR
+  
+  const url = `https://backend.searchyourtour.com/api/tours?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1&language_id=${languageId}&currency_id=${currencyId}&limit=200&IpAdrress=78.177.166.135`
+  
+  console.log('Fetching tours from:', url)
+  
+  const response = await fetch(url)
+  if (!response.ok) {
+    console.error('API Error Details:', {
+      status: response.status,
+      statusText: response.statusText,
+      url: url
     })
-    console.log('=== END API DEBUG ===')
-    
-    attractions.value = istanbulTours
-  } catch (err) {
-    error.value = 'Failed to load attractions. Please try again later.'
-    console.error('Error fetching attractions:', err)
-  } finally {
-    loading.value = false
+    throw new Error(`API Error: ${response.status} ${response.statusText}`)
   }
+  const data = await response.json()
+      const istanbulTours = (data || []).filter(tour => tour.destination?.id === 404 && tour.is_active === true)
+  
+  // Debug: API'den gelen tour verilerini kontrol et
+  console.log('=== API RESPONSE DEBUG ===')
+  console.log('Total tours found:', istanbulTours.length)
+  console.log('API called with currency_id:', currencyId, '(EUR)')
+  istanbulTours.slice(0, 5).forEach((tour, index) => {
+    console.log(`\n${index + 1}. Tour ID: ${tour.id}`)
+    console.log(`   Name: ${tour.content?.[0]?.name}`)
+    console.log(`   Price data:`, tour.tour_price?.[0])
+    console.log(`   Raw price: ${tour.tour_price?.[0]?.price}`)
+    console.log(`   Price type: ${typeof tour.tour_price?.[0]?.price}`)
+    console.log(`   Currency code: ${tour.tour_price?.[0]?.currency_code}`)
+  })
+  console.log('=== END API DEBUG ===')
+  
+  attractions.value = istanbulTours
+} catch (err) {
+  console.error('Detailed error:', err)
+  error.value = 'Sorry, we are unable to load attraction information at the moment. Please try again later.'
+  
+  // API çalışmıyorsa boş liste göster, kullanıcıya hata mesajı ver
+  if (err.message.includes('500') || err.message.includes('Failed to fetch')) {
+    console.log('API is not available, showing empty state')
+    attractions.value = []
+  }
+} finally {
+  loading.value = false
 }
 
 const getAttractionName = (attraction) => {
@@ -2522,5 +2544,82 @@ const cultureTours = attractions
     max-width: 1400px;
     margin: 0 auto;
   }
+}
+
+/* Loading ve Error State Stilleri */
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid #f3f3f3;
+  border-top: 4px solid #FC6421;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.error-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  background: #fff5f5;
+  border: 1px solid #fed7d7;
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+.error-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.error-state h3 {
+  color: #e53e3e;
+  margin-bottom: 8px;
+  font-size: 1.2rem;
+}
+
+.error-state p {
+  color: #666;
+  margin-bottom: 20px;
+  max-width: 400px;
+}
+
+.retry-button {
+  background: #FC6421;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+}
+
+.retry-button:hover {
+  background: #e55a1d;
+}
+
+.retry-button i {
+  font-size: 14px;
 }
 </style>
