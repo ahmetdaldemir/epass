@@ -441,48 +441,49 @@ const getCurrencyCodeFromId = (currencyId) => {
 }
 
 const fetchAttractions = async () => {
-  loading.value = true
-  error.value = null
-  
-  // Güvenli değer alma
-  const language = currentLanguage.value || 'en'
-  const languageId = getLanguageId(language)
-  
-  // Her zaman EUR fiyatları al (currency_id=4)
-  const currencyId = 4 // EUR
-  
-  const url = `https://backend.searchyourtour.com/api/tours?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1&language_id=${languageId}&currency_id=${currencyId}&limit=200&IpAdrress=78.177.166.135`
-  
-  console.log('Fetching tours from:', url)
-  
-  const response = await fetch(url)
-  if (!response.ok) {
-    console.error('API Error Details:', {
-      status: response.status,
-      statusText: response.statusText,
-      url: url
+  try {
+    loading.value = true
+    error.value = null
+    
+    // Güvenli değer alma
+    const language = currentLanguage.value || 'en'
+    const languageId = getLanguageId(language)
+    
+    // Her zaman EUR fiyatları al (currency_id=4)
+    const currencyId = 4 // EUR
+    
+    const url = `https://backend.searchyourtour.com/api/tours?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1&language_id=${languageId}&currency_id=${currencyId}&limit=200&IpAdrress=78.177.166.135`
+    
+    console.log('Fetching tours from:', url)
+    
+    const response = await fetch(url)
+    if (!response.ok) {
+      console.error('API Error Details:', {
+        status: response.status,
+        statusText: response.statusText,
+        url: url
+      })
+      throw new Error(`API Error: ${response.status} ${response.statusText}`)
+    }
+    const data = await response.json()
+        const istanbulTours = (data || []).filter(tour => tour.destination?.id === 404 && tour.is_active === true)
+    
+    // Debug: API'den gelen tour verilerini kontrol et
+    console.log('=== API RESPONSE DEBUG ===')
+    console.log('Total tours found:', istanbulTours.length)
+    console.log('API called with currency_id:', currencyId, '(EUR)')
+    istanbulTours.slice(0, 5).forEach((tour, index) => {
+      console.log(`\n${index + 1}. Tour ID: ${tour.id}`)
+      console.log(`   Name: ${tour.content?.[0]?.name}`)
+      console.log(`   Price data:`, tour.tour_price?.[0])
+      console.log(`   Raw price: ${tour.tour_price?.[0]?.price}`)
+      console.log(`   Price type: ${typeof tour.tour_price?.[0]?.price}`)
+      console.log(`   Currency code: ${tour.tour_price?.[0]?.currency_code}`)
     })
-    throw new Error(`API Error: ${response.status} ${response.statusText}`)
-  }
-  const data = await response.json()
-      const istanbulTours = (data || []).filter(tour => tour.destination?.id === 404 && tour.is_active === true)
-  
-  // Debug: API'den gelen tour verilerini kontrol et
-  console.log('=== API RESPONSE DEBUG ===')
-  console.log('Total tours found:', istanbulTours.length)
-  console.log('API called with currency_id:', currencyId, '(EUR)')
-  istanbulTours.slice(0, 5).forEach((tour, index) => {
-    console.log(`\n${index + 1}. Tour ID: ${tour.id}`)
-    console.log(`   Name: ${tour.content?.[0]?.name}`)
-    console.log(`   Price data:`, tour.tour_price?.[0])
-    console.log(`   Raw price: ${tour.tour_price?.[0]?.price}`)
-    console.log(`   Price type: ${typeof tour.tour_price?.[0]?.price}`)
-    console.log(`   Currency code: ${tour.tour_price?.[0]?.currency_code}`)
-  })
-  console.log('=== END API DEBUG ===')
-  
-  attractions.value = istanbulTours
-} catch (err) {
+    console.log('=== END API DEBUG ===')
+    
+    attractions.value = istanbulTours
+  } catch (err) {
   console.error('Detailed error:', err)
   error.value = 'Sorry, we are unable to load attraction information at the moment. Please try again later.'
   
@@ -491,8 +492,9 @@ const fetchAttractions = async () => {
     console.log('API is not available, showing empty state')
     attractions.value = []
   }
-} finally {
-  loading.value = false
+  } finally {
+    loading.value = false
+  }
 }
 
 const getAttractionName = (attraction) => {
