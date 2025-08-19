@@ -13,7 +13,18 @@ export default defineConfig({
         manualChunks: {
           vendor: ['vue', 'vue-router'],
           swiper: ['swiper']
-        }
+        },
+        // Cache busting için dosya adlarına hash ekle
+        assetFileNames: (assetInfo) => {
+          const info = assetInfo.name.split('.')
+          const ext = info[info.length - 1]
+          if (/\.(css|js)$/.test(assetInfo.name)) {
+            return `assets/[name]-[hash].${ext}`
+          }
+          return `assets/[name]-[hash].${ext}`
+        },
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js'
       }
     },
     terserOptions: {
