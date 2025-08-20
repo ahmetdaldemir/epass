@@ -287,7 +287,7 @@ onMounted(async () => {
 // Kullanıcı profil bilgilerini database'den çek
 async function fetchUserProfile(userId) {
   try {
-    const response = await fetch(`https://searchyourtour.com/api/customer/profile/${userId}`, {
+    const response = await fetch(`https://backend.searchyourtour.com/api/customer/profile/${userId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -322,7 +322,7 @@ async function fetchUserProfile(userId) {
 // Kullanıcının reservation'larını database'den çek
 async function fetchUserReservations(userId) {
   try {
-    const response = await fetch(`https://searchyourtour.com/api/customer/reservations/${userId}`, {
+    const response = await fetch(`https://backend.searchyourtour.com/api/customer/reservations/${userId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -347,7 +347,7 @@ async function login() {
   try {
     loginError.value = ''
     
-    const response = await fetch('https://searchyourtour.com/api/login', {
+    const response = await fetch('https://backend.searchyourtour.com/api/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -412,7 +412,7 @@ async function saveInfo() {
 
     const user = JSON.parse(userData)
     
-    const response = await fetch(`https://searchyourtour.com/api/customer/profile/update/${user.id}`, {
+    const response = await fetch(`https://backend.searchyourtour.com/api/customer/profile/update/${user.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -471,7 +471,7 @@ async function changePassword() {
     const user = JSON.parse(userData)
 
     // Send request to backend
-    const response = await fetch(`https://searchyourtour.com/api/customer/change-password/${user.id}`, {
+    const response = await fetch(`https://backend.searchyourtour.com/api/customer/change-password/${user.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -508,7 +508,7 @@ async function changePassword() {
 // Backend'e reservation cancel request gönder
 async function cancelReservationBackend(reservationId) {
   try {
-    const response = await fetch(`https://searchyourtour.com/api/customer/reservations/cancel/${reservationId}`, {
+    const response = await fetch(`https://backend.searchyourtour.com/api/customer/reservations/cancel/${reservationId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -600,7 +600,7 @@ async function sendResetLink() {
     resetMessage.value = ''
     resetSuccess.value = false
     
-    const response = await fetch('https://searchyourtour.com/api/customer/password/email', {
+    const response = await fetch('https://backend.searchyourtour.com/api/customer/password/email', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
