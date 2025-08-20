@@ -84,6 +84,7 @@ const toggleFaq = (id) => {
   color: white;
   padding: 4rem 0;
   text-align: center;
+  margin-top: 100px;
 }
 
 .hero-section h1 {

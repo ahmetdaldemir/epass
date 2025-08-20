@@ -6,7 +6,160 @@
 @import url('https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.36/fancybox/fancybox.min.css');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/css/intlTelInput.css');
 @import url('https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.14.1/themes/base/theme.min.css');
+/* GT-Eesti Font Family */
+@font-face {
+  font-family: 'GT-Eesti';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Text-Thin-Trial.woff2') format('woff2');
+  font-weight: 100;
+  font-style: normal;
+  font-display: swap;
+}
 
+@font-face {
+  font-family: 'GT-Eesti';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Text-UltraLight-Trial.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-Eesti';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Text-Light-Trial.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-Eesti';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Text-Regular-Trial.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-Eesti';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Text-Medium-Trial.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-Eesti';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Text-Bold-Trial.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* GT-Eesti Italic Variants */
+@font-face {
+  font-family: 'GT-Eesti';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Text-Thin-Italic-Trial.woff2') format('woff2');
+  font-weight: 100;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-Eesti';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Text-UltraLight-Italic-Trial.woff2') format('woff2');
+  font-weight: 200;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-Eesti';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Text-Light-Italic-Trial.woff2') format('woff2');
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-Eesti';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Text-Regular-Italic-Trial.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-Eesti';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Text-Medium-Italic-Trial.woff2') format('woff2');
+  font-weight: 500;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-Eesti';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Text-Bold-Italic-Trial.woff2') format('woff2');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* GT-Eesti Display Variants */
+@font-face {
+  font-family: 'GT-Eesti-Display';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Display-UltraLight-Trial.woff2') format('woff2');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-Eesti-Display';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Display-Thin-Trial.woff2') format('woff2');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-Eesti-Display';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Display-Light-Trial.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-Eesti-Display';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Display-Regular-Trial.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-Eesti-Display';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Display-Medium-Trial.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-Eesti-Display';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Display-Bold-Trial.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'GT-Eesti-Display';
+  src: url('/fonts/GT/GT-Eesti/GT-Eesti-Display-UltraBold-Trial.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
 /* Reset and base styles */
 * {
   margin: 0;
@@ -14,17 +167,23 @@
   box-sizing: border-box;
 }
 
+ 
 body {
-  font-family: 'Poppins', sans-serif;
-  line-height: 1.6;
-  color: #333;
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.375rem;
+  -webkit-font-smoothing: antialiased;
+  color: #1a2b49;
+  font-kerning: normal;
+  transition: background-color .5s, color .5s;
 }
 
 /* Utility classes */
 .container {
-  max-width: 1510px;
-  margin: 0 auto;
-  padding: 0 15px;
+  max-width: 1400px;
+  padding-left: 96px;
+  padding-right: 96px;
+  width: 100%;
 }
 
 .d-block {
@@ -82,7 +241,7 @@ img {
   display: block;
 }
 @media (max-width: 900px) {
-  .container, .main-content, .dashboard-flex {
+   .main-content, .dashboard-flex {
     padding-left: 20px !important;
     padding-right: 20px !important;
     max-width: 100vw !important;
@@ -90,7 +249,7 @@ img {
   h1, h2, h3 { font-size: 1.2em; }
 }
 @media (max-width: 500px) {
-  .container, .main-content, .dashboard-flex {
+   .main-content, .dashboard-flex {
     padding-left: 2px !important;
     padding-right: 2px !important;
   }
@@ -167,7 +326,7 @@ img {
 
 /* Genel padding */
 @media (max-width: 600px) {
-  .container, .main-content {
+   .main-content {
     padding-left: 4px !important;
     padding-right: 4px !important;
   }

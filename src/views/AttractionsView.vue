@@ -81,7 +81,7 @@ const fetchAttractions = async () => {
   error.value = null
   
   try {
-    const url = `https://searchyourtour.com/api/tours?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1&language_id=${getLanguageId(currentLanguage.value)}&currency_id=${currentCurrency.value}&limit=200&IpAdrress=78.177.166.135`
+    const url = `https://backend.searchyourtour.com/api/tours?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1&language_id=${getLanguageId(currentLanguage.value)}&currency_id=${currentCurrency.value}&limit=200&IpAdrress=78.177.166.135`
     
     const response = await fetch(url)
     if (!response.ok) {
@@ -244,11 +244,7 @@ watch(() => localStorage.getItem('selectedLanguage'), (newLanguage) => {
   padding: 4rem 0;
   text-align: center;
 }
-
-.hero-section h1 {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-}
+ 
 
 .attractions-list {
   padding: 4rem 0;

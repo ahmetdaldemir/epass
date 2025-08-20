@@ -309,6 +309,7 @@ onMounted(() => {
   color: white;
   padding: 4rem 0;
   text-align: center;
+  margin-top: 120px;
 }
 
 .hero-section h1 {

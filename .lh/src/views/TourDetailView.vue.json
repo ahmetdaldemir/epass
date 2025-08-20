@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 1,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1755250296548,
@@ -12,6 +12,14 @@
                 {
                     "date": 1755250504897,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -816,9 +816,9 @@\n }\r\n \r\n onMounted(() => {\r\n   const checkMobile = () => {\r\n-    isMobile.value = window.innerWidth <= 768;\r\n+    isMobile.value = window.innerWidth <= 900;\r\n   };\r\n   checkMobile();\r\n   window.addEventListener('resize', checkMobile);\r\n   window.addEventListener('keydown', handleKeydown)\r\n@@ -1271,9 +1271,9 @@\n   font-weight: 600;\r\n }\r\n \r\n /* Responsive Design */\r\n-@media (max-width: 768px) {\r\n+@media (max-width: 900px) {\r\n   .tour-detail {\r\n     min-height: 100vh;\r\n     padding: 0;\r\n     background: #f8f9fa;\r\n@@ -1703,9 +1703,9 @@\n .lightbox-arrow:hover { opacity: 1; }\r\n \r\n .desktop-only { display: block; }\r\n .mobile-only { display: none; }\r\n-@media (max-width: 768px) {\r\n+@media (max-width: 900px) {\r\n   .desktop-only { display: none !important; }\r\n   .mobile-only { display: block !important; }\r\n   .mobile-carousel {\r\n     position: relative;\r\n@@ -1950,9 +1950,9 @@\n   box-shadow: 0 -2px 12px #0002;\r\n   transition: opacity 0.2s;\r\n   display: none;\r\n }\r\n-@media (max-width: 768px) {\r\n+@media (max-width: 900px) {\r\n   .sticky-book-btn {\r\n     display: block;\r\n   }\r\n }\r\n"
+                },
+                {
+                    "date": 1755718377677,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -898,8 +898,9 @@\n /* Hero Section */\r\n .tour-hero {\r\n   background: #f8f9fa;\r\n   padding: 2rem 0;\r\n+  padding-top: 120px;\r\n }\r\n \r\n .tour-hero-content {\r\n   display: grid;\r\n"
+                },
+                {
+                    "date": 1755719920415,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -898,9 +898,9 @@\n /* Hero Section */\r\n .tour-hero {\r\n   background: #f8f9fa;\r\n   padding: 2rem 0;\r\n-  padding-top: 120px;\r\n+  margin-top: 120px;\r\n }\r\n \r\n .tour-hero-content {\r\n   display: grid;\r\n"
                 }
             ],
             "date": 1755250296548,

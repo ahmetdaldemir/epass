@@ -899,6 +899,7 @@ onUnmounted(() => {
 .tour-hero {
   background: #f8f9fa;
   padding: 2rem 0;
+  margin-top: 120px;
 }
 
 .tour-hero-content {

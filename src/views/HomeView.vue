@@ -9,21 +9,24 @@
     <!-- Hero Section with Main Visual and Badge -->
     <section class="hero-section">
       <div class="hero-img-wrap">
-        <img 
-          class="hero-img" 
-          src="https://c4.wallpaperflare.com/wallpaper/683/300/1022/sunken-palace-or-basilica-cistern-istanbul-wallpaper-preview.jpg" 
-          alt="Basilica Cistern"
-          loading="eager"
-          fetchpriority="high"
-        />
+        <div class="hero-title-content">
+          <h1 class="hero-section__header">
+            <span class="text-atom--headline-2">Discover Istanbul with SearchYourTour Pass - Save 40% on Top
+              Attractions</span>
+          </h1>
+        </div>
+        <img class="hero-img"
+          src="https://c4.wallpaperflare.com/wallpaper/683/300/1022/sunken-palace-or-basilica-cistern-istanbul-wallpaper-preview.jpg"
+          alt="Basilica Cistern" loading="eager" fetchpriority="high" />
         <div class="hero-img-gradient"></div>
         <div class="hero-badge">NOW WITH <span>5GB</span> SIM FREE</div>
         <div class="hero-label">Basilica Cistern / Included with pass</div>
         <!-- Main H1 Heading for SEO -->
-        <h1 class="hero-title">Discover Istanbul with SearchYourTour Pass - Save 40% on Top Attractions</h1>
+
         <!-- Kategori Butonları -->
         <div class="category-tabs">
-          <button v-for="cat in categories" :key="cat.value" :class="['category-tab', { active: selectedCategory === cat.value }]" @click="selectedCategory = cat.value">
+          <button v-for="cat in categories" :key="cat.value"
+            :class="['category-tab', { active: selectedCategory === cat.value }]" @click="selectedCategory = cat.value">
             <span class="cat-icon" v-html="cat.icon"></span>
             <span>{{ cat.label }}</span>
           </button>
@@ -38,13 +41,9 @@
           <h2 class="category-title">Unforgettable Cultural Experiences</h2>
           <!-- Masaüstü: Grid, Mobil: Swiper -->
           <div class="tour-card-grid desktop-only">
-            <router-link
-              v-for="tour in cultureTours"
-              :key="tour.id"
-              :to="`/tour/${tour.id}`"
-              class="tour-card"
-              style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;"
-            >
+            <router-link v-for="tour in cultureTours" :key="tour.id" :to="`/tour/${tour.id}`" class="tour-card"
+              style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
+              <div class="" style="    border: 1px solid #dcdfe4;height: 100%;">
               <div class="tour-card-img-wrap">
                 <img :src="getAttractionImage(tour)" :alt="getAttractionName(tour)" />
               </div>
@@ -55,28 +54,21 @@
                 <div class="tour-card-desc">{{ getAttractionDescription(tour) }}</div>
                 <div class="tour-card-bottom">
                   <div class="tour-card-action-row">
-                    <span class="tour-card-price">{{ getReactiveTourPrice(tour) }} <span class="tour-card-price-label">/ 1 adult</span></span>
+                    <span class="tour-card-price">{{ getReactiveTourPrice(tour) }} <span class="tour-card-price-label">/
+                        1 adult</span></span>
                     <router-link :to="`/tour/${tour.id}`" class="tour-card-book-btn">Book Now</router-link>
                   </div>
                 </div>
               </div>
+            </div>
             </router-link>
           </div>
         </div>
-        <swiper
-          class="tour-card-swiper mobile-only"
-          :slides-per-view="1"
-          :space-between="0"
-          :centered-slides="true"
-          :pagination="{ clickable: true }"
-          style="padding-bottom: 32px;"
-        >
+        <swiper class="tour-card-swiper mobile-only" :slides-per-view="1" :space-between="0" :centered-slides="true"
+          :pagination="{ clickable: true }" style="padding-bottom: 32px;">
           <swiper-slide v-for="tour in cultureTours" :key="tour.id">
-            <router-link
-              :to="`/tour/${tour.id}`"
-              class="tour-card"
-              style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;"
-            >
+            <router-link :to="`/tour/${tour.id}`" class="tour-card"
+              style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
               <div class="tour-card-img-wrap">
                 <img :src="getAttractionImage(tour)" :alt="getAttractionName(tour)" />
               </div>
@@ -86,7 +78,8 @@
                 <div class="tour-card-desc">{{ getAttractionDescription(tour) }}</div>
                 <div class="tour-card-bottom">
                   <div class="tour-card-action-row">
-                    <span class="tour-card-price">{{ getReactiveTourPrice(tour) }} <span class="tour-card-price-label">/ 1 adult</span></span>
+                    <span class="tour-card-price">{{ getReactiveTourPrice(tour) }} <span class="tour-card-price-label">/
+                        1 adult</span></span>
                     <router-link :to="`/tour/${tour.id}`" class="tour-card-book-btn">Book Now</router-link>
                   </div>
                 </div>
@@ -104,7 +97,8 @@
 
     <!-- Why Choose Section (Yellow Info Bar) -->
     <div class="why-choose-bar">
-      <span>Beat the heat with cool discoveries!</span> Istanbul's culture is always in season—<b>Save 40% on SearchYourTour ends today!</b>
+      <span>Beat the heat with cool discoveries!</span> Istanbul's culture is always in season—<b>Save 40% on
+        SearchYourTour ends today!</b>
     </div>
 
     <!-- Features Section -->
@@ -122,14 +116,9 @@
             </div>
           </div>
           <!-- Mobile Swiper -->
-          <swiper
-            class="features-swiper-mobile"
-            :slides-per-view="1"
-            :space-between="0"
-            :centered-slides="false"
+          <swiper class="features-swiper-mobile" :slides-per-view="1" :space-between="0" :centered-slides="false"
             :pagination="{ clickable: true }"
-            :breakpoints="{ 0: { slidesPerView: 1, spaceBetween: 0, centeredSlides: false } }"
-          >
+            :breakpoints="{ 0: { slidesPerView: 1, spaceBetween: 0, centeredSlides: false } }">
             <swiper-slide v-for="feature in features" :key="feature.id">
               <div class="feature-card">
                 <div class="feature-icon">
@@ -163,24 +152,14 @@
             </button>
           </div>
           <!-- Masaüstü Swiper -->
-          <swiper
-            class="desktop-only"
-            :slides-per-view="3"
-            :space-between="16"
-            :centered-slides="false"
-            :pagination="{ clickable: true }"
-            :breakpoints="{
+          <swiper class="desktop-only" :slides-per-view="3" :space-between="16" :centered-slides="false"
+            :pagination="{ clickable: true }" :breakpoints="{
               0: { slidesPerView: 1, spaceBetween: 0, centeredSlides: false },
               769: { slidesPerView: 3, spaceBetween: 16, centeredSlides: false }
-            }"
-            style="padding-bottom: 32px;"
-          >
+            }" style="padding-bottom: 32px;">
             <swiper-slide v-for="attraction in attractions" :key="attraction.id">
-              <router-link
-                :to="`/tour/${attraction.id}`"
-                class="attraction-card slider-card"
-                style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;"
-              >
+              <router-link :to="`/tour/${attraction.id}`" class="attraction-card slider-card"
+                style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
                 <div class="attraction-image">
                   <img :src="getAttractionImage(attraction)" :alt="getAttractionName(attraction)" />
                 </div>
@@ -200,20 +179,11 @@
             <div class="swiper-pagination" slot="pagination"></div>
           </swiper>
           <!-- Mobil Swiper -->
-          <swiper
-            class="attractions-slider-mobile mobile-only"
-            :slides-per-view="1"
-            :space-between="0"
-            :centered-slides="true"
-            :pagination="{ clickable: true }"
-            style="padding-bottom: 32px;"
-          >
+          <swiper class="attractions-slider-mobile mobile-only" :slides-per-view="1" :space-between="0"
+            :centered-slides="true" :pagination="{ clickable: true }" style="padding-bottom: 32px;">
             <swiper-slide v-for="attraction in attractions" :key="attraction.id">
-              <router-link
-                :to="`/tour/${attraction.id}`"
-                class="attraction-card slider-card"
-                style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;"
-              >
+              <router-link :to="`/tour/${attraction.id}`" class="attraction-card slider-card"
+                style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
                 <div class="attraction-image">
                   <img :src="getAttractionImage(attraction)" :alt="getAttractionName(attraction)" />
                 </div>
@@ -241,18 +211,14 @@
       <div class="section-list-wrap">
         <div class="container swiper-no-padding">
           <h2 class="section-title">Choose Your SearchYourTour Pass</h2>
-          <p class="section-subtitle">Select the perfect pass for your Istanbul adventure. <router-link to="/istanbul-pass" class="inline-link">View all pass options</router-link> or <router-link to="/attractions" class="inline-link">browse attractions</router-link> to plan your visit.</p>
-          <swiper
-            class="pass-types-slider"
-            :slides-per-view="3"
-            :space-between="16"
-            :centered-slides="false"
-            :pagination="{ clickable: true }"
-            :breakpoints="{
+          <p class="section-subtitle">Select the perfect pass for your Istanbul adventure. <router-link
+              to="/istanbul-pass" class="inline-link">View all pass options</router-link> or <router-link
+              to="/attractions" class="inline-link">browse attractions</router-link> to plan your visit.</p>
+          <swiper class="pass-types-slider" :slides-per-view="3" :space-between="16" :centered-slides="false"
+            :pagination="{ clickable: true }" :breakpoints="{
               0: { slidesPerView: 1, spaceBetween: 0, centeredSlides: false },
               769: { slidesPerView: 3, spaceBetween: 16, centeredSlides: false }
-            }"
-          >
+            }">
             <swiper-slide v-for="pass in passTypes" :key="pass.id">
               <div class="pass-card">
                 <div class="pass-header">
@@ -280,23 +246,18 @@
       <div class="section-list-wrap">
         <div class="container swiper-no-padding">
           <h2 class="section-title">What Our Customers Say About SearchYourTour</h2>
-          <p class="section-subtitle">Read reviews from travelers who experienced Istanbul with SearchYourTour. <router-link to="/tours" class="inline-link">Book guided tours</router-link> or <router-link to="/contact" class="inline-link">contact us</router-link> for personalized recommendations.</p>
-          <swiper
-            :slides-per-view="3"
-            :space-between="16"
-            :centered-slides="false"
-            :pagination="{ clickable: true }"
+          <p class="section-subtitle">Read reviews from travelers who experienced Istanbul with SearchYourTour.
+            <router-link to="/tours" class="inline-link">Book guided tours</router-link> or <router-link to="/contact"
+              class="inline-link">contact us</router-link> for personalized recommendations.
+          </p>
+          <swiper :slides-per-view="3" :space-between="16" :centered-slides="false" :pagination="{ clickable: true }"
             :breakpoints="{
               0: { slidesPerView: 1, spaceBetween: 0, centeredSlides: false },
               769: { slidesPerView: 3, spaceBetween: 16, centeredSlides: false }
-            }"
-          >
+            }">
             <swiper-slide v-for="testimonial in testimonials" :key="testimonial.id">
-              <div
-                class="testimonial-card slider-card"
-                :class="{ active: activeTestimonialId === testimonial.id }"
-                @click="openTestimonialCard(testimonial.id)"
-              >
+              <div class="testimonial-card slider-card" :class="{ active: activeTestimonialId === testimonial.id }"
+                @click="openTestimonialCard(testimonial.id)">
                 <div class="testimonial-content">
                   <template v-if="activeTestimonialId === testimonial.id">
                     "{{ testimonial.text }}"
@@ -325,13 +286,15 @@
       <div v-if="activeTestimonialId" class="testimonial-overlay" @click.self="closeTestimonialCard">
         <div class="testimonial-card active-card-modal">
           <div class="testimonial-content">
-            "{{ testimonials.find(t => t.id === activeTestimonialId).text }}"
+            "{{testimonials.find(t => t.id === activeTestimonialId).text}}"
           </div>
           <div class="testimonial-author">
-            <img v-if="testimonials.find(t => t.id === activeTestimonialId).avatar" :src="testimonials.find(t => t.id === activeTestimonialId).avatar" :alt="testimonials.find(t => t.id === activeTestimonialId).name">
+            <img v-if="testimonials.find(t => t.id === activeTestimonialId).avatar"
+              :src="testimonials.find(t => t.id === activeTestimonialId).avatar"
+              :alt="testimonials.find(t => t.id === activeTestimonialId).name">
             <div>
-              <h4>{{ testimonials.find(t => t.id === activeTestimonialId).name }}</h4>
-              <span>{{ testimonials.find(t => t.id === activeTestimonialId).location }}</span>
+              <h4>{{testimonials.find(t => t.id === activeTestimonialId).name}}</h4>
+              <span>{{testimonials.find(t => t.id === activeTestimonialId).location}}</span>
             </div>
           </div>
         </div>
@@ -444,18 +407,18 @@ const fetchAttractions = async () => {
   try {
     loading.value = true
     error.value = null
-    
+
     // Güvenli değer alma
     const language = currentLanguage.value || 'en'
     const languageId = getLanguageId(language)
-    
+
     // Her zaman EUR fiyatları al (currency_id=4)
     const currencyId = 4 // EUR
-    
+
     const url = `https://backend.searchyourtour.com/api/tours?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1&language_id=${languageId}&currency_id=${currencyId}&limit=200&IpAdrress=78.177.166.135`
-    
+
     console.log('Fetching tours from:', url)
-    
+
     const response = await fetch(url)
     if (!response.ok) {
       console.error('API Error Details:', {
@@ -466,8 +429,8 @@ const fetchAttractions = async () => {
       throw new Error(`API Error: ${response.status} ${response.statusText}`)
     }
     const data = await response.json()
-        const istanbulTours = (data || []).filter(tour => tour.destination?.id === 404 && tour.is_active === true)
-    
+    const istanbulTours = (data || []).filter(tour => tour.destination?.id === 404 && tour.is_active === true)
+
     // Debug: API'den gelen tour verilerini kontrol et
     console.log('=== API RESPONSE DEBUG ===')
     console.log('Total tours found:', istanbulTours.length)
@@ -481,17 +444,17 @@ const fetchAttractions = async () => {
       console.log(`   Currency code: ${tour.tour_price?.[0]?.currency_code}`)
     })
     console.log('=== END API DEBUG ===')
-    
+
     attractions.value = istanbulTours
   } catch (err) {
-  console.error('Detailed error:', err)
-  error.value = 'Sorry, we are unable to load attraction information at the moment. Please try again later.'
-  
-  // API çalışmıyorsa boş liste göster, kullanıcıya hata mesajı ver
-  if (err.message.includes('500') || err.message.includes('Failed to fetch')) {
-    console.log('API is not available, showing empty state')
-    attractions.value = []
-  }
+    console.error('Detailed error:', err)
+    error.value = 'Sorry, we are unable to load attraction information at the moment. Please try again later.'
+
+    // API çalışmıyorsa boş liste göster, kullanıcıya hata mesajı ver
+    if (err.message.includes('500') || err.message.includes('Failed to fetch')) {
+      console.log('API is not available, showing empty state')
+      attractions.value = []
+    }
   } finally {
     loading.value = false
   }
@@ -523,29 +486,29 @@ const convertAndFormatPrice = (priceInEUR) => {
 const getTourPrice = (tour) => {
   // Currency değişikliklerini dinlemek için trigger'ı kullan
   currencyChangeTrigger.value
-  
+
   // API'den gelen fiyat verisini al
   const priceData = tour.tour_price?.[0]
   if (!priceData) {
     return ''
   }
-  
+
   // API'den her zaman EUR fiyatları alıyoruz
   const apiPrice = priceData.price
   const targetCurrency = currencyStore.getCurrentCurrency()
-  
+
   console.log(`Tour ${tour.id} price debug:`, {
     apiPrice,
     apiCurrencyCode: 'EUR',
     targetCurrency,
     priceData
   })
-  
+
   // Eğer hedef para birimi EUR ise, direkt formatla
   if (targetCurrency === 'EUR') {
     return currencyStore.formatPrice(apiPrice, targetCurrency)
   }
-  
+
   // EUR'dan hedef para birimine çevir
   const convertedPrice = currencyStore.convertPrice(apiPrice, targetCurrency)
   return currencyStore.formatPrice(convertedPrice, targetCurrency)
@@ -555,30 +518,30 @@ const getTourPrice = (tour) => {
 const getReactiveTourPrice = (tour) => {
   // Currency değişikliklerini dinlemek için trigger'ı kullan
   currencyChangeTrigger.value
-  
+
   // API'den gelen fiyat verisini al
   const priceData = tour.tour_price?.[0]
   if (!priceData) {
     console.warn(`Tour ${tour.id} has no price data`)
     return ''
   }
-  
+
   // API'den her zaman EUR fiyatları alıyoruz
   const apiPrice = priceData.price
   const targetCurrency = currencyStore.getCurrentCurrency()
-  
+
   console.log(`Tour ${tour.id} price debug:`, {
     apiPrice,
     apiCurrencyCode: 'EUR',
     targetCurrency,
     priceData
   })
-  
+
   // Eğer hedef para birimi EUR ise, direkt formatla
   if (targetCurrency === 'EUR') {
     return currencyStore.formatPrice(apiPrice, targetCurrency)
   }
-  
+
   // EUR'dan hedef para birimine çevir
   const convertedPrice = currencyStore.convertPrice(apiPrice, targetCurrency)
   return currencyStore.formatPrice(convertedPrice, targetCurrency)
@@ -726,16 +689,16 @@ onMounted(() => {
   // Get language from localStorage or default to English
   const savedLanguage = localStorage.getItem('selectedLanguage') || 'en'
   currentLanguage.value = savedLanguage
-  
+
   // Currency store'u başlangıçta yükle
   currencyStore.fetchCurrencies()
-  
+
   console.log('HomeView onMounted:', {
     savedLanguage,
     currentLanguage: currentLanguage.value,
     currentCurrency: currentCurrency.value
   })
-  
+
   fetchAttractions()
 })
 
@@ -765,30 +728,39 @@ const cultureTours = attractions
 .home {
   padding-top: 0 !important;
 }
-.features-slider, .attractions-slider, .pass-types-slider, .testimonials-slider {
+
+.features-slider,
+.attractions-slider,
+.pass-types-slider,
+.testimonials-slider {
   width: 100%;
   padding-bottom: 2.5rem;
 }
+
 .attraction-card,
 .slider-card {
   display: block;
   width: 100%;
   height: 100%;
-  box-shadow: 0 1px 6px rgba(0,0,0,0.08);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
   border-radius: 14px;
   padding: 0.7rem 0.7rem 1rem 0.7rem;
   background: #fff;
   min-width: 0;
 }
+
 .attraction-image,
 .attraction-image img {
   border-radius: 0 !important;
 }
+
 .swiper-slide {
   width: 350px !important;
   box-sizing: border-box;
 }
+
 @media (max-width: 768px) {
+
   .slider-card,
   .attraction-card,
   .feature-card,
@@ -803,6 +775,7 @@ const cultureTours = attractions
     min-height: 480px;
     height: 480px;
   }
+
   .swiper-slide {
     width: 100vw !important;
     min-width: 100vw !important;
@@ -815,18 +788,22 @@ const cultureTours = attractions
     padding: 0 !important;
     box-sizing: border-box !important;
   }
+
   .swiper-wrapper {
     width: 100vw !important;
   }
+
   .container.swiper-no-padding {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
+
   .pass-types-slider .swiper-slide {
     height: 500px;
     display: flex;
     align-items: stretch;
   }
+
   .pass-card {
     min-height: 400px;
     height: 100%;
@@ -838,33 +815,40 @@ const cultureTours = attractions
     max-width: 99vw;
     margin: 0 0 1.5rem 0.1rem;
   }
+
   .pass-action {
     margin-top: auto;
     padding-bottom: 1.2rem;
     display: flex;
     justify-content: center;
   }
+
   .attraction-image img {
     height: 200px !important;
     object-fit: cover;
     border-radius: 10px 10px 0 0;
   }
+
   .attraction-content {
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
   }
+
   .hero-img-wrap {
     height: 220px;
   }
+
   .hero-img {
     height: 220px;
   }
 }
+
 .swiper-pagination {
   bottom: 0 !important;
 }
+
 .home {
   min-height: 100vh;
   background: #f4f6fa;
@@ -882,6 +866,7 @@ const cultureTours = attractions
   align-items: center;
   padding: 0.7rem 1rem;
 }
+
 .buy-now-btn {
   background: #fff;
   color: #FC6421;
@@ -890,9 +875,10 @@ const cultureTours = attractions
   font-weight: 700;
   font-size: 1rem;
   text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
   transition: background 0.2s, color 0.2s;
 }
+
 .buy-now-btn:hover {
   background: #ffe6ef;
   color: #b8003a;
@@ -903,6 +889,7 @@ const cultureTours = attractions
   text-align: center;
   position: relative;
 }
+
 .hero-img-wrap {
   position: relative;
   width: 100vw;
@@ -910,20 +897,25 @@ const cultureTours = attractions
   overflow: hidden;
   height: 500px;
 }
+
 .hero-img {
   width: 100vw;
   height: 500px;
   object-fit: cover;
   filter: brightness(0.85);
 }
+
 .hero-img-gradient {
   position: absolute;
-  left: 0; right: 0; bottom: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   height: 40%;
-  background: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0));
+  background: linear-gradient(to top, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
   z-index: 2;
   pointer-events: none;
 }
+
 .hero-badge {
   position: absolute;
   top: 18px;
@@ -934,18 +926,20 @@ const cultureTours = attractions
   font-size: 1.1rem;
   border-radius: 30px;
   padding: 0.4rem 1.1rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   letter-spacing: 0.5px;
 }
+
 .hero-badge span {
   color: #ffe600;
   font-size: 1.2em;
 }
+
 .hero-label {
   position: absolute;
   top: 14px;
   right: 14px;
-  background: rgba(44,62,80,0.92);
+  background: rgba(44, 62, 80, 0.92);
   color: #fff;
   font-size: 0.95rem;
   border-radius: 8px;
@@ -959,6 +953,7 @@ const cultureTours = attractions
     font-size: 1rem;
     padding: 0.35rem 1rem;
   }
+
   .hero-label {
     font-size: 0.9rem;
     padding: 0.25rem 0.8rem;
@@ -972,6 +967,7 @@ const cultureTours = attractions
     top: 15px;
     left: 10px;
   }
+
   .hero-label {
     font-size: 0.85rem;
     padding: 0.2rem 0.7rem;
@@ -987,6 +983,7 @@ const cultureTours = attractions
     top: 10px;
     left: 7px;
   }
+
   .hero-label {
     font-size: 0.75rem;
     padding: 0.18rem 0.6rem;
@@ -1002,6 +999,7 @@ const cultureTours = attractions
     top: 8px;
     left: 6px;
   }
+
   .hero-label {
     font-size: 0.6rem;
     padding: 0.15rem 0.5rem;
@@ -1016,6 +1014,7 @@ const cultureTours = attractions
   gap: 0.7rem;
   margin: 1.2rem 0 0.7rem 0;
 }
+
 .stat-box {
   display: flex;
   flex-direction: column;
@@ -1027,11 +1026,30 @@ const cultureTours = attractions
   color: #fff;
   min-width: 80px;
 }
-.stat-box.orange { background: #FC6421; color: #fff; }
-.stat-box.pink { background: #FC6421; color: #fff; }
-.stat-box.blue { background: #00b6e6; color: #fff; }
-.stat-box span { font-size: 1.3em; }
-.stat-box small { font-size: 0.8em; font-weight: 400; }
+
+.stat-box.orange {
+  background: #FC6421;
+  color: #fff;
+}
+
+.stat-box.pink {
+  background: #FC6421;
+  color: #fff;
+}
+
+.stat-box.blue {
+  background: #00b6e6;
+  color: #fff;
+}
+
+.stat-box span {
+  font-size: 1.3em;
+}
+
+.stat-box small {
+  font-size: 0.8em;
+  font-weight: 400;
+}
 
 .mini-stats-row {
   display: flex;
@@ -1040,41 +1058,84 @@ const cultureTours = attractions
   margin-bottom: 1.2rem;
   flex-wrap: wrap;
 }
+
 .mini-stat {
   background: #fff;
   color: #2c3e50;
   border-radius: 8px;
   font-size: 0.93rem;
   padding: 0.5rem 0.8rem;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
   text-align: center;
   min-width: 110px;
 }
 
+@media (max-width: 1024px) {
+    .hero-title-content {
+        align-items: start;
+        padding: 204px 16px 16px;
+    }
+}
+
+.hero-title-content {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  margin: auto;
+  max-width: 1400px;
+  padding: 16px 17rem;
+  position: absolute;
+  z-index: 999;
+  color: #fff;
+  text-align: left;
+}
+
+.hero-section__header {
+  align-self: flex-start;
+  margin-bottom: 32px;
+  margin-top: 128px;
+  width: 90%;
+}
+
+.text-atom--headline-2 {
+  font-size: 3rem;
+  font-weight: 700;
+  line-height: 4.25rem
+}
+
 .hero-title {
-  font-size: 2.1rem;
-  font-weight: 800;
+
   color: #FC6421;
   margin: 1.2rem 0 0.2rem 0;
-  line-height: 1.1;
+
+  font-size: 2.75rem;
+  font-weight: 700;
+  line-height: 3rem;
+
 }
+
 .hero-title span {
   color: #00b6e6;
 }
+
 .hero-subtitle {
   font-size: 1.08rem;
   color: #2c3e50;
   margin-bottom: 1.2rem;
   margin-top: 0.7rem;
 }
+
 .highlight {
   color: #FC6421;
   font-weight: 700;
 }
+
 .now-highlight {
   color: #00b6e6;
   font-weight: 700;
 }
+
 .cta-btn {
   display: block;
   width: 100%;
@@ -1087,9 +1148,10 @@ const cultureTours = attractions
   border-radius: 8px;
   padding: 0.9rem 0;
   text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.09);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.09);
   transition: background 0.2s;
 }
+
 .cta-btn:hover {
   background: #b8003a;
 }
@@ -1103,8 +1165,9 @@ const cultureTours = attractions
   padding: 0.7rem 1rem;
   margin-bottom: 1.2rem;
   border-radius: 0 0 12px 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
+
 .why-choose-bar b {
   color: #FC6421;
 }
@@ -1128,13 +1191,16 @@ const cultureTours = attractions
   gap: 2rem;
   margin-top: 2rem;
 }
+
 .features-swiper-mobile {
   display: none;
 }
+
 @media (max-width: 768px) {
   .features-grid-desktop {
     display: none;
   }
+
   .features-swiper-mobile {
     display: block;
   }
@@ -1145,7 +1211,7 @@ const cultureTours = attractions
   padding: 2rem;
   background: white;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   margin: 0;
 }
@@ -1180,7 +1246,7 @@ const cultureTours = attractions
   background: white;
   border-radius: 8px;
   overflow: hidden;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease;
   padding: 0 0 1rem 0;
 }
@@ -1235,7 +1301,7 @@ const cultureTours = attractions
   background: white;
   border-radius: 8px;
   padding: 2rem;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
   transition: transform 0.3s ease;
   display: flex;
@@ -1297,7 +1363,7 @@ const cultureTours = attractions
   background: white;
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .testimonial-content {
@@ -1328,27 +1394,62 @@ const cultureTours = attractions
   font-size: 0.9rem;
 }
 
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
-  .top-banner { font-size: 0.98rem; padding: 0.6rem 0.7rem; }
-  .hero-img-wrap, .hero-img { height: 160px; }
-  .quick-stats { gap: 0.4rem; }
-  .stat-box { font-size: 0.95rem; min-width: 65px; padding: 0.5rem 0.7rem; }
-  .mini-stats-row { gap: 0.5rem; }
-  .mini-stat { font-size: 0.85rem; min-width: 90px; padding: 0.4rem 0.5rem; }
-  .cta-btn { font-size: 1rem; padding: 0.7rem 0; }
-  .why-choose-bar { font-size: 0.95rem; padding: 0.5rem 0.5rem; }
-  
+  .top-banner {
+    font-size: 0.98rem;
+    padding: 0.6rem 0.7rem;
+  }
+
+  .hero-img-wrap,
+  .hero-img {
+    height: 160px;
+  }
+
+  .quick-stats {
+    gap: 0.4rem;
+  }
+
+  .stat-box {
+    font-size: 0.95rem;
+    min-width: 65px;
+    padding: 0.5rem 0.7rem;
+  }
+
+  .mini-stats-row {
+    gap: 0.5rem;
+  }
+
+  .mini-stat {
+    font-size: 0.85rem;
+    min-width: 90px;
+    padding: 0.4rem 0.5rem;
+  }
+
+  .cta-btn {
+    font-size: 1rem;
+    padding: 0.7rem 0;
+  }
+
+  .why-choose-bar {
+    font-size: 0.95rem;
+    padding: 0.5rem 0.5rem;
+  }
+
   .section-title {
     font-size: 2rem;
   }
-  
+
   .features-grid-desktop {
     display: none;
   }
+
   .features-swiper-mobile {
     display: block;
   }
+
   .features-swiper-mobile .swiper-slide {
     width: 100vw !important;
     max-width: 100vw !important;
@@ -1356,22 +1457,27 @@ const cultureTours = attractions
     margin: 0 !important;
     padding: 0 !important;
   }
+
   .features-swiper-mobile .swiper-wrapper {
     width: 100vw !important;
   }
+
   .features-swiper-mobile .swiper-pagination {
     bottom: 0 !important;
   }
+
   .attractions-grid,
   .pass-types-grid,
   .testimonials-grid {
     grid-template-columns: 1fr;
   }
+
   .feature-card {
     width: 100%;
     max-width: 100vw;
     margin: 0;
   }
+
   .features-swiper-mobile .feature-card {
     width: 85vw !important;
     max-width: 85vw !important;
@@ -1381,23 +1487,28 @@ const cultureTours = attractions
     min-height: 220px !important;
     height: 220px !important;
   }
+
   .pass-types-section .pass-card {
     height: 500px !important;
     padding-top: 2.2rem !important;
   }
+
   .testimonials-section .testimonial-card {
     min-height: 180px !important;
     height: 180px !important;
     padding: 1rem 0.7rem !important;
   }
+
   .testimonials-section .testimonial-content {
     margin-bottom: 0.7rem;
     font-size: 0.98rem;
   }
+
   .testimonials-section .testimonial-author img {
     width: 40px;
     height: 40px;
   }
+
   .testimonials-section .testimonial-author h4 {
     font-size: 1rem;
   }
@@ -1417,6 +1528,7 @@ const cultureTours = attractions
   padding-bottom: 8px;
   max-width: 90vw;
 }
+
 .category-tab {
   background: transparent;
   color: #fff;
@@ -1435,22 +1547,26 @@ const cultureTours = attractions
   transition: background 0.2s, color 0.2s;
   white-space: nowrap;
 }
+
 .category-tab.active {
   background: #FC6421;
   color: #fff;
   z-index: 3;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
+
 .cat-icon {
   font-size: 1.5em;
   display: flex;
   align-items: center;
 }
+
 .category-section {
   border-radius: 0 0 24px 24px;
   margin-bottom: 32px;
   padding-bottom: 32px;
 }
+
 .category-title {
   text-align: left;
   font-size: 2.2rem;
@@ -1458,6 +1574,7 @@ const cultureTours = attractions
   font-weight: 800;
   margin: 0 0 2rem;
 }
+
 .tour-card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
@@ -1471,14 +1588,16 @@ const cultureTours = attractions
   .tour-card-grid {
     display: none !important;
   }
+
   .tour-card-swiper {
     display: block !important;
   }
 }
+
 .tour-card {
   background: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 12px rgba(34,51,102,0.08);
+  box-shadow: 0 2px 12px rgba(34, 51, 102, 0.08);
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -1487,21 +1606,25 @@ const cultureTours = attractions
   min-height: 540px;
   height: 540px;
 }
+
 .tour-card:hover {
-  box-shadow: 0 4px 24px rgba(34,51,102,0.16);
+  box-shadow: 0 4px 24px rgba(34, 51, 102, 0.16);
 }
+
 .tour-card-img-wrap {
   width: 100%;
   height: 180px;
   overflow: hidden;
   border-radius: 8px 8px 0 0;
 }
+
 .tour-card-img-wrap img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
 }
+
 .tour-card-badge {
   position: absolute;
   top: 12px;
@@ -1512,8 +1635,9 @@ const cultureTours = attractions
   font-size: 0.95rem;
   border-radius: 8px;
   padding: 4px 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
+
 .tour-card-fav {
   position: absolute;
   top: 12px;
@@ -1528,13 +1652,15 @@ const cultureTours = attractions
   align-items: center;
   justify-content: center;
   font-size: 1.2em;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   cursor: pointer;
   transition: background 0.2s;
 }
+
 .tour-card-fav:hover {
   background: #ffe6ef;
 }
+
 .tour-card-content {
   padding: 1.2rem 1.2rem 1.4rem 1.2rem;
   display: flex;
@@ -1542,11 +1668,14 @@ const cultureTours = attractions
   height: 50%;
   justify-content: space-between;
 }
+
 .tour-card-bottom {
   margin-top: auto;
   padding-top: 16px;
+  padding-bottom: 16px;
   flex-shrink: 0;
 }
+
 .tour-card-type {
   color: #e6007a;
   font-size: 0.95rem;
@@ -1554,15 +1683,17 @@ const cultureTours = attractions
   margin-bottom: 0.2rem;
   flex-shrink: 0;
 }
+
 .tour-card-title {
-  font-size: 1.15rem;
-  font-weight: 700;
-  color: #223366;
+  color: #1a2b49;
   margin-bottom: 0.2rem;
   flex-shrink: 0;
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.5rem;
 }
+
 .tour-card-desc {
-  font-size: 1.01rem;
   color: #444;
   margin-bottom: 0.2rem;
   flex: 1;
@@ -1570,7 +1701,11 @@ const cultureTours = attractions
   display: -webkit-box;
   -webkit-line-clamp: 4;
   -webkit-box-orient: vertical;
+  font-size: .875rem;
+  font-weight: 400;
+  line-height: 1.25rem;
 }
+
 .tour-card-meta {
   display: flex;
   justify-content: space-between;
@@ -1578,10 +1713,12 @@ const cultureTours = attractions
   font-size: 0.98rem;
   margin-bottom: 0.2rem;
 }
+
 .tour-card-duration {
   color: #223366;
   font-weight: 600;
 }
+
 .tour-card-rating {
   color: #f39c12;
   font-weight: 700;
@@ -1589,21 +1726,25 @@ const cultureTours = attractions
   align-items: center;
   gap: 4px;
 }
+
 .tour-card-reviews {
   color: #888;
   font-size: 0.95em;
   margin-left: 2px;
 }
+
 .tour-card-prices {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
+
 .tour-card-old-price {
   color: #888;
   font-size: 0.98em;
   text-decoration: line-through;
 }
+
 .tour-card-price {
   color: #e6007a;
   font-size: 1.08em;
@@ -1613,6 +1754,7 @@ const cultureTours = attractions
   text-overflow: ellipsis;
   display: block;
 }
+
 .coming-soon {
   text-align: center;
   color: #888;
@@ -1626,6 +1768,7 @@ const cultureTours = attractions
     padding-bottom: 2px;
     z-index: 15;
   }
+
   .category-tab {
     font-size: 0.85rem;
     padding: 7px 10px 6px 10px;
@@ -1635,19 +1778,23 @@ const cultureTours = attractions
     align-items: center;
     justify-content: center;
   }
+
   .cat-icon {
     font-size: 0.95em;
   }
+
   .category-title {
     font-size: 1.1rem;
     margin: 0 0 1.2rem 2vw;
   }
+
   .hero-label {
     font-size: 0.6rem;
     padding: 0.12rem 0.4rem;
     top: 8px;
     right: 8px;
   }
+
   .hero-badge {
     font-size: 0.8rem;
     padding: 0.18rem 0.7rem;
@@ -1657,6 +1804,7 @@ const cultureTours = attractions
 }
 
 @media (max-width: 768px) {
+
   .features-list,
   .attractions-list,
   .pass-types-list,
@@ -1665,6 +1813,7 @@ const cultureTours = attractions
     flex-direction: column;
     gap: 18px;
   }
+
   .slider-card,
   .attraction-card,
   .feature-card,
@@ -1684,6 +1833,7 @@ const cultureTours = attractions
     display: flex;
     align-items: stretch;
   }
+
   .features-section .feature-card {
     height: 100%;
     min-height: 260px;
@@ -1691,24 +1841,29 @@ const cultureTours = attractions
     flex-direction: column;
     justify-content: center;
   }
+
   .attractions-section .swiper-wrapper {
     display: flex;
     align-items: stretch;
   }
+
   .attractions-section .swiper-slide {
     display: flex;
     align-items: stretch;
     height: 100%;
   }
+
   .attraction-card {
     height: 100%;
     min-height: 420px;
     display: flex;
     flex-direction: column;
   }
+
   .attraction-image img {
     height: 200px;
   }
+
   .attraction-content h3 {
     display: -webkit-box;
     -webkit-line-clamp: 3;
@@ -1718,6 +1873,7 @@ const cultureTours = attractions
     min-height: 4.2em;
     max-height: 4.2em;
   }
+
   .attraction-content p {
     display: -webkit-box;
     -webkit-line-clamp: 5;
@@ -1727,47 +1883,70 @@ const cultureTours = attractions
     min-height: 6.5em;
     max-height: 6.5em;
   }
+
   /* Center pass cards */
   .pass-types-section .container.swiper-no-padding {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+
   .pass-types-section .swiper {
     width: auto;
     display: flex;
     justify-content: center;
   }
+
   .pass-types-section .swiper-wrapper {
     justify-content: center;
   }
+
   /* Center testimonial cards */
   .testimonials-section .container.swiper-no-padding {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+
   .testimonials-section .swiper {
     width: auto;
     display: flex;
     justify-content: center;
   }
+
   .testimonials-section .swiper-wrapper {
     justify-content: center;
   }
 }
-.desktop-only { display: block; }
-.mobile-only { display: none; }
+
+.desktop-only {
+  display: block;
+}
+
+.mobile-only {
+  display: none;
+}
 
 /* 1200px altında mobil slider'a geç */
 @media (max-width: 1199px) {
-  .desktop-only { display: none !important; }
-  .mobile-only { display: block !important; }
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: block !important;
+  }
 }
 
 @media (max-width: 768px) {
-  .desktop-only { display: none !important; }
-  .mobile-only { display: block !important; }
+  .desktop-only {
+    display: none !important;
+  }
+
+  .mobile-only {
+    display: block !important;
+  }
+
   .tour-card-swiper .tour-card,
   .tour-card-swiper .swiper-slide {
     width: 90vw !important;
@@ -1783,6 +1962,7 @@ const cultureTours = attractions
     width: 100vw !important;
     margin-left: calc(-50vw + 50%) !important;
   }
+
   .tour-card-swiper .swiper-slide {
     width: 100vw !important;
     max-width: 100vw !important;
@@ -1792,17 +1972,20 @@ const cultureTours = attractions
     display: flex;
     justify-content: center;
   }
+
   .tour-card-swiper .tour-card {
     width: 92vw !important;
     max-width: 92vw !important;
     min-width: 92vw !important;
     margin: 0 auto !important;
   }
+
   .category-section,
   .container {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
+
   /* Tablet boyutları için mobil kart stilleri */
   .tour-card {
     width: 96vw !important;
@@ -1810,11 +1993,13 @@ const cultureTours = attractions
     min-width: 96vw !important;
     margin: 0 auto 1.2rem auto !important;
     border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
   }
+
   .tour-card-content {
     padding: 1.2rem 1.2rem 1.4rem 1.2rem !important;
   }
+
   .tour-card-img-wrap {
     height: 200px !important;
     min-height: 200px !important;
@@ -1822,24 +2007,28 @@ const cultureTours = attractions
     overflow: hidden;
     border-radius: 16px 16px 0 0;
   }
+
   .tour-card-img-wrap img {
     width: 100%;
     height: 200px;
     object-fit: cover;
     display: block;
   }
+
   .tour-card-title {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
   }
+
   .tour-card-action-row {
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
     margin-top: 12px;
   }
+
   .tour-card-book-btn {
     width: 100%;
     text-align: center;
@@ -1847,20 +2036,24 @@ const cultureTours = attractions
     font-size: 1.12rem;
     height: 48px;
   }
+
   .tour-card {
     min-height: 480px;
     height: 480px;
   }
+
   .tour-card-content {
     padding: 1rem 1rem 1.2rem 1rem;
     height: 60%;
   }
 }
+
 @media (max-width: 768px) {
   .tour-card-swiper {
     width: 100vw !important;
     margin-left: calc(-50vw + 50%) !important;
   }
+
   .tour-card-swiper .swiper-slide {
     width: 100vw !important;
     max-width: 100vw !important;
@@ -1870,18 +2063,21 @@ const cultureTours = attractions
     display: flex;
     justify-content: center;
   }
+
   .tour-card-swiper .tour-card {
     width: 92vw !important;
     max-width: 92vw !important;
     min-width: 92vw !important;
     margin: 0 auto !important;
   }
+
   .category-section,
   .container {
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
 }
+
 @media (max-width: 768px) {
   .tour-card-img-wrap {
     height: 200px !important;
@@ -1890,12 +2086,14 @@ const cultureTours = attractions
     overflow: hidden;
     border-radius: 16px 16px 0 0;
   }
+
   .tour-card-img-wrap img {
     width: 100%;
     height: 200px;
     object-fit: cover;
     display: block;
   }
+
   .tour-card-title {
     white-space: nowrap;
     overflow: hidden;
@@ -1903,6 +2101,7 @@ const cultureTours = attractions
     display: block;
   }
 }
+
 @media (min-width: 769px) {
   .tour-card {
     width: 100% !important;
@@ -1911,6 +2110,7 @@ const cultureTours = attractions
     box-sizing: border-box;
   }
 }
+
 @media (min-width: 769px) {
   .tour-card-grid {
     display: grid;
@@ -1919,11 +2119,13 @@ const cultureTours = attractions
     padding: 0 2vw;
     width: 100%;
   }
+
   .tour-card-img-wrap {
     height: 300px;
     overflow: hidden;
     border-radius: 8px 8px 0 0;
   }
+
   .tour-card-img-wrap img {
     width: 100%;
     height: 100%;
@@ -1931,9 +2133,13 @@ const cultureTours = attractions
     display: block;
   }
 }
+
 @media (max-width: 768px) {
-  .desktop-only { display: none !important; }
+  .desktop-only {
+    display: none !important;
+  }
 }
+
 @media (max-width: 768px) {
   .tour-card {
     width: 96vw !important;
@@ -1941,20 +2147,24 @@ const cultureTours = attractions
     min-width: 96vw !important;
     margin: 0 auto 1.2rem auto !important;
     border-radius: 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.10);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.10);
   }
+
   .tour-card-content {
     padding: 1.2rem 1.2rem 1.4rem 1.2rem !important;
   }
 }
+
 @media (max-width: 768px) {
   .tour-card {
     border-radius: 8px !important;
   }
+
   .tour-card-img-wrap {
     border-radius: 8px 8px 0 0 !important;
   }
 }
+
 @media (min-width: 1200px) {
   .testimonials-section .section-list-wrap {
     margin-left: 350px;
@@ -1963,23 +2173,27 @@ const cultureTours = attractions
     width: auto;
     max-width: none;
   }
+
   .testimonials-section .container.swiper-no-padding {
     padding: 0;
     margin: 0;
     width: 100%;
     max-width: 100%;
   }
+
   .testimonials-section .swiper {
     width: 100%;
     margin: 0;
     padding: 0;
   }
+
   .testimonials-section .swiper-wrapper {
     display: flex;
     align-items: stretch;
     width: 100%;
     margin: 0;
   }
+
   .testimonial-card {
     min-height: 320px;
     height: 320px;
@@ -1992,6 +2206,7 @@ const cultureTours = attractions
     z-index: 1;
     position: relative;
   }
+
   .testimonial-card .testimonial-content {
     /* JS ile kısaltma yapıldığı için satır kırpma kaldırıldı */
     overflow: hidden;
@@ -2001,25 +2216,31 @@ const cultureTours = attractions
     transition: all 0.2s;
     display: block;
   }
+
   .testimonial-short {
     /* Sadece normal metin, ... JS ile eklenecek */
     white-space: pre-line;
   }
+
   /* Overlay ve büyüyen kart */
   .testimonial-overlay {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.35);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.35);
     z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
     animation: fadeIn 0.2s;
   }
+
   .active-card-modal {
     background: #fff;
     border-radius: 12px;
-    box-shadow: 0 8px 40px rgba(34,51,102,0.18);
+    box-shadow: 0 8px 40px rgba(34, 51, 102, 0.18);
     max-width: 520px;
     width: 90vw;
     min-height: 320px;
@@ -2027,18 +2248,33 @@ const cultureTours = attractions
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    animation: growIn 0.22s cubic-bezier(.4,2,.6,1);
+    animation: growIn 0.22s cubic-bezier(.4, 2, .6, 1);
     position: relative;
   }
+
   @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
   }
+
   @keyframes growIn {
-    from { transform: scale(0.85); opacity: 0.5; }
-    to { transform: scale(1); opacity: 1; }
+    from {
+      transform: scale(0.85);
+      opacity: 0.5;
+    }
+
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
   }
 }
+
 @media (max-width: 768px) {
   .active-card-modal {
     max-width: 98vw;
@@ -2050,6 +2286,7 @@ const cultureTours = attractions
     box-sizing: border-box;
     justify-content: flex-start;
   }
+
   .active-card-modal .testimonial-content {
     font-size: 1.08rem;
     margin-bottom: 1.2rem;
@@ -2059,33 +2296,40 @@ const cultureTours = attractions
     overflow-y: auto;
     white-space: pre-line;
   }
+
   .active-card-modal .testimonial-author {
     margin-top: 1.2rem;
     display: flex;
     align-items: center;
     gap: 0.8rem;
   }
+
   .active-card-modal .testimonial-author img {
     width: 48px;
     height: 48px;
     border-radius: 50%;
     object-fit: cover;
   }
+
   .active-card-modal .testimonial-author h4 {
     font-size: 1.08rem;
     margin: 0;
   }
+
   .active-card-modal .testimonial-author span {
     font-size: 0.98rem;
     color: #888;
   }
 }
+
 @media (min-width: 1200px) {
+
   /* Sağdan 350px margin için swiper'a padding ekle */
   .testimonials-section .swiper {
     padding-right: 350px;
   }
 }
+
 @media (min-width: 769px) {
   .testimonial-card .testimonial-author h4 {
     white-space: nowrap;
@@ -2096,6 +2340,7 @@ const cultureTours = attractions
     max-width: 180px;
     display: block;
   }
+
   .active-card-modal .testimonial-author h4 {
     white-space: normal;
     overflow: visible;
@@ -2104,6 +2349,7 @@ const cultureTours = attractions
     display: block;
   }
 }
+
 /* Hero Title Styles for SEO */
 .hero-title {
   position: absolute;
@@ -2114,7 +2360,7 @@ const cultureTours = attractions
   font-size: 2.5rem;
   font-weight: 700;
   text-align: center;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
   z-index: 10;
   max-width: 800px;
   width: 90%;
@@ -2152,6 +2398,7 @@ const cultureTours = attractions
   .category-tabs {
     gap: 20px;
   }
+
   .category-tab {
     font-size: 1.2rem;
     padding: 14px 28px 10px 28px;
@@ -2162,6 +2409,7 @@ const cultureTours = attractions
   .category-tabs {
     gap: 16px;
   }
+
   .category-tab {
     font-size: 1.1rem;
     padding: 12px 24px 8px 24px;
@@ -2175,9 +2423,11 @@ const cultureTours = attractions
     line-height: 1.1;
     top: 45%;
   }
+
   .category-tabs {
     gap: 12px;
   }
+
   .category-tab {
     font-size: 1rem;
     padding: 10px 20px 6px 20px;
@@ -2189,6 +2439,7 @@ const cultureTours = attractions
   .category-tabs {
     gap: 14px;
   }
+
   .category-tab {
     font-size: 1.05rem;
     padding: 11px 22px 7px 22px;
@@ -2201,10 +2452,12 @@ const cultureTours = attractions
     gap: 8px;
     max-width: 95vw;
   }
+
   .category-tab {
     font-size: 0.9rem;
     padding: 8px 12px 4px 12px;
   }
+
   .cat-icon {
     font-size: 1.2em;
   }
@@ -2216,15 +2469,18 @@ const cultureTours = attractions
     gap: 6px;
     max-width: 98vw;
   }
+
   .category-tab {
     font-size: 0.8rem;
     padding: 6px 8px 2px 8px;
     min-width: 40px;
     justify-content: center;
   }
+
   .cat-icon {
     font-size: 1.3em;
   }
+
   .category-tab span:not(.cat-icon) {
     display: none;
   }
@@ -2271,13 +2527,13 @@ const cultureTours = attractions
   padding: 2rem;
   border-radius: 12px;
   text-align: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .social-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
 }
 
 .social-icon {
@@ -2393,12 +2649,12 @@ const cultureTours = attractions
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
-  
+
   .share-buttons {
     flex-direction: column;
     align-items: center;
   }
-  
+
   .share-btn {
     width: 200px;
     justify-content: center;
@@ -2415,6 +2671,7 @@ const cultureTours = attractions
     padding: 1.2rem 0.7rem 1.2rem 0.7rem;
     box-sizing: border-box;
   }
+
   .testimonial-card .testimonial-content {
     flex: 1 1 auto;
     font-size: 1.01rem;
@@ -2423,6 +2680,7 @@ const cultureTours = attractions
     overflow-y: auto;
     white-space: pre-line;
   }
+
   .testimonial-card .testimonial-author {
     margin-top: auto;
     display: flex;
@@ -2430,12 +2688,14 @@ const cultureTours = attractions
     gap: 0.8rem;
     padding-bottom: 0.2rem;
   }
+
   .testimonial-card .testimonial-author img {
     width: 40px;
     height: 40px;
     border-radius: 50%;
     object-fit: cover;
   }
+
   .testimonial-card .testimonial-author h4 {
     font-size: 1rem;
     margin: 0;
@@ -2445,17 +2705,20 @@ const cultureTours = attractions
     max-width: 100%;
     display: block;
   }
+
   .testimonial-card .testimonial-author span {
     font-size: 0.95rem;
     color: #888;
   }
 }
+
 @media (max-width: 768px) {
   .testimonials-section .testimonial-card {
     min-height: 250px !important;
     height: 250px !important;
   }
 }
+
 @media (min-width: 1200px) {
   .category-list-wrap {
     margin-left: 350px;
@@ -2464,6 +2727,7 @@ const cultureTours = attractions
     flex-direction: column;
     align-items: flex-start;
   }
+
   .tour-card-grid {
     margin-left: 0;
     margin-right: 0;
@@ -2471,6 +2735,7 @@ const cultureTours = attractions
     width: 100%;
   }
 }
+
 .tour-card-action-row {
   display: flex;
   align-items: center;
@@ -2480,6 +2745,7 @@ const cultureTours = attractions
   min-height: 44px;
   align-items: flex-end;
 }
+
 .tour-card-book-btn {
   background: #FC6421;
   color: #fff;
@@ -2488,7 +2754,7 @@ const cultureTours = attractions
   padding: 0.6rem 1.4rem;
   font-size: 1.08rem;
   text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
   transition: background 0.2s, color 0.2s;
   white-space: nowrap;
   border: none;
@@ -2499,15 +2765,18 @@ const cultureTours = attractions
   align-items: center;
   justify-content: center;
 }
+
 .tour-card-book-btn:hover {
   background: #e6007a;
   color: #fff;
 }
+
 .tour-card-price-label {
   color: #888;
   font-size: 0.98em;
   margin-left: 4px;
 }
+
 @media (max-width: 768px) {
   .tour-card-action-row {
     flex-direction: column;
@@ -2515,6 +2784,7 @@ const cultureTours = attractions
     gap: 8px;
     margin-top: 12px;
   }
+
   .tour-card-book-btn {
     width: 100%;
     text-align: center;
@@ -2522,26 +2792,31 @@ const cultureTours = attractions
     font-size: 1.12rem;
     height: 48px;
   }
+
   .tour-card {
     min-height: 480px;
     height: 480px;
   }
+
   .tour-card-content {
     padding: 1rem 1rem 1.2rem 1rem;
     height: 60%;
   }
 }
+
 @media (min-width: 1200px) {
   .tour-card-grid {
     grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
     padding: 0 1vw;
   }
+
   .tour-card {
     min-width: 0;
     max-width: 320px;
     margin: 0 auto;
   }
+
   .category-list-wrap {
     max-width: 1400px;
     margin: 0 auto;
@@ -2569,8 +2844,13 @@ const cultureTours = attractions
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .error-state {

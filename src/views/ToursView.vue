@@ -294,6 +294,7 @@ watch(() => localStorage.getItem('selectedLanguage'), (newLanguage) => {
   color: white;
   padding: 4rem 0;
   text-align: center;
+  margin-top: 100px;
 }
 
 .hero-title {

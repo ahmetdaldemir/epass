@@ -514,6 +514,7 @@ const handleStep = async () => {
   background: #f6f8fa;
   padding: 48px 0;
   min-height: 100vh;
+  margin-top: 120px;
 }
 .checkout-left, .checkout-right {
   flex: 1 1 0;

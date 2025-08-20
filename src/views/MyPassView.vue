@@ -872,6 +872,7 @@ async function sendResetLink() {
   padding: 40px 24px 32px;
   text-align: center;
   border-bottom: 1px solid rgba(255,255,255,0.1);
+  margin-top: 120px;
 }
 
 .user-avatar {
@@ -968,6 +969,7 @@ async function sendResetLink() {
   padding: 40px;
   background: #f8f9fa;
   overflow-y: auto;
+  margin-top: 100px;
 }
 
 .content-section {

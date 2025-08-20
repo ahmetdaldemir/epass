@@ -3,11 +3,23 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 0,
+            "activePatchIndex": 3,
             "patches": [
                 {
                     "date": 1755255114534,
                     "content": "Index: \n===================================================================\n--- \n+++ \n"
+                },
+                {
+                    "date": 1755718996178,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,26 +66,45 @@\n \n function openMobileMenu() {\n   showMobileMenu.value = true\n   document.body.style.overflow = 'hidden'\n+  // Mobil menü açıldığında header yüksekliğini güncelle\n+  setTimeout(updateHeaderHeight, 100)\n }\n+\n function closeMobileMenu() {\n   showMobileMenu.value = false\n   document.body.style.overflow = ''\n+  // Mobil menü kapandığında header yüksekliğini güncelle\n+  setTimeout(updateHeaderHeight, 100)\n }\n // Escape tuşu ile menüyü kapat\n+watch(showMobileMenu, (val) => {\n+  if (!val) document.body.style.overflow = ''\n+})\n+\n+// Header yüksekliğini hesapla ve CSS custom property'ye ata\n+function updateHeaderHeight() {\n+  const header = document.querySelector('.main-header')\n+  if (header) {\n+    const height = header.offsetHeight\n+    document.documentElement.style.setProperty('--header-height', `${height}px`)\n+  }\n+}\n+\n onMounted(() => {\n   window.addEventListener('keydown', escClose)\n+  // Header yüksekliğini hesapla\n+  updateHeaderHeight()\n+  \n+  // Resize event'inde de güncelle\n+  window.addEventListener('resize', updateHeaderHeight)\n })\n function escClose(e) {\n   if (showMobileMenu.value && (e.key === 'Escape' || e.key === 'Esc')) {\n     closeMobileMenu()\n   }\n }\n-// Temizlik\n-watch(showMobileMenu, (val) => {\n-  if (!val) document.body.style.overflow = ''\n-})\n </script>\n \n <style scoped>\n .main-header {\n@@ -95,8 +114,9 @@\n   width: 100vw;\n   z-index: 1100;\n   background: #fff;\n   box-shadow: 0 2px 4px rgba(0,0,0,0.1);\n+  height: var(--header-height, 120px); /* CSS custom property */\n }\n .header {\n   display: flex;\n   justify-content: space-between;\n"
+                },
+                {
+                    "date": 1755719221470,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -66,45 +66,26 @@\n \n function openMobileMenu() {\n   showMobileMenu.value = true\n   document.body.style.overflow = 'hidden'\n-  // Mobil menü açıldığında header yüksekliğini güncelle\n-  setTimeout(updateHeaderHeight, 100)\n }\n-\n function closeMobileMenu() {\n   showMobileMenu.value = false\n   document.body.style.overflow = ''\n-  // Mobil menü kapandığında header yüksekliğini güncelle\n-  setTimeout(updateHeaderHeight, 100)\n }\n // Escape tuşu ile menüyü kapat\n-watch(showMobileMenu, (val) => {\n-  if (!val) document.body.style.overflow = ''\n-})\n-\n-// Header yüksekliğini hesapla ve CSS custom property'ye ata\n-function updateHeaderHeight() {\n-  const header = document.querySelector('.main-header')\n-  if (header) {\n-    const height = header.offsetHeight\n-    document.documentElement.style.setProperty('--header-height', `${height}px`)\n-  }\n-}\n-\n onMounted(() => {\n   window.addEventListener('keydown', escClose)\n-  // Header yüksekliğini hesapla\n-  updateHeaderHeight()\n-  \n-  // Resize event'inde de güncelle\n-  window.addEventListener('resize', updateHeaderHeight)\n })\n function escClose(e) {\n   if (showMobileMenu.value && (e.key === 'Escape' || e.key === 'Esc')) {\n     closeMobileMenu()\n   }\n }\n+// Temizlik\n+watch(showMobileMenu, (val) => {\n+  if (!val) document.body.style.overflow = ''\n+})\n </script>\n \n <style scoped>\n .main-header {\n@@ -114,9 +95,8 @@\n   width: 100vw;\n   z-index: 1100;\n   background: #fff;\n   box-shadow: 0 2px 4px rgba(0,0,0,0.1);\n-  height: var(--header-height, 120px); /* CSS custom property */\n }\n .header {\n   display: flex;\n   justify-content: space-between;\n"
+                },
+                {
+                    "date": 1755720653577,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -88,9 +88,8 @@\n </script>\n \n <style scoped>\n .main-header {\n-  position: fixed;\n   top: 0;\n   left: 0;\n   width: 100vw;\n   z-index: 1100;\n"
                 }
             ],
             "date": 1755255114534,

@@ -13,7 +13,7 @@
             <label class="upload-label">
               <input type="file" accept="image/*" @change="onLogoChange" />
               <div class="upload-placeholder">
-                <i class="fas fa-image"></i>
+                <span class="emoji-icon">📷</span>
                 <div class="upload-desc">SVG, PNG, JPG</div>
                 <div class="upload-desc">(max. 800x400)</div>
                 <div v-if="logoPreview" class="upload-filename">Selected file</div>
@@ -254,7 +254,7 @@
             <label class="upload-label">
               <input type="file" @change="onFileChange($event, 'taxDocument')" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx" required />
               <div class="upload-placeholder">
-                <i class="fas fa-file-upload"></i>
+                <span class="emoji-icon">📁</span>
                 <div class="upload-desc">PDF, JPG, PNG, DOC, DOCX, XLS, XLSX</div>
                 <div class="upload-desc">(max. 10MB)</div>
                 <div v-if="form.taxDocument" class="upload-filename">{{ form.taxDocument.name }}</div>
@@ -269,7 +269,7 @@
             <label class="upload-label">
               <input type="file" @change="onFileChange($event, 'tursabDocument')" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx" />
               <div class="upload-placeholder">
-                <i class="fas fa-file-upload"></i>
+                <span class="emoji-icon">📁</span>
                 <div class="upload-desc">PDF, JPG, PNG, DOC, DOCX, XLS, XLSX</div>
                 <div class="upload-desc">(if available)</div>
                 <div v-if="form.tursabDocument" class="upload-filename">{{ form.tursabDocument.name }}</div>
@@ -284,7 +284,7 @@
             <label class="upload-label">
               <input type="file" @change="onFileChange($event, 'expertiseDocument')" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx" />
               <div class="upload-placeholder">
-                <i class="fas fa-file-upload"></i>
+                <span class="emoji-icon">📁</span>
                 <div class="upload-desc">PDF, JPG, PNG, DOC, DOCX, XLS, XLSX</div>
                 <div class="upload-desc">(if available)</div>
                 <div v-if="form.expertiseDocument" class="upload-filename">{{ form.expertiseDocument.name }}</div>
@@ -299,7 +299,7 @@
             <label class="upload-label">
               <input type="file" @change="onFileChange($event, 'otherDocuments')" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx" multiple />
               <div class="upload-placeholder">
-                <i class="fas fa-file-upload"></i>
+                <span class="emoji-icon">📁</span>
                 <div class="upload-desc">PDF, JPG, PNG, DOC, DOCX, XLS, XLSX</div>
                 <div class="upload-desc">(if available)</div>
                 <div v-if="form.otherDocuments && form.otherDocuments.length" class="upload-filename">
@@ -378,6 +378,29 @@
 
 <script setup>
 import { reactive, ref, computed, onMounted, onUnmounted } from 'vue'
+
+// Header yüksekliğini dinamik olarak hesapla
+const headerHeight = ref(100)
+
+const updateHeaderHeight = () => {
+  const header = document.querySelector('.main-header')
+  if (header) {
+    headerHeight.value = header.offsetHeight
+    document.documentElement.style.setProperty('--header-height', `${headerHeight.value}px`)
+  }
+}
+
+onMounted(() => {
+  updateHeaderHeight()
+  window.addEventListener('resize', updateHeaderHeight)
+  
+  // Sayfa yüklendikten sonra tekrar kontrol et
+  setTimeout(updateHeaderHeight, 100)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('resize', updateHeaderHeight)
+})
 
 const form = reactive({
   username: '',
@@ -612,12 +635,13 @@ function submitForm() {
 <style scoped>
 .become-partner-page {
   max-width: 1200px;
-  margin: 40px auto;
+  margin: 0 auto;
   background: #fff;
   color: #222;
   border-radius: 12px;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
   padding: 40px 36px;
+  margin-top: calc(var(--header-height, 100px) + 2rem);
 }
 .form-title {
   text-align: center;
@@ -763,6 +787,7 @@ function submitForm() {
 @media (max-width: 700px) {
   .become-partner-page {
     padding: 8px 2px;
+    margin-top: calc(var(--header-height, 80px) + 1rem);
   }
   .form-section {
     padding: 12px 4px;
@@ -868,7 +893,17 @@ function submitForm() {
   color: #bbb;
   font-size: 13px;
 }
-.upload-placeholder i {
+.upload-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: #bbb;
+  font-size: 13px;
+}
+
+.upload-placeholder .emoji-icon {
   font-size: 24px;
   margin-bottom: 2px;
 }
