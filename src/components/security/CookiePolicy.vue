@@ -68,7 +68,7 @@
   border-radius: 12px;
   box-shadow: 0 2px 16px #0001;
   color: #222;
-  margin-top: 120px;
+
 }
 h1, h3 {
   color: #FC6421;

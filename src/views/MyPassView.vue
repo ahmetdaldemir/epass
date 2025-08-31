@@ -392,13 +392,14 @@ function logout() {
 }
 
 function editReservation(reservation) { 
-  alert('Edit reservation: ' + reservation.id) 
+  alert('To make changes to your reservation, please contact us via email. Reservation ID: ' + reservation.id) 
 }
 
 function cancelReservation(reservation) { 
   if (confirm('Are you sure you want to cancel this reservation?')) {
     // Backend'e cancel request gönder
-    cancelReservationBackend(reservation.id)
+    //cancelReservationBackend(reservation.id)
+    alert('To cancel your reservation, please contact us via email. Reservation ID: ' + reservation.id)
   }
 }
 
@@ -872,7 +873,6 @@ async function sendResetLink() {
   padding: 40px 24px 32px;
   text-align: center;
   border-bottom: 1px solid rgba(255,255,255,0.1);
-  margin-top: 120px;
 }
 
 .user-avatar {
@@ -969,7 +969,6 @@ async function sendResetLink() {
   padding: 40px;
   background: #f8f9fa;
   overflow-y: auto;
-  margin-top: 100px;
 }
 
 .content-section {

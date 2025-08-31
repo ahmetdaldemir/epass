@@ -81,7 +81,7 @@ async function resetPassword() {
       return
     }
     
-    const response = await fetch('https://searchyourtour.com/api/customer/password/reset', {
+    const response = await fetch('https://backend.searchyourtour.com/api/customer/password/reset', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

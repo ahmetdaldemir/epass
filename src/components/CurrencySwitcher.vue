@@ -110,6 +110,7 @@ onMounted(() => {
   background: white;
   font-size: 14px;
   transition: border-color 0.2s;
+  width: 120px;
 }
 
 .currency-display:hover {

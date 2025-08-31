@@ -13,7 +13,7 @@ export const useCurrencyStore = () => {
     error.value = null
     
     try {
-      const response = await fetch('https://searchyourtour.com/api/currencies?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1')
+      const response = await fetch('https://backend.searchyourtour.com/api/currencies?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1')
       if (!response.ok) {
         throw new Error('Failed to fetch currencies')
       }

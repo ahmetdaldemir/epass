@@ -22,7 +22,7 @@
         <div class="hero-badge">NOW WITH <span>5GB</span> SIM FREE</div>
         <div class="hero-label">Basilica Cistern / Included with pass</div>
         <!-- Main H1 Heading for SEO -->
-
+    
         <!-- Kategori Butonları -->
         <div class="category-tabs">
           <button v-for="cat in categories" :key="cat.value"
@@ -46,6 +46,10 @@
               <div class="" style="    border: 1px solid #dcdfe4;height: 100%;">
               <div class="tour-card-img-wrap">
                 <img :src="getAttractionImage(tour)" :alt="getAttractionName(tour)" />
+                <!-- Likely to sell out badge -->
+                <div v-if="isLikelyToSellOut(tour.id)" class="sell-out-badge">
+                  Likely to sell out
+                </div>
               </div>
               <!-- Kart içeriği -->
               <div class="tour-card-content">
@@ -71,6 +75,10 @@
               style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
               <div class="tour-card-img-wrap">
                 <img :src="getAttractionImage(tour)" :alt="getAttractionName(tour)" />
+                <!-- Likely to sell out badge -->
+                <div v-if="isLikelyToSellOut(tour.id)" class="sell-out-badge">
+                  Likely to sell out
+                </div>
               </div>
               <div class="tour-card-content">
                 <div class="tour-card-type">{{ tour.type || 'GUIDED TOURS' }}</div>
@@ -343,6 +351,10 @@ const loading = ref(false)
 const error = ref(null)
 const currentLanguage = ref('en')
 
+// Likely to sell out system
+const sellOutInterval = ref(null)
+const currentSellOutTourId = ref(null)
+
 // Currency store
 const currencyStore = useCurrencyStore()
 const currentCurrency = computed(() => {
@@ -429,12 +441,24 @@ const fetchAttractions = async () => {
       throw new Error(`API Error: ${response.status} ${response.statusText}`)
     }
     const data = await response.json()
-    const istanbulTours = (data || []).filter(tour => tour.destination?.id === 404 && tour.is_active === true)
+    const istanbulTours = (data || []).filter(tour => 
+      tour.destination?.id === 404 && 
+      tour.is_active === true &&
+      tour.tour_price?.[0]?.price && 
+      tour.tour_price[0].price > 0
+    )
 
     // Debug: API'den gelen tour verilerini kontrol et
     console.log('=== API RESPONSE DEBUG ===')
     console.log('Total tours found:', istanbulTours.length)
     console.log('API called with currency_id:', currencyId, '(EUR)')
+    
+    // Fiyat bilgisi olmayan turları da sayalım
+    const allIstanbulTours = (data || []).filter(tour => tour.destination?.id === 404 && tour.is_active === true)
+    const toursWithoutPrice = allIstanbulTours.filter(tour => !tour.tour_price?.[0]?.price || tour.tour_price[0].price <= 0)
+    console.log(`Tours without price: ${toursWithoutPrice.length}`)
+    console.log(`Tours with price: ${istanbulTours.length}`)
+    
     istanbulTours.slice(0, 5).forEach((tour, index) => {
       console.log(`\n${index + 1}. Tour ID: ${tour.id}`)
       console.log(`   Name: ${tour.content?.[0]?.name}`)
@@ -473,6 +497,36 @@ const getAttractionDescription = (attraction) => {
 }
 const getAttractionImage = (attraction) => {
   return attraction.files?.[0]?.url || 'https://via.placeholder.com/300x200?text=Istanbul+Attraction'
+}
+
+// Likely to sell out functions
+const isLikelyToSellOut = (tourId) => {
+  return currentSellOutTourId.value === tourId
+}
+
+const rotateSellOutBadge = () => {
+  if (attractions.value.length === 0) return
+  
+  // Randomly select a new tour for the badge
+  const randomIndex = Math.floor(Math.random() * attractions.value.length)
+  currentSellOutTourId.value = attractions.value[randomIndex].id
+  
+  console.log(`"Likely to sell out" badge moved to tour ID: ${currentSellOutTourId.value}`)
+}
+
+const startSellOutRotation = () => {
+  // Set initial tour
+  rotateSellOutBadge()
+  
+  // For testing: rotate every 10 seconds, for production: 3-4 hours
+  const isDevelopment = process.env.NODE_ENV === 'development'
+  const interval = isDevelopment ? 10000 : Math.random() * (4 * 60 * 60 * 1000 - 3 * 60 * 60 * 1000) + 3 * 60 * 60 * 1000
+  
+  sellOutInterval.value = setInterval(() => {
+    rotateSellOutBadge()
+  }, interval)
+  
+  console.log(`Sell out badge rotation started with ${Math.round(interval / 1000)} second interval`)
 }
 
 // Price conversion functions
@@ -700,11 +754,24 @@ onMounted(() => {
   })
 
   fetchAttractions()
+  
+  // Start sell out badge rotation after attractions are loaded
+  watch(attractions, (newAttractions) => {
+    if (newAttractions.length > 0 && !sellOutInterval.value) {
+      startSellOutRotation()
+    }
+  }, { immediate: true })
 })
 
 onBeforeUnmount(() => {
   // Remove event listener
   window.removeEventListener('currency-changed', handleCurrencyChange)
+  
+  // Clear sell out interval
+  if (sellOutInterval.value) {
+    clearInterval(sellOutInterval.value)
+    sellOutInterval.value = null
+  }
 })
 
 // Kategoriler
@@ -837,11 +904,11 @@ const cultureTours = attractions
   }
 
   .hero-img-wrap {
-    height: 220px;
+    height: 400px;
   }
 
   .hero-img {
-    height: 220px;
+    height: 400px;
   }
 }
 
@@ -1072,30 +1139,58 @@ const cultureTours = attractions
 
 @media (max-width: 1024px) {
     .hero-title-content {
-        align-items: start;
-        padding: 204px 16px 16px;
+        padding: 0 1.5rem;
+    }
+    
+    .text-atom--headline-2 {
+        font-size: 2.5rem !important;
+        line-height: 3rem !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-title-content {
+        padding: 0 1rem;
+    }
+    
+    .text-atom--headline-2 {
+        font-size: 1.8rem !important;
+        line-height: 2.2rem !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title-content {
+        padding: 0 0.8rem;
+    }
+    
+    .text-atom--headline-2 {
+        font-size: 1.4rem !important;
+        line-height: 1.8rem !important;
     }
 }
 
 .hero-title-content {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  margin: auto;
-  max-width: 1400px;
-  padding: 16px 17rem;
   position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 900px;
+  padding: 0 2rem;
   z-index: 999;
   color: #fff;
-  text-align: left;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .hero-section__header {
-  align-self: flex-start;
-  margin-bottom: 32px;
-  margin-top: 128px;
-  width: 90%;
+  margin: 0;
+  width: 100%;
+  text-align: center;
 }
 
 .text-atom--headline-2 {
@@ -1178,6 +1273,7 @@ const cultureTours = attractions
   font-size: 2.5rem;
   margin-bottom: 3rem;
   color: #2c3e50;
+  line-height: 0.8;
 }
 
 /* Features Section */
@@ -1224,6 +1320,29 @@ const cultureTours = attractions
   font-size: 3rem;
   color: #FC6421;
   margin-bottom: 1rem;
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 6 Solid", sans-serif;
+}
+
+.feature-icon i {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 6 Solid", sans-serif !important;
+  font-weight: 900;
+}
+
+/* Font Awesome ikonları için genel kural */
+.fas, .far, .fab, .fa-solid, .fa-regular, .fa-brands {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 6 Solid", sans-serif !important;
+}
+
+.fas, .fa-solid {
+  font-weight: 900 !important;
+}
+
+.far, .fa-regular {
+  font-weight: 400 !important;
+}
+
+.fab, .fa-brands {
+  font-weight: 400 !important;
 }
 
 .feature-card h3 {
@@ -1559,6 +1678,19 @@ const cultureTours = attractions
   font-size: 1.5em;
   display: flex;
   align-items: center;
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 6 Solid", sans-serif !important;
+}
+
+.cat-icon i {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 6 Solid", sans-serif !important;
+  font-weight: 900 !important;
+}
+
+/* Kategori ikonları için özel kural */
+.category-tab .cat-icon i {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 6 Solid", sans-serif !important;
+  font-weight: 900 !important;
+  display: inline-block !important;
 }
 
 .category-section {
@@ -1625,6 +1757,20 @@ const cultureTours = attractions
   display: block;
 }
 
+.sell-out-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: #ff0000;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
 .tour-card-badge {
   position: absolute;
   top: 12px;
@@ -1677,7 +1823,7 @@ const cultureTours = attractions
 }
 
 .tour-card-type {
-  color: #e6007a;
+  color: #FC6421;
   font-size: 0.95rem;
   font-weight: 700;
   margin-bottom: 0.2rem;
@@ -1746,7 +1892,7 @@ const cultureTours = attractions
 }
 
 .tour-card-price {
-  color: #e6007a;
+  color: #FC6421;
   font-size: 1.08em;
   font-weight: 700;
   white-space: nowrap;
@@ -2423,6 +2569,14 @@ const cultureTours = attractions
     line-height: 1.1;
     top: 45%;
   }
+  
+  .hero-img-wrap {
+    height: 400px;
+  }
+  
+  .hero-img {
+    height: 400px;
+  }
 
   .category-tabs {
     gap: 12px;
@@ -2460,6 +2614,12 @@ const cultureTours = attractions
 
   .cat-icon {
     font-size: 1.2em;
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 6 Solid", sans-serif !important;
+  }
+  
+  .cat-icon i {
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 6 Solid", sans-serif !important;
+    font-weight: 900 !important;
   }
 }
 
@@ -2479,6 +2639,12 @@ const cultureTours = attractions
 
   .cat-icon {
     font-size: 1.3em;
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 6 Solid", sans-serif !important;
+  }
+  
+  .cat-icon i {
+    font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 6 Solid", sans-serif !important;
+    font-weight: 900 !important;
   }
 
   .category-tab span:not(.cat-icon) {

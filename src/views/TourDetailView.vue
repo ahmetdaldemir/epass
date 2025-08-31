@@ -64,16 +64,27 @@
               <h1 class="tour-title">{{ getTourName(tour) }}</h1>
               <div class="tour-meta">
                 <div class="rating">
-                  <i class="fas fa-star"></i>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="#FFD700">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                  </svg>
                   <span>4.5</span>
                   <span class="review-count">(New)</span>
                 </div>
+                <!-- Likely to sell out badge for tour detail -->
+                <div v-if="isLikelyToSellOut" class="sell-out-badge-detail">
+                  Likely to sell out
+                </div>
                 <div class="duration">
-                  <i class="fas fa-clock"></i>
-                  <span>{{ tour.tour_duraction }} {{ tour.tour_duraction_type }}{{ tour.tour_duraction > 1 ? 's' : '' }}</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fc6421" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"/>
+                    <polyline points="12,6 12,12 16,14"/>
+                  </svg>
+                  <span>{{ tour.tour_duraction }} {{ tour.tour_duraction_type }}{{ tour.tour_duraction > 1 ? '' : '' }}</span>
                 </div>
                 <div class="destination">
-                  <i class="fas fa-map-marker-alt"></i>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="#fc6421">
+                    <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                  </svg>
                   <span>{{ getDestinationName(tour) }}</span>
                 </div>
               </div>
@@ -81,29 +92,40 @@
                 <p>{{ getTourDescription(tour) }}</p>
               </div>
            
-              <div class="info-card">
-                <h4>Tour Information</h4>
-                <div class="info-item">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span>Destination: {{ getDestinationName(tour) }}</span>
-                </div>
-                <div class="info-item">
-                  <i class="fas fa-clock"></i>
-                  <span>Duration: {{ tour.tour_duraction }} {{ tour.tour_duraction_type }}{{ tour.tour_duraction > 1 ? 's' : '' }}</span>
-                </div>
-                <div class="info-item">
-                  <i class="fas fa-users"></i>
-                  <span>Max Group Size: {{ tour.pax || 'Not specified' }}</span>
-                </div>
-                <div class="info-item">
-                  <i class="fas fa-calendar"></i>
-                  <span>Available Days: {{ getAvailableDays(tour) }}</span>
-                </div>
-                <div class="info-item" v-if="tour.min_age">
-                  <i class="fas fa-child"></i>
-                  <span>Minimum Age: {{ tour.min_age }}</span>
-                </div>
-              </div>
+                             <div class="info-card">
+                 <h4>Tour Information</h4>
+                 <div class="info-item">
+                   <svg width="16" height="16" viewBox="0 0 24 24" fill="#fc6421">
+                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                   </svg>
+                   <span>Destination: {{ getDestinationName(tour) }}</span>
+                 </div>
+                                   <div class="info-item">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fc6421" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <circle cx="12" cy="12" r="10"/>
+                      <polyline points="12,6 12,12 16,14"/>
+                    </svg>
+                    <span>Duration: {{ tour.tour_duraction }} {{ tour.tour_duraction_type }}{{ tour.tour_duraction > 1 ? '' : '' }}</span>
+                  </div>
+                 <div class="info-item">
+                   <svg width="16" height="16" viewBox="0 0 24 24" fill="#fc6421">
+                     <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H17c-.8 0-1.54.37-2.01 1l-1.7 2.26V16h-1.5v6h5zM12.5 11.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5S11 9.17 11 10s.67 1.5 1.5 1.5zM5.5 6c1.11 0 2-.89 2-2s-.89-2-2-2-2 .89-2 2 .89 2 2 2zm2 16v-7H9V9c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v6h1.5v7h4z"/>
+                   </svg>
+                   <span>Max Group Size: {{ tour.pax || 'Not specified' }}</span>
+                 </div>
+                 <div class="info-item">
+                   <svg width="16" height="16" viewBox="0 0 24 24" fill="#fc6421">
+                     <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
+                   </svg>
+                   <span>Available Days: {{ getAvailableDays(tour) }}</span>
+                 </div>
+                 <div class="info-item" v-if="tour.min_age">
+                   <svg width="16" height="16" viewBox="0 0 24 24" fill="#fc6421">
+                     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                   </svg>
+                   <span>Minimum Age: {{ tour.min_age }}</span>
+                 </div>
+               </div>
             </div>
           </div>
         </div>
@@ -158,7 +180,9 @@
                         <h4>What's Included</h4>
                         <ul class="inclusions-list">
                           <li v-for="service in tour.tour_include_service" :key="service.id">
-                            <i class="fas fa-check"></i>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#27ae60">
+                              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                            </svg>
                             {{ service.include_service }}
                           </li>
                         </ul>
@@ -167,7 +191,9 @@
                         <h4>Not Included</h4>
                         <ul class="exclusions-list">
                           <li v-for="service in tour.tour_outside_service" :key="service.id">
-                            <i class="fas fa-times"></i>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#e74c3c">
+                              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                            </svg>
                             {{ service.outside_service }}
                           </li>
                         </ul>
@@ -214,7 +240,9 @@
                         <h3>What's Included</h3>
                         <ul class="inclusions-list">
                           <li v-for="service in tour.tour_include_service" :key="service.id">
-                            <i class="fas fa-check"></i>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#27ae60">
+                              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                            </svg>
                             {{ service.include_service }}
                           </li>
                         </ul>
@@ -223,7 +251,9 @@
                         <h3>Not Included</h3>
                         <ul class="exclusions-list">
                           <li v-for="service in tour.tour_outside_service" :key="service.id">
-                            <i class="fas fa-times"></i>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="#e74c3c">
+                              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                            </svg>
                             {{ service.outside_service }}
                           </li>
                         </ul>
@@ -260,53 +290,76 @@
             <div class="content-row-booking">
                                <!-- Rezervasyon/Ödeme Kutusu Başlangıç -->
                                <div v-if="tour" class="pass-box" ref="bookingBox">
-                                <h2 style="cursor:pointer" @click="scrollToBookingBox">Book this tour</h2>
+                                <h2 style="cursor:pointer" @click="scrollToBookingBox">Book Now</h2>
                                 <div class="pass-select-row">
                                   <div class="pass-select">{{ getTourName(tour) }}</div>
                                   <span class="pass-price">{{ currentCurrencySymbol }}{{ adultPrice }}<small> / adult</small></span>
                                   <span class="pass-price" style="margin-left:12px;">{{ currentCurrencySymbol }}{{ childPrice }}<small> / child</small></span>
                                   <span class="pass-price" style="margin-left:12px;">{{ currentCurrencySymbol }}{{ infantPrice }}<small> / infant</small></span>
                                 </div>
-                                <div class="quantity-row" style="display: flex; gap: 12px; align-items: flex-start; justify-content: flex-start; margin-bottom: 8px;">
-                                  <div style="display:flex;align-items:center;gap:4px; min-width: 90px;">
-                                    <span style="width:40px; font-size: 0.9rem;">Adult</span>
-                                    <button @click="decrement('adult')" :disabled="adultQuantity <= 0" style="width:24px; height:24px; font-size: 14px; padding: 0; border-radius: 4px;">-</button>
-                                    <span style="width:20px; text-align:center; font-size: 0.9rem;">{{ adultQuantity }}</span>
-                                    <button @click="increment('adult')" style="width:24px; height:24px; font-size: 14px; padding: 0; border-radius: 4px;">+</button>
-                                  </div>
-                                  <div style="display:flex;align-items:center;gap:4px; min-width: 90px;">
-                                    <span style="width:40px; font-size: 0.9rem;">Child</span>
-                                    <button @click="decrement('child')" :disabled="childQuantity <= 0" style="width:24px; height:24px; font-size: 14px; padding: 0; border-radius: 4px;">-</button>
-                                    <span style="width:20px; text-align:center; font-size: 0.9rem;">{{ childQuantity }}</span>
-                                    <button @click="increment('child')" style="width:24px; height:24px; font-size: 14px; padding: 0; border-radius: 4px;">+</button>
-                                  </div>
-                                  <div style="display:flex;flex-direction:column;gap:2px; min-width: 90px;">
-                                    <div style="display:flex;align-items:center;gap:4px;">
-                                      <span style="width:40px; font-size: 0.9rem;">Infant</span>
-                                      <button @click="decrement('infant')" :disabled="infantQuantity <= 0" style="width:24px; height:24px; font-size: 14px; padding: 0; border-radius: 4px;">-</button>
-                                      <span style="width:20px; text-align:center; font-size: 0.9rem;">{{ infantQuantity }}</span>
-                                      <button @click="increment('infant')" style="width:24px; height:24px; font-size: 14px; padding: 0; border-radius: 4px;">+</button>
-                                    </div>
-                                    <div style="color: #888; font-size: 0.75rem; margin-left: 40px;">
-                                      Age 0-2 years
-                                    </div>
-                                  </div>
-                                </div>
+                                                                 <div class="quantity-row" style="display: flex; gap: 16px; align-items: flex-start; justify-content: flex-start; margin-bottom: 12px;">
+                                   <!-- Desktop layout -->
+                                   <div class="desktop-quantity-controls" style="display:flex;align-items:center;gap:6px; min-width: 110px;">
+                                     <span style="width:50px; font-size: 1.1rem; font-weight: 500;">Adult</span>
+                                     <button @click="decrement('adult')" :disabled="adultQuantity <= 0" style="width:32px; height:32px; font-size: 18px; padding: 0; border-radius: 6px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s;">-</button>
+                                     <span style="width:30px; text-align:center; font-size: 1.1rem; font-weight: 500;">{{ adultQuantity }}</span>
+                                     <button @click="increment('adult')" style="width:32px; height:32px; font-size: 18px; padding: 0; border-radius: 6px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s;">+</button>
+                                   </div>
+                                   <div class="desktop-quantity-controls" style="display:flex;align-items:center;gap:6px; min-width: 110px;">
+                                     <span style="width:50px; font-size: 1.1rem; font-weight: 500;">Child</span>
+                                     <button @click="decrement('child')" :disabled="childQuantity <= 0" style="width:32px; height:32px; font-size: 18px; padding: 0; border-radius: 6px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s;">-</button>
+                                     <span style="width:30px; text-align:center; font-size: 1.1rem; font-weight: 500;">{{ childQuantity }}</span>
+                                     <button @click="increment('child')" style="width:32px; height:32px; font-size: 18px; padding: 0; border-radius: 6px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s;">+</button>
+                                   </div>
+                                   <div class="desktop-quantity-controls" style="display:flex;flex-direction:column;gap:3px; min-width: 110px;">
+                                     <div style="display:flex;align-items:center;gap:6px;">
+                                       <span style="width:50px; font-size: 1.1rem; font-weight: 500;">Infant</span>
+                                       <button @click="decrement('infant')" :disabled="infantQuantity <= 0" style="width:32px; height:32px; font-size: 18px; padding: 0; border-radius: 6px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s;">-</button>
+                                       <span style="width:30px; text-align:center; font-size: 1.1rem; font-weight: 500;">{{ infantQuantity }}</span>
+                                       <button @click="increment('infant')" style="width:32px; height:32px; font-size: 18px; padding: 0; border-radius: 6px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s;">+</button>
+                                     </div>
+                                     <div style="color: #888; font-size: 0.85rem; margin-left: 50px;">
+                                       Age 0-2 years
+                                     </div>
+                                   </div>
+                                   
+                                   <!-- Mobile layout -->
+                                   <div class="mobile-quantity-controls" style="display: none; flex-direction: column; width: 100%;">
+                                     <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 0;">
+                                       <span style="font-size: 1.1rem; font-weight: 500;">Adult</span>
+                                       <div style="display: flex; align-items: center; gap: 12px;">
+                                         <button @click="decrement('adult')" :disabled="adultQuantity <= 0" style="width:44px; height:44px; font-size: 20px; padding: 0; border-radius: 8px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center;">-</button>
+                                         <span style="width:40px; text-align:center; font-size: 1.2rem; font-weight: 600;">{{ adultQuantity }}</span>
+                                         <button @click="increment('adult')" style="width:44px; height:44px; font-size: 20px; padding: 0; border-radius: 8px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center;">+</button>
+                                       </div>
+                                     </div>
+                                     <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 0;">
+                                       <span style="font-size: 1.1rem; font-weight: 500;">Child</span>
+                                       <div style="display: flex; align-items: center; gap: 12px;">
+                                         <button @click="decrement('child')" :disabled="childQuantity <= 0" style="width:44px; height:44px; font-size: 20px; padding: 0; border-radius: 8px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center;">-</button>
+                                         <span style="width:40px; text-align:center; font-size: 1.2rem; font-weight: 600;">{{ childQuantity }}</span>
+                                         <button @click="increment('child')" style="width:44px; height:44px; font-size: 20px; padding: 0; border-radius: 8px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center;">+</button>
+                                       </div>
+                                     </div>
+                                     <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 0;">
+                                       <div style="display: flex; flex-direction: column; gap: 2px;">
+                                         <span style="font-size: 1.1rem; font-weight: 500;">Infant</span>
+                                         <span style="color: #888; font-size: 0.85rem;">Age 0-2 years</span>
+                                       </div>
+                                       <div style="display: flex; align-items: center; gap: 12px;">
+                                         <button @click="decrement('infant')" :disabled="infantQuantity <= 0" style="width:44px; height:44px; font-size: 20px; padding: 0; border-radius: 8px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center;">-</button>
+                                         <span style="width:40px; text-align:center; font-size: 1.2rem; font-weight: 600;">{{ infantQuantity }}</span>
+                                         <button @click="increment('infant')" style="width:44px; height:44px; font-size: 20px; padding: 0; border-radius: 8px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center;">+</button>
+                                       </div>
+                                     </div>
+                                   </div>
+                                 </div>
                                 <div class="price-summary">
                                   <div class="old-price" v-if="getOldTourPrice(tour)"><s>{{ getOldTourPrice(tour) }}</s></div>
                                   <div class="new-price">{{ getTourPrice(tour) }}</div>
                                   <div class="discount" v-if="getDiscount(tour)"><span>Sale Discount</span><span>-{{ getDiscount(tour) }}</span></div>
                                 </div>
-                                <hr />
-                                <div class="fee-row">
-                                  <span>Instant Access Fee <span class="info" title="You get your booking instantly after payment.">i</span></span>
-                                  <span>{{ instantFee }}</span>
-                                </div>
-                                <div class="eco-row">
-                                  <span class="eco-icon">🌱</span>
-                                  <span>Eco-Friendly Green Technology</span>
-                                </div>
-                                <hr />
+                                <hr />                    
                                 <div class="order-total-row">
                                   <span>Order Total</span>
                                   <span class="order-total">{{ orderTotal }}</span>
@@ -397,7 +450,7 @@
       class="sticky-book-btn"
       @click="scrollToBookingBox"
     >
-      Book this tour
+      Book Now
     </button>
 
     <!-- Mobilde Element Plus DatePicker tam ekran modal -->
@@ -458,6 +511,10 @@ const todayStr = new Date().toISOString().slice(0, 10);
 const aboutMaxHeight = 800 // px, show more/less için artırıldı
 const bookingBox = ref(null)
 const showStickyBookBtn = ref(true)
+
+// Likely to sell out system
+const sellOutInterval = ref(null)
+const currentSellOutTourId = ref(null)
 
 // Fetch tour data from API
 const fetchTourData = async () => {
@@ -698,6 +755,38 @@ const getAvailableDays = (tour) => {
   return tour.days.map(day => dayNames[day - 1]).join(', ')
 }
 
+// Likely to sell out functions
+const isLikelyToSellOut = computed(() => {
+  return currentSellOutTourId.value === tour.value?.id
+})
+
+const rotateSellOutBadge = () => {
+  // For tour detail, we'll randomly show/hide the badge
+  const shouldShow = Math.random() > 0.5
+  if (shouldShow) {
+    currentSellOutTourId.value = tour.value?.id
+  } else {
+    currentSellOutTourId.value = null
+  }
+  
+  console.log(`Tour detail "Likely to sell out" badge: ${shouldShow ? 'SHOWN' : 'HIDDEN'}`)
+}
+
+const startSellOutRotation = () => {
+  // Set initial state
+  rotateSellOutBadge()
+  
+  // For testing: rotate every 10 seconds, for production: 3-4 hours
+  const isDevelopment = process.env.NODE_ENV === 'development'
+  const interval = isDevelopment ? 10000 : Math.random() * (4 * 60 * 60 * 1000 - 3 * 60 * 60 * 1000) + 3 * 60 * 60 * 1000
+  
+  sellOutInterval.value = setInterval(() => {
+    rotateSellOutBadge()
+  }, interval)
+  
+  console.log(`Tour detail sell out badge rotation started with ${Math.round(interval / 1000)} second interval`)
+}
+
 function increment(type) {
   if (type === 'adult') adultQuantity.value++
   else if (type === 'child') childQuantity.value++
@@ -817,7 +906,7 @@ function handleScroll() {
 
 onMounted(() => {
   const checkMobile = () => {
-    isMobile.value = window.innerWidth <= 900;
+    isMobile.value = window.innerWidth <= 1150;
   };
   checkMobile();
   window.addEventListener('resize', checkMobile);
@@ -848,12 +937,25 @@ onMounted(() => {
   // Add event listeners for language and currency changes
   window.addEventListener('language-changed', handleLanguageChange)
   window.addEventListener('currency-changed', handleCurrencyChange)
+  
+  // Start sell out badge rotation after tour is loaded
+  watch(tour, (newTour) => {
+    if (newTour && !sellOutInterval.value) {
+      startSellOutRotation()
+    }
+  }, { immediate: true })
 })
 
 onUnmounted(() => {
   // Remove event listeners
   window.removeEventListener('language-changed', handleLanguageChange)
   window.removeEventListener('currency-changed', handleCurrencyChange)
+  
+  // Clear sell out interval
+  if (sellOutInterval.value) {
+    clearInterval(sellOutInterval.value)
+    sellOutInterval.value = null
+  }
 })
 </script>
 
@@ -899,7 +1001,6 @@ onUnmounted(() => {
 .tour-hero {
   background: #f8f9fa;
   padding: 2rem 0;
-  margin-top: 120px;
 }
 
 .tour-hero-content {
@@ -999,6 +1100,7 @@ onUnmounted(() => {
   font-weight: 700;
   color: #333;
   margin: 0;
+  line-height: 0.8;
 }
 
 .tour-meta {
@@ -1012,6 +1114,19 @@ onUnmounted(() => {
   align-items: center;
   gap: 0.5rem;
   color: #666;
+}
+
+.sell-out-badge-detail{
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #ffffff !important;
+  background-color: #ff0000;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .rating {
@@ -1273,7 +1388,7 @@ onUnmounted(() => {
 }
 
 /* Responsive Design */
-@media (max-width: 900px) {
+@media (max-width: 1150px) {
   .tour-detail {
     min-height: 100vh;
     padding: 0;
@@ -1705,9 +1820,17 @@ hr {
 
 .desktop-only { display: block; }
 .mobile-only { display: none; }
-@media (max-width: 900px) {
+
+/* Quantity controls responsive styles */
+.desktop-quantity-controls { display: flex; }
+.mobile-quantity-controls { display: none; }
+@media (max-width: 1150px) {
   .desktop-only { display: none !important; }
   .mobile-only { display: block !important; }
+  
+  /* Quantity controls mobile styles */
+  .desktop-quantity-controls { display: none !important; }
+  .mobile-quantity-controls { display: flex !important; }
   .mobile-carousel {
     position: relative;
     width: 100%;
@@ -1758,20 +1881,20 @@ hr {
     border-radius: 8px;
     font-size: 0.9rem;
   }
-  .quantity-row button {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: none;
-    background: #f2f2f2;
-    font-size: 1.2rem;
-    cursor: pointer;
-    transition: background 0.2s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-  }
+     .quantity-row button {
+     width: 36px;
+     height: 36px;
+     border-radius: 6px;
+     border: none;
+     background: #f2f2f2;
+     font-size: 1.4rem;
+     cursor: pointer;
+     transition: background 0.2s;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     padding: 0;
+   }
 }
 .date-input-wrapper {
   position: relative;
@@ -1952,10 +2075,22 @@ html, body {
   transition: opacity 0.2s;
   display: none;
 }
-@media (max-width: 900px) {
+@media (max-width: 1150px) {
   .sticky-book-btn {
     display: block;
   }
+}
+
+.sell-out-badge-detail {
+  background-color: #ff0000 !important;
+  color: white !important;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  display: inline-block;
+  margin-left: 1rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 </style>
 

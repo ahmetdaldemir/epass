@@ -23,7 +23,7 @@ The error you encountered was due to conflicting configuration fields in `wrangl
 ## 🌍 Language Switcher API Integration
 
 The language switcher now fetches real language data from the API:
-- **API Endpoint:** `https://searchyourtour.com/api/languages?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1`
+- **API Endpoint:** `https://backend.searchyourtour.com/api/languages?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1`
 - **Features:** Real language names, proper flags, status filtering
 - **Fallback:** Default languages if API fails
 - **Storage:** Selected language saved to localStorage
@@ -38,7 +38,7 @@ The language switcher now fetches real language data from the API:
 ## 🏛️ Tours API Integration
 
 All tour-related components now use the new API endpoint with language and currency support:
-- **API Endpoint:** `https://searchyourtour.com/api/tours?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1&language_id={id}&currency_id=5&limit=100&IpAdrress=78.177.166.135`
+- **API Endpoint:** `https://backend.searchyourtour.com/api/tours?token=ad5257a5-efdd-4314-9e5e-b56aabe321f1&language_id={id}&currency_id=5&limit=100&IpAdrress=78.177.166.135`
 - **Language Support:** Dynamic content based on selected language
 - **Currency Support:** USD pricing (currency_id=5)
 - **Real-time Updates:** Content updates when language changes
@@ -202,8 +202,8 @@ If you need to add environment variables for different environments:
 
 ```bash
 # .env.production
-VITE_API_URL=https://searchyourtour.com/api
-VITE_APP_TITLE=Istanbul Tourist Pass
+VITE_API_URL=https://backend.searchyourtour.com/api/
+VITE_APP_TITLE=SearchYourTour
 VITE_LANGUAGE_API_TOKEN=ad5257a5-efdd-4314-9e5e-b56aabe321f1
 VITE_TOURS_API_TOKEN=ad5257a5-efdd-4314-9e5e-b56aabe321f1
 VITE_DEFAULT_CURRENCY_ID=5

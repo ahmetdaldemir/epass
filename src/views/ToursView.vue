@@ -58,6 +58,10 @@
                   <i class="fas fa-heart"></i>
                 </button>
               </div>
+              <!-- Likely to sell out badge -->
+              <div v-if="isLikelyToSellOut(tour.id)" class="sell-out-badge">
+                Likely to sell out
+              </div>
             </div>
             <div class="tour-content">
               <h3>{{ getTourName(tour) }}</h3>
@@ -97,6 +101,10 @@ const selectedDuration = ref('')
 const tours = ref([])
 const loading = ref(false)
 const error = ref(null)
+
+// Likely to sell out system
+const sellOutInterval = ref(null)
+const currentSellOutTourId = ref(null)
 const currentLanguage = ref('en')
 const currentCurrency = computed(() => {
   const savedCurrency = localStorage.getItem('selectedCurrency') || 'EUR'
@@ -202,6 +210,36 @@ const getTourDuration = (tour) => {
   return `${duration} ${type}s`
 }
 
+// Likely to sell out functions
+const isLikelyToSellOut = (tourId) => {
+  return currentSellOutTourId.value === tourId
+}
+
+const rotateSellOutBadge = () => {
+  if (tours.value.length === 0) return
+  
+  // Randomly select a new tour for the badge
+  const randomIndex = Math.floor(Math.random() * tours.value.length)
+  currentSellOutTourId.value = tours.value[randomIndex].id
+  
+  console.log(`"Likely to sell out" badge moved to tour ID: ${currentSellOutTourId.value}`)
+}
+
+const startSellOutRotation = () => {
+  // Set initial tour
+  rotateSellOutBadge()
+  
+  // For testing: rotate every 10 seconds, for production: 3-4 hours
+  const isDevelopment = process.env.NODE_ENV === 'development'
+  const interval = isDevelopment ? 10000 : Math.random() * (4 * 60 * 60 * 1000 - 3 * 60 * 60 * 1000) + 3 * 60 * 60 * 1000
+  
+  sellOutInterval.value = setInterval(() => {
+    rotateSellOutBadge()
+  }, interval)
+  
+  console.log(`Sell out badge rotation started with ${Math.round(interval / 1000)} second interval`)
+}
+
 // Computed properties
 const uniqueDestinations = computed(() => {
   const destinations = tours.value.map(tour => tour.destination?.name).filter(Boolean)
@@ -267,11 +305,24 @@ onMounted(() => {
   currentLanguage.value = savedLanguage
   
   fetchTours()
+  
+  // Start sell out badge rotation after tours are loaded
+  watch(tours, (newTours) => {
+    if (newTours.length > 0 && !sellOutInterval.value) {
+      startSellOutRotation()
+    }
+  }, { immediate: true })
 })
 
 onBeforeUnmount(() => {
   // Remove event listener
   window.removeEventListener('currency-changed', handleCurrencyChange)
+  
+  // Clear sell out interval
+  if (sellOutInterval.value) {
+    clearInterval(sellOutInterval.value)
+    sellOutInterval.value = null
+  }
 })
 
 // Watch for language changes in localStorage
@@ -294,7 +345,6 @@ watch(() => localStorage.getItem('selectedLanguage'), (newLanguage) => {
   color: white;
   padding: 4rem 0;
   text-align: center;
-  margin-top: 100px;
 }
 
 .hero-title {
@@ -439,6 +489,20 @@ watch(() => localStorage.getItem('selectedLanguage'), (newLanguage) => {
 .wishlist-btn:hover {
   background: white;
   transform: scale(1.1);
+}
+
+.sell-out-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background-color: #fc6421;
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .tour-content {
