@@ -339,3 +339,73 @@ img {
     padding-right: 4px !important;
   }
 } 
+
+/* RTL Language Support */
+[dir="rtl"] {
+  text-align: right;
+}
+
+[dir="rtl"] .container {
+  direction: rtl;
+}
+
+[dir="rtl"] .footer-content.five-cols {
+  direction: rtl;
+}
+
+[dir="rtl"] .lang-switch .active-lang {
+  justify-content: flex-end;
+}
+
+[dir="rtl"] .lang-dropdown {
+  right: auto;
+  left: 0;
+}
+
+[dir="rtl"] .currency-display {
+  flex-direction: row-reverse;
+}
+
+[dir="rtl"] .currency-options {
+  left: auto;
+  right: 0;
+}
+
+[dir="rtl"] .social-links {
+  justify-content: flex-end;
+}
+
+[dir="rtl"] .hero-title-content {
+  text-align: right;
+}
+
+[dir="rtl"] .feature-card {
+  text-align: right;
+}
+
+[dir="rtl"] .attraction-content {
+  text-align: right;
+}
+
+[dir="rtl"] .pass-card {
+  text-align: right;
+}
+
+[dir="rtl"] .testimonial-card {
+  text-align: right;
+}
+
+/* Arabic font support */
+[lang="ar"] {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* German font support */
+[lang="de"] {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Turkish font support */
+[lang="tr"] {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+} 

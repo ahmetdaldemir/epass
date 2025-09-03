@@ -23,14 +23,14 @@
               </button>
             </div>
             <div class="mobile-menu-links">
-              <router-link to="/faqs" @click="closeMobileMenu">FAQs</router-link>
-              <router-link to="/contact" @click="closeMobileMenu">Contact Us</router-link>
-              <router-link to="/my-pass" @click="closeMobileMenu">Manage Your Pass</router-link>
-              <router-link to="/attractions" @click="closeMobileMenu">İstanbul Attractions</router-link>
-              <router-link to="/things-to-do-in-istanbul" @click="closeMobileMenu">Things to Do in Istanbul</router-link>
-              <router-link to="/tours" @click="closeMobileMenu">Tours</router-link>
-              <router-link to="/about" @click="closeMobileMenu">About</router-link>
-              <router-link to="/istanbul-pass" class="mobile-buy-btn" @click="closeMobileMenu">Buy Now</router-link>
+              <router-link to="/faqs" @click="closeMobileMenu">{{ $t('nav.faqs') }}</router-link>
+              <router-link to="/contact" @click="closeMobileMenu">{{ $t('nav.contact') }}</router-link>
+              <router-link to="/my-pass" @click="closeMobileMenu">{{ $t('nav.myPass') }}</router-link>
+              <router-link to="/attractions" @click="closeMobileMenu">{{ $t('nav.attractions') }}</router-link>
+              <router-link to="/things-to-do-in-istanbul" @click="closeMobileMenu">{{ $t('nav.thingsToDo') }}</router-link>
+              <router-link to="/tours" @click="closeMobileMenu">{{ $t('nav.tours') }}</router-link>
+              <router-link to="/about" @click="closeMobileMenu">{{ $t('nav.about') }}</router-link>
+              <router-link to="/istanbul-pass" class="mobile-buy-btn" @click="closeMobileMenu">{{ $t('nav.buyNow') }}</router-link>
             </div>
           </nav>
         </div>
@@ -39,16 +39,16 @@
                       <div class="header-right">
               <div class="top-links">
                 <ul>
-                  <li><router-link to="/faqs">FAQs</router-link></li>
-                  <li><router-link to="/contact">Contact Us</router-link></li>
-                  <li><router-link to="/my-pass">Manage Your Pass</router-link></li>
+                  <li><router-link to="/faqs">{{ $t('nav.faqs') }}</router-link></li>
+                  <li><router-link to="/contact">{{ $t('nav.contact') }}</router-link></li>
+                  <li><router-link to="/my-pass">{{ $t('nav.myPass') }}</router-link></li>
                 </ul>
               </div>
             <nav class="main-menu">
               <ul>
-                <li><router-link to="/attractions">İstanbul Attractions</router-link></li>
-                <li><router-link to="/tours">Tours</router-link></li>
-                <li><router-link to="/about">About</router-link></li>
+                <li><router-link to="/attractions">{{ $t('nav.attractions') }}</router-link></li>
+                <li><router-link to="/tours">{{ $t('nav.tours') }}</router-link></li>
+                <li><router-link to="/about">{{ $t('nav.about') }}</router-link></li>
               </ul>
             </nav>
           </div>
@@ -60,7 +60,10 @@
 
 <script setup>
 import { ref, onMounted, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import logo from '../assets/logo.png'
+
+const { t } = useI18n()
 
 const showMobileMenu = ref(false)
 

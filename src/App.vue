@@ -70,7 +70,23 @@ const initializeGlobalFeatures = () => {
     
     // Store language preference
     localStorage.setItem('selectedLanguage', lang)
+    
+    // Update RTL support
+    updateRTLSupport(lang)
   }
+  
+  // RTL support function
+  const updateRTLSupport = (lang) => {
+    const rtlLanguages = ['ar']
+    const isRTL = rtlLanguages.includes(lang)
+    
+    document.documentElement.dir = isRTL ? 'rtl' : 'ltr'
+    document.documentElement.lang = lang
+  }
+  
+  // Initialize RTL support on page load
+  const savedLanguage = localStorage.getItem('selectedLanguage') || 'en'
+  updateRTLSupport(savedLanguage)
 }
 </script>
 

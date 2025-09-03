@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 16,
+            "activePatchIndex": 17,
             "patches": [
                 {
                     "date": 1755211742142,
@@ -72,6 +72,10 @@
                 {
                     "date": 1756813176645,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -262,9 +262,9 @@\n     padding-right: 2px !important;\n   }\n   .btn, button, input, select {\n     font-size: 1.05rem;\n-    padding: 14px 0;\n+    padding: 14px 5;\n   }\n }\n \n /* Filtre butonları yatay scroll */\n"
+                },
+                {
+                    "date": 1756894799034,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -337,5 +337,75 @@\n    .main-content {\n     padding-left: 4px !important;\n     padding-right: 4px !important;\n   }\n+} \n+\n+/* RTL Language Support */\n+[dir=\"rtl\"] {\n+  text-align: right;\n+}\n+\n+[dir=\"rtl\"] .container {\n+  direction: rtl;\n+}\n+\n+[dir=\"rtl\"] .footer-content.five-cols {\n+  direction: rtl;\n+}\n+\n+[dir=\"rtl\"] .lang-switch .active-lang {\n+  justify-content: flex-end;\n+}\n+\n+[dir=\"rtl\"] .lang-dropdown {\n+  right: auto;\n+  left: 0;\n+}\n+\n+[dir=\"rtl\"] .currency-display {\n+  flex-direction: row-reverse;\n+}\n+\n+[dir=\"rtl\"] .currency-options {\n+  left: auto;\n+  right: 0;\n+}\n+\n+[dir=\"rtl\"] .social-links {\n+  justify-content: flex-end;\n+}\n+\n+[dir=\"rtl\"] .hero-title-content {\n+  text-align: right;\n+}\n+\n+[dir=\"rtl\"] .feature-card {\n+  text-align: right;\n+}\n+\n+[dir=\"rtl\"] .attraction-content {\n+  text-align: right;\n+}\n+\n+[dir=\"rtl\"] .pass-card {\n+  text-align: right;\n+}\n+\n+[dir=\"rtl\"] .testimonial-card {\n+  text-align: right;\n+}\n+\n+/* Arabic font support */\n+[lang=\"ar\"] {\n+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n+}\n+\n+/* German font support */\n+[lang=\"de\"] {\n+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n+}\n+\n+/* Turkish font support */\n+[lang=\"tr\"] {\n+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;\n } \n\\ No newline at end of file\n"
                 }
             ],
             "date": 1755211742142,

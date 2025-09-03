@@ -21,35 +21,27 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useLanguageStore } from '../stores/language'
 
 // Reactive data
-const currentLanguage = ref('en')
 const isDropdownOpen = ref(false)
-const languages = ref([])
 const loading = ref(false)
 const error = ref(null)
 
+// Store ve i18n
+const languageStore = useLanguageStore()
+const { locale } = useI18n()
+
+// Computed properties
+const currentLanguage = computed(() => languageStore.getCurrentLanguage)
+const languages = computed(() => languageStore.getAvailableLanguages)
+
 // Static language list based on database IDs
 const fetchLanguages = () => {
-  languages.value = [
-    { id: 2, code: 'tr', name: 'Türkçe', flag: 'tr', status: true },
-    { id: 6, code: 'de', name: 'Deutsch', flag: 'de', status: true },
-    { id: 1, code: 'en', name: 'English', flag: 'gb', status: true },
-    { id: 3, code: 'ar', name: 'العربية', flag: 'sa', status: true },
-    { id: 4, code: 'es', name: 'Español', flag: 'es', status: true },
-    { id: 5, code: 'fr', name: 'Français', flag: 'fr', status: true },
-    { id: 7, code: 'it', name: 'Italiano', flag: 'it', status: true },
-    { id: 8, code: 'pt', name: 'Português', flag: 'pt', status: true },
-    { id: 10, code: 'zh', name: '中文', flag: 'cn', status: true },
-    { id: 11, code: 'ja', name: '日本語', flag: 'jp', status: true },
-    { id: 9, code: 'ru', name: 'Русский', flag: 'ru', status: true }
-  ]
-  
-  // Set default language to English if none is set
-  if (!currentLanguage.value) {
-    currentLanguage.value = 'en'
-  }
+  // Languages are now managed by the store
+  // This function is kept for compatibility but not needed
 }
 
 // Methods
@@ -58,19 +50,23 @@ const toggleDropdown = () => {
 }
 
 const changeLanguage = (langCode) => {
-  currentLanguage.value = langCode
-  isDropdownOpen.value = false
+  // Store'da dili güncelle
+  languageStore.setLanguage(langCode)
   
-  // Save to localStorage
-  localStorage.setItem('selectedLanguage', langCode)
+  // i18n locale'ini güncelle
+  locale.value = langCode
+  
+  // Dropdown'ı kapat
+  isDropdownOpen.value = false
   
   // Emit event for parent components
   emit('language-changed', langCode)
   
-  // Dispatch custom event for global listeners
-  window.dispatchEvent(new CustomEvent('language-changed', {
-    detail: { language: langCode }
-  }))
+  // RTL desteğini güncelle
+  const rtlLanguages = ['ar']
+  const isRTL = rtlLanguages.includes(langCode)
+  document.documentElement.dir = isRTL ? 'rtl' : 'ltr'
+  document.documentElement.lang = langCode
   
   // Call the original doGTranslate function if it exists
   if (typeof window.doGTranslate === 'function') {
@@ -109,16 +105,8 @@ const emit = defineEmits(['language-changed'])
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
   
-  // Initialize language from meta tag or localStorage
-  const metaLanguage = document.querySelector("meta[name='language']")?.getAttribute('content')
-  const savedLanguage = localStorage.getItem('selectedLanguage')
-  if (savedLanguage) {
-    currentLanguage.value = savedLanguage
-  } else if (metaLanguage) {
-    currentLanguage.value = metaLanguage
-  } else {
-    currentLanguage.value = 'en'
-  }
+  // Initialize language store
+  languageStore.initializeLanguage()
   
   // Initialize languages
   fetchLanguages()

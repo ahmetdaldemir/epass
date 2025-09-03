@@ -2,8 +2,8 @@
   <div class="home">
     <!-- Top Banner (Price & Buy Now) -->
     <div class="top-banner">
-      <span>Starting from just €139</span>
-      <router-link to="/istanbul-pass" class="buy-now-btn">Buy Now</router-link>
+              <span>{{ $t('home.hero.startingFrom') }}</span>
+        <router-link to="/istanbul-pass" class="buy-now-btn">{{ $t('home.hero.buyNow') }}</router-link>
     </div>
 
     <!-- Hero Section with Main Visual and Badge -->
@@ -11,16 +11,15 @@
       <div class="hero-img-wrap">
         <div class="hero-title-content">
           <h1 class="hero-section__header">
-            <span class="text-atom--headline-2">Discover Istanbul with SearchYourTour Pass - Save 40% on Top
-              Attractions</span>
+            <span class="text-atom--headline-2">{{ $t('home.hero.title') }}</span>
           </h1>
         </div>
         <img class="hero-img"
           src="https://c4.wallpaperflare.com/wallpaper/683/300/1022/sunken-palace-or-basilica-cistern-istanbul-wallpaper-preview.jpg"
           alt="Basilica Cistern" loading="eager" fetchpriority="high" />
         <div class="hero-img-gradient"></div>
-        <div class="hero-badge">NOW WITH <span>5GB</span> SIM FREE</div>
-        <div class="hero-label">Basilica Cistern / Included with pass</div>
+        <div class="hero-badge">{{ $t('home.hero.badge') }}</div>
+        <div class="hero-label">{{ $t('home.hero.subtitle') }}</div>
         <!-- Main H1 Heading for SEO -->
     
         <!-- Kategori Butonları -->
@@ -28,7 +27,7 @@
           <button v-for="cat in categories" :key="cat.value"
             :class="['category-tab', { active: selectedCategory === cat.value }]" @click="selectedCategory = cat.value">
             <span class="cat-icon" v-html="cat.icon"></span>
-            <span>{{ cat.label }}</span>
+            <span>{{ $t(cat.label) }}</span>
           </button>
         </div>
       </div>
@@ -38,7 +37,7 @@
     <section class="category-section">
       <div v-if="selectedCategory === 'culture'">
         <div class="category-list-wrap">
-          <h2 class="category-title">Unforgettable Cultural Experiences</h2>
+          <h2 class="category-title">{{ $t('home.categories.title') }}</h2>
           <!-- Masaüstü: Grid, Mobil: Swiper -->
           <div class="tour-card-grid desktop-only">
             <router-link v-for="tour in cultureTours" :key="tour.id" :to="`/tour/${tour.id}`" class="tour-card"
@@ -48,7 +47,7 @@
                 <img :src="getAttractionImage(tour)" :alt="getAttractionName(tour)" />
                 <!-- Likely to sell out badge -->
                 <div v-if="isLikelyToSellOut(tour.id)" class="sell-out-badge">
-                  Likely to sell out
+                  {{ $t('home.common.likelyToSellOut') }}
                 </div>
               </div>
               <!-- Kart içeriği -->
@@ -60,7 +59,7 @@
                   <div class="tour-card-action-row">
                     <span class="tour-card-price">{{ getReactiveTourPrice(tour) }} <span class="tour-card-price-label">/
                         1 adult</span></span>
-                    <router-link :to="`/tour/${tour.id}`" class="tour-card-book-btn">Book Now</router-link>
+                    <router-link :to="`/tour/${tour.id}`" class="tour-card-book-btn">{{ $t('home.common.bookNow') }}</router-link>
                   </div>
                 </div>
               </div>
@@ -77,7 +76,7 @@
                 <img :src="getAttractionImage(tour)" :alt="getAttractionName(tour)" />
                 <!-- Likely to sell out badge -->
                 <div v-if="isLikelyToSellOut(tour.id)" class="sell-out-badge">
-                  Likely to sell out
+                  {{ $t('home.common.likelyToSellOut') }}
                 </div>
               </div>
               <div class="tour-card-content">
@@ -88,7 +87,7 @@
                   <div class="tour-card-action-row">
                     <span class="tour-card-price">{{ getReactiveTourPrice(tour) }} <span class="tour-card-price-label">/
                         1 adult</span></span>
-                    <router-link :to="`/tour/${tour.id}`" class="tour-card-book-btn">Book Now</router-link>
+                    <router-link :to="`/tour/${tour.id}`" class="tour-card-book-btn">{{ $t('home.common.bookNow') }}</router-link>
                   </div>
                 </div>
               </div>
@@ -98,29 +97,28 @@
         </swiper>
       </div>
       <div v-else>
-        <h2 class="category-title">Coming Soon</h2>
-        <div class="coming-soon">This category will be available soon.</div>
+        <h2 class="category-title">{{ $t('home.categories.comingSoon') }}</h2>
+        <div class="coming-soon">{{ $t('home.categories.comingSoonText') }}</div>
       </div>
     </section>
 
     <!-- Why Choose Section (Yellow Info Bar) -->
     <div class="why-choose-bar">
-      <span>Beat the heat with cool discoveries!</span> Istanbul's culture is always in season—<b>Save 40% on
-        SearchYourTour ends today!</b>
+      <span>{{ $t('home.whyChooseBar.title') }}</span> {{ $t('home.whyChooseBar.subtitle') }}<b>{{ $t('home.whyChooseBar.highlight') }}</b>
     </div>
 
     <!-- Features Section -->
     <section class="features-section desktop-only">
       <div class="section-list-wrap">
         <div class="container swiper-no-padding">
-          <h2 class="section-title">Why choose SearchYourTour?</h2>
+          <h2 class="section-title">{{ $t('home.whyChoose.title') }}</h2>
           <div class="features-grid-desktop">
             <div class="feature-card" v-for="feature in features" :key="feature.id">
               <div class="feature-icon">
                 <i :class="feature.icon"></i>
               </div>
-              <h3>{{ feature.title }}</h3>
-              <p>{{ feature.description }}</p>
+              <h3>{{ $t(feature.title) }}</h3>
+              <p>{{ $t(feature.description) }}</p>
             </div>
           </div>
           <!-- Mobile Swiper -->
@@ -132,8 +130,8 @@
                 <div class="feature-icon">
                   <i :class="feature.icon"></i>
                 </div>
-                <h3>{{ feature.title }}</h3>
-                <p>{{ feature.description }}</p>
+                <h3>{{ $t(feature.title) }}</h3>
+                <p>{{ $t(feature.description) }}</p>
               </div>
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
@@ -146,17 +144,17 @@
     <section id="attractions" class="attractions-section">
       <div class="section-list-wrap">
         <div class="container swiper-no-padding">
-          <h2 class="section-title">Popular Attractions</h2>
+          <h2 class="section-title">{{ $t('home.attractions.title') }}</h2>
           <div v-if="loading" class="loading-state">
             <div class="loading-spinner"></div>
-            <p>Loading attraction information...</p>
+            <p>{{ $t('home.attractions.loading') }}</p>
           </div>
           <div v-else-if="error" class="error-state">
             <div class="error-icon">⚠️</div>
-            <h3>Failed to Load Data</h3>
+            <h3>{{ $t('home.attractions.error') }}</h3>
             <p>{{ error }}</p>
             <button @click="fetchAttractions" class="retry-button">
-              <i class="fas fa-redo"></i> Try Again
+              <i class="fas fa-redo"></i> {{ $t('home.attractions.retry') }}
             </button>
           </div>
           <!-- Masaüstü Swiper -->
@@ -175,7 +173,7 @@
                   <h3>{{ getAttractionName(attraction) }}</h3>
                   <p>{{ getAttractionDescription(attraction) }}</p>
                   <div class="attraction-meta">
-                    <span class="price">FREE with Pass</span>
+                    <span class="price">{{ $t('home.attractions.freeWithPass') }}</span>
                     <span class="rating">
                       <i class="fas fa-star"></i>
                       {{ attraction.rating || '4.5' }}
@@ -199,7 +197,7 @@
                   <h3>{{ getAttractionName(attraction) }}</h3>
                   <p>{{ getAttractionDescription(attraction) }}</p>
                   <div class="attraction-meta">
-                    <span class="price">FREE with Pass</span>
+                    <span class="price">{{ $t('home.attractions.freeWithPass') }}</span>
                     <span class="rating">
                       <i class="fas fa-star"></i>
                       {{ attraction.rating || '4.5' }}
@@ -218,10 +216,8 @@
     <section class="pass-types-section">
       <div class="section-list-wrap">
         <div class="container swiper-no-padding">
-          <h2 class="section-title">Choose Your SearchYourTour Pass</h2>
-          <p class="section-subtitle">Select the perfect pass for your Istanbul adventure. <router-link
-              to="/istanbul-pass" class="inline-link">View all pass options</router-link> or <router-link
-              to="/attractions" class="inline-link">browse attractions</router-link> to plan your visit.</p>
+          <h2 class="section-title">{{ $t('home.passTypes.title') }}</h2>
+          <p class="section-subtitle">{{ $t('home.passTypes.subtitle') }}</p>
           <swiper class="pass-types-slider" :slides-per-view="3" :space-between="16" :centered-slides="false"
             :pagination="{ clickable: true }" :breakpoints="{
               0: { slidesPerView: 1, spaceBetween: 0, centeredSlides: false },
@@ -230,16 +226,16 @@
             <swiper-slide v-for="pass in passTypes" :key="pass.id">
               <div class="pass-card">
                 <div class="pass-header">
-                  <h3>{{ pass.name }}</h3>
+                  <h3>{{ $t(pass.name) }}</h3>
                   <div class="pass-price">{{ pass.price }}</div>
                 </div>
                 <div class="pass-features">
                   <ul>
-                    <li v-for="feature in pass.features" :key="feature">{{ feature }}</li>
+                    <li v-for="feature in pass.features" :key="feature">{{ $t(feature) }}</li>
                   </ul>
                 </div>
                 <div class="pass-action">
-                  <router-link :to="pass.link" class="btn btn-primary">Select Pass</router-link>
+                  <router-link :to="pass.link" class="btn btn-primary">{{ $t('home.passTypes.selectPass') }}</router-link>
                 </div>
               </div>
             </swiper-slide>
@@ -253,11 +249,8 @@
     <section class="testimonials-section">
       <div class="section-list-wrap">
         <div class="container swiper-no-padding">
-          <h2 class="section-title">What Our Customers Say About SearchYourTour</h2>
-          <p class="section-subtitle">Read reviews from travelers who experienced Istanbul with SearchYourTour.
-            <router-link to="/tours" class="inline-link">Book guided tours</router-link> or <router-link to="/contact"
-              class="inline-link">contact us</router-link> for personalized recommendations.
-          </p>
+          <h2 class="section-title">{{ $t('home.testimonials.title') }}</h2>
+          <p class="section-subtitle">{{ $t('home.testimonials.subtitle') }}</p>
           <swiper :slides-per-view="3" :space-between="16" :centered-slides="false" :pagination="{ clickable: true }"
             :breakpoints="{
               0: { slidesPerView: 1, spaceBetween: 0, centeredSlides: false },
@@ -313,6 +306,7 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed, watch, nextTick } from 'vue'
+import { useI18n } from 'vue-i18n'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/css/pagination'
@@ -323,26 +317,26 @@ const features = ref([
   {
     id: 1,
     icon: 'fas fa-ticket-alt',
-    title: 'Skip the Lines',
-    description: 'Fast-track entry to popular attractions without waiting in long queues.'
+    title: 'home.whyChoose.features.skipLines.title',
+    description: 'home.whyChoose.features.skipLines.description'
   },
   {
     id: 2,
     icon: 'fas fa-save',
-    title: 'Save Money',
-    description: 'Get significant discounts compared to buying individual tickets.'
+    title: 'home.whyChoose.features.saveMoney.title',
+    description: 'home.whyChoose.features.saveMoney.description'
   },
   {
     id: 3,
     icon: 'fas fa-map-marked-alt',
-    title: '100+ Attractions',
-    description: 'Access to museums, palaces, tours, and experiences across Istanbul.'
+    title: 'home.whyChoose.features.attractions.title',
+    description: 'home.whyChoose.features.attractions.description'
   },
   {
     id: 4,
     icon: 'fas fa-clock',
-    title: 'Flexible Duration',
-    description: 'Choose from 1, 3, 5, or 7-day passes to suit your schedule.'
+    title: 'home.whyChoose.features.flexibleDuration.title',
+    description: 'home.whyChoose.features.flexibleDuration.description'
   }
 ])
 
@@ -354,6 +348,9 @@ const currentLanguage = ref('en')
 // Likely to sell out system
 const sellOutInterval = ref(null)
 const currentSellOutTourId = ref(null)
+
+// i18n
+const { t } = useI18n()
 
 // Currency store
 const currencyStore = useCurrencyStore()
@@ -373,6 +370,17 @@ const handleCurrencyChange = (event) => {
     currencyStore.setCurrentCurrency(event.detail.currency)
     // Trigger'ı artırarak fiyatların yeniden hesaplanmasını sağla
     currencyChangeTrigger.value++
+  }
+}
+
+// Dil değişikliklerini dinlemek için event listener
+const handleLanguageChange = (event) => {
+  if (event.detail && event.detail.language) {
+    console.log('HomeView: Language changed to:', event.detail.language)
+    // currentLanguage'i güncelle
+    currentLanguage.value = event.detail.language
+    // API'den yeni dilde veri çek
+    fetchAttractions()
   }
 }
 
@@ -420,9 +428,9 @@ const fetchAttractions = async () => {
     loading.value = true
     error.value = null
 
-    // Güvenli değer alma
-    const language = currentLanguage.value || 'en'
-    const languageId = getLanguageId(language)
+    // Güvenli değer alma - localStorage'dan güncel dili al
+    const savedLanguage = localStorage.getItem('selectedLanguage') || 'en'
+    const languageId = getLanguageId(savedLanguage)
 
     // Her zaman EUR fiyatları al (currency_id=4)
     const currencyId = 4 // EUR
@@ -606,39 +614,39 @@ const getReactiveTourPrice = (tour) => {
 const passTypes = ref([
   {
     id: 1,
-    name: '1 Day Pass',
+    name: 'home.passTypes.day1.name',
     price: '€85',
     features: [
-      'Access to 100+ attractions',
-      'Skip-the-line entry',
-      'Free guided tours',
-      'Mobile ticket'
+      'home.passTypes.features.access',
+      'home.passTypes.features.skipLine',
+      'home.passTypes.features.guidedTours',
+      'home.passTypes.features.mobileTicket'
     ],
     link: '/istanbul-pass?duration=1'
   },
   {
     id: 2,
-    name: '3 Day Pass',
+    name: 'home.passTypes.day3.name',
     price: '€115',
     features: [
-      'Access to 100+ attractions',
-      'Skip-the-line entry',
-      'Free guided tours',
-      'Mobile ticket',
-      'Best value option'
+      'home.passTypes.features.access',
+      'home.passTypes.features.skipLine',
+      'home.passTypes.features.guidedTours',
+      'home.passTypes.features.mobileTicket',
+      'home.passTypes.features.bestValue'
     ],
     link: '/istanbul-pass?duration=3'
   },
   {
     id: 3,
-    name: '7 Day Pass',
+    name: 'home.passTypes.day7.name',
     price: '€145',
     features: [
-      'Access to 100+ attractions',
-      'Skip-the-line entry',
-      'Free guided tours',
-      'Mobile ticket',
-      'Maximum flexibility'
+      'home.passTypes.features.access',
+      'home.passTypes.features.skipLine',
+      'home.passTypes.features.guidedTours',
+      'home.passTypes.features.mobileTicket',
+      'home.passTypes.features.maxFlexibility'
     ],
     link: '/istanbul-pass?duration=7'
   }
@@ -742,6 +750,8 @@ onMounted(() => {
   window.addEventListener('resize', checkMobile)
   // Add event listener for currency changes
   window.addEventListener('currency-changed', handleCurrencyChange)
+  // Add event listener for language changes
+  window.addEventListener('language-changed', handleLanguageChange)
   // Get language from localStorage or default to English
   const savedLanguage = localStorage.getItem('selectedLanguage') || 'en'
   currentLanguage.value = savedLanguage
@@ -763,11 +773,21 @@ onMounted(() => {
       startSellOutRotation()
     }
   }, { immediate: true })
+  
+  // Dil değişikliklerini izle
+  watch(() => currentLanguage.value, (newLang, oldLang) => {
+    if (newLang !== oldLang) {
+      console.log('Language changed from', oldLang, 'to', newLang)
+      // API'den yeni dilde veri çek
+      fetchAttractions()
+    }
+  })
 })
 
 onBeforeUnmount(() => {
-  // Remove event listener
+  // Remove event listeners
   window.removeEventListener('currency-changed', handleCurrencyChange)
+  window.removeEventListener('language-changed', handleLanguageChange)
   
   // Clear sell out interval
   if (sellOutInterval.value) {
@@ -778,10 +798,10 @@ onBeforeUnmount(() => {
 
 // Kategoriler
 const categories = [
-  { value: 'culture', label: 'Culture', icon: '<i class="fas fa-landmark"></i>' },
-  { value: 'food', label: 'Food', icon: '<i class="fas fa-utensils"></i>' },
-  { value: 'nature', label: 'Nature', icon: '<i class="fas fa-mountain"></i>' },
-  { value: 'sport', label: 'Sports', icon: '<i class="fas fa-running"></i>' }
+  { value: 'culture', label: 'home.categories.culture', icon: '<i class="fas fa-landmark"></i>' },
+  { value: 'food', label: 'home.categories.food', icon: '<i class="fas fa-utensils"></i>' },
+  { value: 'nature', label: 'home.categories.nature', icon: '<i class="fas fa-mountain"></i>' },
+  { value: 'sport', label: 'home.categories.sport', icon: '<i class="fas fa-running"></i>' }
 ]
 const selectedCategory = ref('culture')
 

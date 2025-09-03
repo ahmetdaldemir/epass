@@ -4,14 +4,14 @@
       <div class="footer-content five-cols">
         <!-- 1. Sütun: Language, Currency, Connect With Us -->
         <div class="footer-section">
-          <h3>Language</h3>
+          <h3>{{ $t('footer.language') }}</h3>
           <LanguageSwitcher />
-          <h3 class="currency-label">Currency</h3>
+          <h3 class="currency-label">{{ $t('footer.currency') }}</h3>
           <div class="currency-wrap">
             <CurrencySwitcher />
           </div>
           <div class="footer-social-row left-align">
-            <h3>Connect With Us</h3>
+            <h3>{{ $t('footer.connectWithUs') }}</h3>
             <div class="social-links">
               <a href="https://www.facebook.com/searchyourtour" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-facebook-f"></i></a>
               <a href="https://twitter.com/searchyourtour" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-twitter"></i></a>
@@ -24,7 +24,7 @@
         </div>
         <!-- 2. Sütun: Mobile -->
         <div class="footer-section">
-          <h3>Mobile</h3>
+          <h3>{{ $t('footer.mobile') }}</h3>
           <a href="#" class="app-btn google-play dark-bg">
             <img src="https://upload.wikimedia.org/wikipedia/commons/7/78/Google_Play_Store_badge_EN.svg" alt="Google Play" />
           </a>
@@ -34,43 +34,43 @@
         </div>
         <!-- 3. Sütun: Support -->
         <div class="footer-section">
-          <h3>Support</h3>
+          <h3>{{ $t('footer.support') }}</h3>
           <ul>
-            <li><router-link to="/contact">Contact Us</router-link></li>
-            <li><router-link to="/faqs">Frequently Asked Questions</router-link></li>
-            <li><router-link to="/security/terms-conditions">General Terms and Conditions</router-link></li>
-            <li><router-link to="/security/privacy-policy">Privacy Policy</router-link></li>
-            <li><router-link to="/security/cookie-policy">Cookies and Marketing Preferences</router-link></li>
-            <li><router-link to="/my-pass" >Manage Your Pass</router-link></li>
-            <li><router-link to="/become-partner">Become a Partner</router-link></li>
-            <li><router-link to="/my-listing">Manage Your Listings</router-link></li>
-            <li><a href="#">Information according to the Digital Services Act</a></li>
+            <li><router-link to="/contact">{{ $t('footer.links.contactUs') }}</router-link></li>
+            <li><router-link to="/faqs">{{ $t('footer.links.faqs') }}</router-link></li>
+            <li><router-link to="/security/terms-conditions">{{ $t('footer.links.terms') }}</router-link></li>
+            <li><router-link to="/security/privacy-policy">{{ $t('footer.links.privacy') }}</router-link></li>
+            <li><router-link to="/security/cookie-policy">{{ $t('footer.links.cookies') }}</router-link></li>
+            <li><router-link to="/my-pass" >{{ $t('footer.links.managePass') }}</router-link></li>
+            <li><router-link to="/become-partner">{{ $t('footer.links.becomePartner') }}</router-link></li>
+            <li><router-link to="/my-listing">{{ $t('footer.links.manageListings') }}</router-link></li>
+            <li><a href="#">{{ $t('footer.links.digitalServices') }}</a></li>
           </ul>
         </div>
         <!-- 4. Sütun: Company -->
         <div class="footer-section">
-          <h3>Company</h3>
+          <h3>{{ $t('footer.company') }}</h3>
           <ul>
-            <li><router-link to="/about">About Us</router-link></li>
-            <li><router-link to="/attractions">Istanbul Attractions</router-link></li>
-            <li><router-link to="/tours">Guided Tours</router-link></li>
-            <li><router-link to="/istanbul-pass">SearchYourTour Pass</router-link></li>
-            <li><a href="#">Careers</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Press</a></li>
-            <li><a href="#">Gift Cards</a></li>
-            <li><router-link to="/attractions">Explorer</router-link></li>
+            <li><router-link to="/about">{{ $t('footer.links.about') }}</router-link></li>
+            <li><router-link to="/attractions">{{ $t('footer.links.istanbulAttractions') }}</router-link></li>
+            <li><router-link to="/tours">{{ $t('footer.links.guidedTours') }}</router-link></li>
+            <li><router-link to="/istanbul-pass">{{ $t('footer.links.searchYourTourPass') }}</router-link></li>
+            <li><a href="#">{{ $t('footer.links.careers') }}</a></li>
+            <li><a href="#">{{ $t('footer.links.blog') }}</a></li>
+            <li><a href="#">{{ $t('footer.links.press') }}</a></li>
+            <li><a href="#">{{ $t('footer.links.giftCards') }}</a></li>
+            <li><router-link to="/attractions">{{ $t('footer.links.explorer') }}</router-link></li>
           </ul>
         </div>
         <!-- 5. Sütun: Work With Us & Payment -->
         <div class="footer-section right-section">
-          <h3>Work With Us</h3>
+          <h3>{{ $t('footer.workWithUs') }}</h3>
           <ul>
-            <li><router-link to="/become-partner">As a Supply Partner</router-link></li>
-            <li><router-link to="">As a Content Creator</router-link></li>
-            <li><router-link to="">As an Affiliate Partner</router-link></li>
+            <li><router-link to="/become-partner">{{ $t('footer.links.supplyPartner') }}</router-link></li>
+            <li><router-link to="">{{ $t('footer.links.contentCreator') }}</router-link></li>
+            <li><router-link to="">{{ $t('footer.links.affiliatePartner') }}</router-link></li>
           </ul>
-          <h3>Ways You Can Pay</h3>
+          <h3>{{ $t('footer.waysToPay') }}</h3>
           <div class="payment-icons">
             <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/PayPal_logo.svg" alt="PayPal" />
             <img src="https://upload.wikimedia.org/wikipedia/commons/0/04/Mastercard-logo.png" alt="Mastercard" />
@@ -80,7 +80,7 @@
       </div>
       <!-- Copyright -->
       <div class="footer-bottom-content">
-        <p>&copy; 2008 — {{ currentYear }} SearchYourTour. All rights reserved.</p>
+        <p>{{ $t('footer.copyright', { year: currentYear }) }}</p>
       </div>
     </div>
   </footer>
@@ -88,8 +88,11 @@
 
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import LanguageSwitcher from './LanguageSwitcher.vue'
 import CurrencySwitcher from './CurrencySwitcher.vue'
+
+const { t } = useI18n()
 const currentYear = computed(() => new Date().getFullYear())
 </script>
 
