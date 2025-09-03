@@ -210,6 +210,7 @@ const currentYear = computed(() => new Date().getFullYear())
   margin-bottom: 1rem;
   font-size: 1.2rem;
   font-weight: 600;
+  margin-top: 20px;
 }
 .social-links {
   display: flex;

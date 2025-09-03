@@ -110,7 +110,7 @@
     </div>
 
     <!-- Features Section -->
-    <section class="features-section">
+    <section class="features-section desktop-only">
       <div class="section-list-wrap">
         <div class="container swiper-no-padding">
           <h2 class="section-title">Why choose SearchYourTour?</h2>
@@ -518,15 +518,17 @@ const startSellOutRotation = () => {
   // Set initial tour
   rotateSellOutBadge()
   
-  // For testing: rotate every 10 seconds, for production: 3-4 hours
-  const isDevelopment = process.env.NODE_ENV === 'development'
-  const interval = isDevelopment ? 10000 : Math.random() * (4 * 60 * 60 * 1000 - 3 * 60 * 60 * 1000) + 3 * 60 * 60 * 1000
+  // Random interval between 3-4 hours (10800000-14400000 milliseconds)
+  const minInterval = 3 * 60 * 60 * 1000  // 3 hours in milliseconds
+  const maxInterval = 4 * 60 * 60 * 1000  // 4 hours in milliseconds
+  const interval = Math.random() * (maxInterval - minInterval) + minInterval
   
   sellOutInterval.value = setInterval(() => {
     rotateSellOutBadge()
   }, interval)
   
-  console.log(`Sell out badge rotation started with ${Math.round(interval / 1000)} second interval`)
+  const hours = Math.round(interval / (60 * 60 * 1000) * 10) / 10
+  console.log(`Sell out badge rotation started with ${hours} hour interval`)
 }
 
 // Price conversion functions

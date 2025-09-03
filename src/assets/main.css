@@ -263,7 +263,7 @@ img {
   }
   .btn, button, input, select {
     font-size: 1.05rem;
-    padding: 14px 0;
+    padding: 14px 5;
   }
 }
 
