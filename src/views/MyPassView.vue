@@ -2,15 +2,15 @@
   <div class="my-pass-panel">
     <div v-if="!loggedIn" class="login-outer">
       <div class="login-box">
-        <h2>Customer Login</h2>
+        <h2>{{ $t('myPass.login.title') }}</h2>
         <form @submit.prevent="login">
-          <input v-model="email" type="email" placeholder="E-mail" required />
-          <input v-model="password" type="password" placeholder="Password" required />
+          <input v-model="email" type="email" :placeholder="$t('myPass.login.email')" required />
+          <input v-model="password" type="password" :placeholder="$t('myPass.login.password')" required />
           <div class="forgot-password">
-            <a href="#" @click.prevent="showForgotPassword = true">Forgot Password?</a>
+            <a href="#" @click.prevent="showForgotPassword = true">{{ $t('myPass.login.forgotPassword') }}</a>
           </div>
-          <button class="btn btn-primary login-btn" type="submit">Login</button>
-          <button class="btn btn-secondary signup-btn" type="button" style="margin-top: 10px;" @click="$router.push('/signup')">Sign Up</button>
+          <button class="btn btn-primary login-btn" type="submit">{{ $t('myPass.login.loginBtn') }}</button>
+          <button class="btn btn-secondary signup-btn" type="button" style="margin-top: 10px;" @click="$router.push('/signup')">{{ $t('myPass.login.signupBtn') }}</button>
         </form>
         <div v-if="loginError" class="error">{{ loginError }}</div>
       </div>
@@ -18,18 +18,18 @@
       <!-- Forgot Password Modal -->
       <div v-if="showForgotPassword" class="modal-overlay" @click="showForgotPassword = false">
         <div class="modal-content" @click.stop>
-          <div class="modal-header">
-            <h3>Reset Password</h3>
-            <button class="close-btn" @click="showForgotPassword = false">&times;</button>
-          </div>
-          <form @submit.prevent="sendResetLink" class="reset-form">
-            <div class="form-group">
-              <label>Email Address</label>
-              <input v-model="resetEmail" type="email" placeholder="Enter your email address" required />
-            </div>
-            <button class="btn btn-primary" type="submit" :disabled="resetLoading">
-              {{ resetLoading ? 'Sending...' : 'Send Reset Link' }}
-            </button>
+                     <div class="modal-header">
+             <h3>{{ $t('myPass.resetPassword.title') }}</h3>
+             <button class="close-btn" @click="showForgotPassword = false">&times;</button>
+           </div>
+           <form @submit.prevent="sendResetLink" class="reset-form">
+             <div class="form-group">
+               <label>{{ $t('myPass.resetPassword.email') }}</label>
+               <input v-model="resetEmail" type="email" :placeholder="$t('myPass.resetPassword.emailPlaceholder')" required />
+             </div>
+             <button class="btn btn-primary" type="submit" :disabled="resetLoading">
+               {{ resetLoading ? $t('myPass.resetPassword.sending') : $t('myPass.resetPassword.sendBtn') }}
+             </button>
             <div v-if="resetMessage" :class="['message', resetSuccess ? 'success' : 'error']">
               {{ resetMessage }}
             </div>
@@ -44,39 +44,39 @@
           <div class="user-avatar">
             <span>{{ getUserInitials() }}</span>
           </div>
-          <div class="user-info">
-            <h3>{{ getUserName() }}</h3>
-            <p>Account</p>
-          </div>
+                     <div class="user-info">
+             <h3>{{ getUserName() }}</h3>
+             <p>{{ $t('myPass.dashboard.account') }}</p>
+           </div>
         </div>
         <nav class="nav-menu">
           <div class="nav-item" :class="{active: activeTab==='reservations'}" @click="activeTab='reservations'">
             <i class="nav-icon">📋</i>
-            <span>My Reservations</span>
+            <span>{{ $t('myPass.dashboard.myReservations') }}</span>
           </div>
           <div class="nav-item" :class="{active: activeTab==='info'}" @click="activeTab='info'">
             <i class="nav-icon">👤</i>
-            <span>Profile</span>
+            <span>{{ $t('myPass.dashboard.profile') }}</span>
           </div>
           <div class="nav-item" :class="{active: activeTab==='password'}" @click="activeTab='password'">
             <i class="nav-icon">🔒</i>
-            <span>Change Password</span>
+            <span>{{ $t('myPass.dashboard.changePassword') }}</span>
           </div>
         </nav>
-        <button class="logout-btn" @click="logout">
-          <i class="logout-icon">🚪</i>
-          Logout
-        </button>
+                 <button class="logout-btn" @click="logout">
+           <i class="logout-icon">🚪</i>
+           {{ $t('myPass.dashboard.logout') }}
+         </button>
       </aside>
       
       <!-- Sağ İçerik -->
       <main class="main-content">
         <!-- My Reservations -->
-        <section v-if="activeTab==='reservations'" class="content-section">
-          <div class="section-header">
-            <h2>My Reservations</h2>
-            <p class="section-subtitle">Manage your tour bookings</p>
-          </div>
+                 <section v-if="activeTab==='reservations'" class="content-section">
+           <div class="section-header">
+             <h2>{{ $t('myPass.reservations.title') }}</h2>
+             <p class="section-subtitle">{{ $t('myPass.reservations.subtitle') }}</p>
+           </div>
           <div class="reservation-list">
             <div class="reservation-card" v-for="reservation in reservations" :key="reservation.id">
               <div class="reservation-header">
@@ -85,142 +85,142 @@
               </div>
               <div class="reservation-details">
                 <div class="detail-row">
-                  <div class="detail-item">
-                    <i class="detail-icon">📅</i>
-                    <span class="detail-label">Date:</span>
-                    <span class="detail-value">{{ formatDate(reservation.tour_date) }}</span>
-                  </div>
-                  <div class="detail-item">
-                    <i class="detail-icon">⏰</i>
-                    <span class="detail-label">Time:</span>
-                    <span class="detail-value">{{ reservation.tour_time || 'TBD' }}</span>
-                  </div>
+                                     <div class="detail-item">
+                     <i class="detail-icon">📅</i>
+                     <span class="detail-label">{{ $t('myPass.reservations.date') }}</span>
+                     <span class="detail-value">{{ formatDate(reservation.tour_date) }}</span>
+                   </div>
+                   <div class="detail-item">
+                     <i class="detail-icon">⏰</i>
+                     <span class="detail-label">{{ $t('myPass.reservations.time') }}</span>
+                     <span class="detail-value">{{ reservation.tour_time || $t('myPass.reservations.tbd') }}</span>
+                   </div>
                 </div>
                 <div class="detail-row">
-                  <div class="detail-item">
-                    <i class="detail-icon">💰</i>
-                    <span class="detail-label">Total:</span>
-                    <span class="detail-value price">{{ reservation.total }} {{ reservation.totalCurrency }}</span>
-                  </div>
-                  <div class="detail-item">
-                    <i class="detail-icon">👥</i>
-                    <span class="detail-label">Attendees:</span>
-                    <span class="detail-value">{{ formatAttendees(reservation) }}</span>
-                  </div>
+                                     <div class="detail-item">
+                     <i class="detail-icon">💰</i>
+                     <span class="detail-label">{{ $t('myPass.reservations.total') }}</span>
+                     <span class="detail-value price">{{ reservation.total }} {{ reservation.totalCurrency }}</span>
+                   </div>
+                   <div class="detail-item">
+                     <i class="detail-icon">👥</i>
+                     <span class="detail-label">{{ $t('myPass.reservations.attendees') }}</span>
+                     <span class="detail-value">{{ formatAttendees(reservation) }}</span>
+                   </div>
                 </div>
               </div>
-              <div class="reservation-actions">
-                <button class="btn btn-edit" @click="editReservation(reservation)">
-                  <i class="btn-icon">✏️</i>
-                  Edit
-                </button>
-                <button class="btn btn-cancel" @click="cancelReservation(reservation)" :disabled="!canCancel(reservation.payment_status)">
-                  <i class="btn-icon">❌</i>
-                  Cancel
-                </button>
-              </div>
+                             <div class="reservation-actions">
+                 <button class="btn btn-edit" @click="editReservation(reservation)">
+                   <i class="btn-icon">✏️</i>
+                   {{ $t('myPass.reservations.edit') }}
+                 </button>
+                 <button class="btn btn-cancel" @click="cancelReservation(reservation)" :disabled="!canCancel(reservation.payment_status)">
+                   <i class="btn-icon">❌</i>
+                   {{ $t('myPass.reservations.cancel') }}
+                 </button>
+               </div>
             </div>
-            <div v-if="reservations.length === 0" class="empty-state">
-              <div class="empty-icon">📋</div>
-              <h3>No Reservations Found</h3>
-              <p>You haven't made any reservations yet.</p>
-              <button class="btn btn-primary" @click="$router.push('/tours')">Browse Tours</button>
-            </div>
+                         <div v-if="reservations.length === 0" class="empty-state">
+               <div class="empty-icon">📋</div>
+               <h3>{{ $t('myPass.reservations.emptyState.title') }}</h3>
+               <p>{{ $t('myPass.reservations.emptyState.description') }}</p>
+               <button class="btn btn-primary" @click="$router.push('/tours')">{{ $t('myPass.reservations.emptyState.browseTours') }}</button>
+             </div>
           </div>
         </section>
         
-        <!-- My Info -->
-        <section v-if="activeTab==='info'" class="content-section">
-          <div class="section-header">
-            <h2>Profile Details</h2>
-            <p class="section-subtitle">Update your personal information</p>
-          </div>
+                 <!-- My Info -->
+         <section v-if="activeTab==='info'" class="content-section">
+           <div class="section-header">
+             <h2>{{ $t('myPass.profile.title') }}</h2>
+             <p class="section-subtitle">{{ $t('myPass.profile.subtitle') }}</p>
+           </div>
           <form @submit.prevent="saveInfo" class="profile-form">
-            <div class="form-section">
-              <h3>Personal Information</h3>
-              <div class="form-row">
-                <div class="form-group">
-                  <label>First Name</label>
-                  <input v-model="userInfo.firstName" type="text" placeholder="Enter your first name" required />
-                </div>
-                <div class="form-group">
-                  <label>Last Name</label>
-                  <input v-model="userInfo.lastName" type="text" placeholder="Enter your last name" required />
-                </div>
-              </div>
-            </div>
+                         <div class="form-section">
+               <h3>{{ $t('myPass.profile.personalInfo') }}</h3>
+               <div class="form-row">
+                 <div class="form-group">
+                   <label>{{ $t('myPass.profile.firstName') }}</label>
+                   <input v-model="userInfo.firstName" type="text" :placeholder="$t('myPass.profile.firstNamePlaceholder')" required />
+                 </div>
+                 <div class="form-group">
+                   <label>{{ $t('myPass.profile.lastName') }}</label>
+                   <input v-model="userInfo.lastName" type="text" :placeholder="$t('myPass.profile.lastNamePlaceholder')" required />
+                 </div>
+               </div>
+             </div>
             
-            <div class="form-section">
-              <h3>Contact Information</h3>
-              <div class="form-group">
-                <label>Email Address</label>
-                <input v-model="userInfo.email" type="email" placeholder="Enter your email" required disabled />
-                <small class="field-note">Email cannot be changed</small>
-              </div>
-              <div class="form-group">
-                <label>Mobile Phone</label>
-                <input v-model="userInfo.phone" type="tel" placeholder="Enter your phone number" />
-              </div>
-            </div>
+                         <div class="form-section">
+               <h3>{{ $t('myPass.profile.contactInfo') }}</h3>
+               <div class="form-group">
+                 <label>{{ $t('myPass.profile.emailAddress') }}</label>
+                 <input v-model="userInfo.email" type="email" :placeholder="$t('myPass.profile.emailPlaceholder')" required disabled />
+                 <small class="field-note">{{ $t('myPass.profile.emailNote') }}</small>
+               </div>
+               <div class="form-group">
+                 <label>{{ $t('myPass.profile.mobilePhone') }}</label>
+                 <input v-model="userInfo.phone" type="tel" :placeholder="$t('myPass.profile.phonePlaceholder')" />
+               </div>
+             </div>
             
-            <div class="form-section">
-              <h3>Address Information</h3>
-              <div class="form-group">
-                <label>Address</label>
-                <input v-model="userInfo.address" type="text" placeholder="Enter your address" />
-              </div>
-              <div class="form-row">
-                <div class="form-group">
-                  <label>City</label>
-                  <input v-model="userInfo.city" type="text" placeholder="Enter your city" />
-                </div>
-                <div class="form-group">
-                  <label>Country</label>
-                  <input v-model="userInfo.country" type="text" placeholder="Enter your country" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label>ZIP Code</label>
-                <input v-model="userInfo.zip_code" type="text" placeholder="Enter your ZIP code" />
-              </div>
-            </div>
+                         <div class="form-section">
+               <h3>{{ $t('myPass.profile.addressInfo') }}</h3>
+               <div class="form-group">
+                 <label>{{ $t('myPass.profile.address') }}</label>
+                 <input v-model="userInfo.address" type="text" :placeholder="$t('myPass.profile.addressPlaceholder')" />
+               </div>
+               <div class="form-row">
+                 <div class="form-group">
+                   <label>{{ $t('myPass.profile.city') }}</label>
+                   <input v-model="userInfo.city" type="text" :placeholder="$t('myPass.profile.cityPlaceholder')" />
+                 </div>
+                 <div class="form-group">
+                   <label>{{ $t('myPass.profile.country') }}</label>
+                   <input v-model="userInfo.country" type="text" :placeholder="$t('myPass.profile.countryPlaceholder')" />
+                 </div>
+               </div>
+               <div class="form-group">
+                 <label>{{ $t('myPass.profile.zipCode') }}</label>
+                 <input v-model="userInfo.zip_code" type="text" :placeholder="$t('myPass.profile.zipPlaceholder')" />
+               </div>
+             </div>
             
-            <div class="form-actions">
-              <button class="btn btn-primary" type="submit">
-                <i class="btn-icon">💾</i>
-                Save Changes
-              </button>
-            </div>
+                         <div class="form-actions">
+               <button class="btn btn-primary" type="submit">
+                 <i class="btn-icon">💾</i>
+                 {{ $t('myPass.profile.saveChanges') }}
+               </button>
+             </div>
           </form>
         </section>
         
-        <!-- Change Password -->
-        <section v-if="activeTab==='password'" class="content-section">
-          <div class="section-header">
-            <h2>Change Password</h2>
-            <p class="section-subtitle">Update your account password</p>
-          </div>
+                 <!-- Change Password -->
+         <section v-if="activeTab==='password'" class="content-section">
+           <div class="section-header">
+             <h2>{{ $t('myPass.password.title') }}</h2>
+             <p class="section-subtitle">{{ $t('myPass.password.subtitle') }}</p>
+           </div>
           <form @submit.prevent="changePassword" class="password-form">
-            <div class="form-group">
-              <label>Current Password</label>
-              <input v-model="oldPassword" type="password" placeholder="Enter your current password" required />
-            </div>
-            <div class="form-group">
-              <label>New Password</label>
-              <input v-model="newPassword" type="password" placeholder="Enter your new password" required />
-              <small class="field-note">Password must be at least 6 characters</small>
-            </div>
-            <div class="form-group">
-              <label>Confirm New Password</label>
-              <input v-model="newPasswordRepeat" type="password" placeholder="Confirm your new password" required />
-            </div>
+                         <div class="form-group">
+               <label>{{ $t('myPass.password.currentPassword') }}</label>
+               <input v-model="oldPassword" type="password" :placeholder="$t('myPass.password.currentPasswordPlaceholder')" required />
+             </div>
+             <div class="form-group">
+               <label>{{ $t('myPass.password.newPassword') }}</label>
+               <input v-model="newPassword" type="password" :placeholder="$t('myPass.password.newPasswordPlaceholder')" required />
+               <small class="field-note">{{ $t('myPass.password.passwordNote') }}</small>
+             </div>
+             <div class="form-group">
+               <label>{{ $t('myPass.password.confirmPassword') }}</label>
+               <input v-model="newPasswordRepeat" type="password" :placeholder="$t('myPass.password.confirmPasswordPlaceholder')" required />
+             </div>
             
-            <div class="form-actions">
-              <button class="btn btn-primary" type="submit">
-                <i class="btn-icon">🔒</i>
-                Change Password
-              </button>
-            </div>
+                         <div class="form-actions">
+               <button class="btn btn-primary" type="submit">
+                 <i class="btn-icon">🔒</i>
+                 {{ $t('myPass.password.changePasswordBtn') }}
+               </button>
+             </div>
             
             <div v-if="passwordMsg" :class="['message', passwordSuccess ? 'success' : 'error']">
               <i :class="passwordSuccess ? '✅' : '❌'"></i>
@@ -235,6 +235,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const loggedIn = ref(false)
 const email = ref('')
@@ -371,17 +374,25 @@ async function login() {
       localStorage.setItem('user', JSON.stringify(result.data))
       localStorage.setItem('isLoggedIn', 'true')
       
+      // Kullanıcı verilerini çek
+      try {
+        await fetchUserProfile(result.data.id)
+        await fetchUserReservations(result.data.id)
+      } catch (error) {
+        console.error('Error fetching user data after login:', error)
+      }
+      
       // Form alanlarını temizle
       email.value = ''
       password.value = ''
-    } else {
-      // Login başarısız
-      loginError.value = 'Invalid email or password'
-    }
-  } catch (error) {
-    console.error('Login error:', error)
-    loginError.value = 'An error occurred during login. Please try again.'
-  }
+         } else {
+       // Login başarısız
+       loginError.value = t('myPass.login.error')
+     }
+   } catch (error) {
+     console.error('Login error:', error)
+     loginError.value = t('myPass.login.generalError')
+   }
 }
 
 function logout() { 
@@ -392,24 +403,24 @@ function logout() {
 }
 
 function editReservation(reservation) { 
-  alert('To make changes to your reservation, please contact us via email. Reservation ID: ' + reservation.id) 
+  alert(t('myPass.messages.reservationEdit') + reservation.id) 
 }
 
 function cancelReservation(reservation) { 
-  if (confirm('Are you sure you want to cancel this reservation?')) {
+  if (confirm(t('myPass.messages.confirmCancel'))) {
     // Backend'e cancel request gönder
     //cancelReservationBackend(reservation.id)
-    alert('To cancel your reservation, please contact us via email. Reservation ID: ' + reservation.id)
+    alert(t('myPass.messages.reservationCancel') + reservation.id)
   }
 }
 
 async function saveInfo() {
-  try {
-    const userData = localStorage.getItem('user')
-    if (!userData) {
-      alert('User not found. Please login again.')
-      return
-    }
+     try {
+     const userData = localStorage.getItem('user')
+     if (!userData) {
+       alert(t('myPass.messages.userNotFound'))
+       return
+     }
 
     const user = JSON.parse(userData)
     
@@ -433,15 +444,15 @@ async function saveInfo() {
 
     const result = await response.json()
     
-    if (result.status) {
-      alert('Profile updated successfully!')
-    } else {
-      alert('Failed to update profile: ' + (result.message || 'Unknown error'))
-    }
-  } catch (error) {
-    console.error('Error updating profile:', error)
-    alert('An error occurred while updating profile. Please try again.')
-  }
+         if (result.status) {
+       alert(t('myPass.messages.profileUpdated'))
+     } else {
+       alert(t('myPass.messages.profileUpdateFailed') + (result.message || t('myPass.messages.unknownError')))
+     }
+   } catch (error) {
+     console.error('Error updating profile:', error)
+     alert(t('myPass.messages.generalError'))
+   }
 }
 
 async function changePassword() {
@@ -449,25 +460,25 @@ async function changePassword() {
     passwordMsg.value = ''
     passwordSuccess.value = false
 
-    // Validation
-    if (newPassword.value.length < 6) {
-      passwordMsg.value = 'New password must be at least 6 characters.'
-      passwordSuccess.value = false
-      return
-    }
-    if (newPassword.value !== newPasswordRepeat.value) {
-      passwordMsg.value = 'New passwords do not match.'
-      passwordSuccess.value = false
-      return
-    }
+         // Validation
+     if (newPassword.value.length < 6) {
+       passwordMsg.value = t('myPass.password.validation.tooShort')
+       passwordSuccess.value = false
+       return
+     }
+     if (newPassword.value !== newPasswordRepeat.value) {
+       passwordMsg.value = t('myPass.password.validation.noMatch')
+       passwordSuccess.value = false
+       return
+     }
 
-    // Get user data from localStorage
-    const userData = localStorage.getItem('user')
-    if (!userData) {
-      passwordMsg.value = 'User not found. Please login again.'
-      passwordSuccess.value = false
-      return
-    }
+         // Get user data from localStorage
+     const userData = localStorage.getItem('user')
+     if (!userData) {
+       passwordMsg.value = t('myPass.messages.userNotFound')
+       passwordSuccess.value = false
+       return
+     }
 
     const user = JSON.parse(userData)
 
@@ -488,22 +499,22 @@ async function changePassword() {
 
     const result = await response.json()
     
-    if (result.status) {
-      passwordMsg.value = 'Password changed successfully!'
-      passwordSuccess.value = true
-      // Clear form
-      oldPassword.value = ''
-      newPassword.value = ''
-      newPasswordRepeat.value = ''
-    } else {
-      passwordMsg.value = result.message || 'Failed to change password'
-      passwordSuccess.value = false
-    }
-  } catch (error) {
-    console.error('Error changing password:', error)
-    passwordMsg.value = 'An error occurred while changing password. Please try again.'
-    passwordSuccess.value = false
-  }
+         if (result.status) {
+       passwordMsg.value = t('myPass.password.success')
+       passwordSuccess.value = true
+       // Clear form
+       oldPassword.value = ''
+       newPassword.value = ''
+       newPasswordRepeat.value = ''
+     } else {
+       passwordMsg.value = result.message || t('myPass.password.error')
+       passwordSuccess.value = false
+     }
+   } catch (error) {
+     console.error('Error changing password:', error)
+     passwordMsg.value = t('myPass.password.generalError')
+     passwordSuccess.value = false
+   }
 }
 
 // Backend'e reservation cancel request gönder
@@ -520,21 +531,21 @@ async function cancelReservationBackend(reservationId) {
 
     const result = await response.json()
     
-    if (result.status) {
-      alert('Reservation cancelled successfully!')
-      // Reservation listesini yenile
-      const userData = localStorage.getItem('user')
-      if (userData) {
-        const user = JSON.parse(userData)
-        await fetchUserReservations(user.id)
-      }
-    } else {
-      alert('Failed to cancel reservation: ' + (result.message || 'Unknown error'))
-    }
-  } catch (error) {
-    console.error('Error cancelling reservation:', error)
-    alert('An error occurred while cancelling reservation. Please try again.')
-  }
+         if (result.status) {
+       alert(t('myPass.messages.reservationCancelled'))
+       // Reservation listesini yenile
+       const userData = localStorage.getItem('user')
+       if (userData) {
+         const user = JSON.parse(userData)
+         await fetchUserReservations(user.id)
+       }
+     } else {
+       alert(t('myPass.messages.reservationCancelFailed') + (result.message || t('myPass.messages.unknownError')))
+     }
+   } catch (error) {
+     console.error('Error cancelling reservation:', error)
+     alert(t('myPass.messages.generalError'))
+   }
 }
 
 // Tarih formatla
@@ -556,11 +567,11 @@ function formatStatus(status) {
 // Attendees formatla
 function formatAttendees(reservation) {
   const parts = []
-  if (reservation.adult > 0) parts.push(`Adults: ${reservation.adult}`)
-  if (reservation.child > 0) parts.push(`Children: ${reservation.child}`)
-  if (reservation.infant > 0) parts.push(`Infants: ${reservation.infant}`)
-  if (reservation.buggy > 0) parts.push(`Buggy: ${reservation.buggy}`)
-  return parts.length > 0 ? parts.join(', ') : 'No attendees'
+  if (reservation.adult > 0) parts.push(`${t('myPass.reservations.adults')}: ${reservation.adult}`)
+  if (reservation.child > 0) parts.push(`${t('myPass.reservations.children')}: ${reservation.child}`)
+  if (reservation.infant > 0) parts.push(`${t('myPass.reservations.infants')}: ${reservation.infant}`)
+  if (reservation.buggy > 0) parts.push(`${t('myPass.reservations.buggy')}: ${reservation.buggy}`)
+  return parts.length > 0 ? parts.join(', ') : t('myPass.reservations.noAttendees')
 }
 
 // Cancel edilebilir mi kontrol et
@@ -615,24 +626,24 @@ async function sendResetLink() {
 
     const result = await response.json()
     
-    if (result.status) {
-      resetSuccess.value = true
-      resetMessage.value = result.message || 'Password reset link sent successfully!'
-      resetEmail.value = ''
-      // 3 saniye sonra modal'ı kapat
-      setTimeout(() => {
-        showForgotPassword.value = false
-        resetMessage.value = ''
-      }, 3000)
-    } else {
-      resetSuccess.value = false
-      resetMessage.value = result.message || 'Failed to send reset link'
-    }
-  } catch (error) {
-    console.error('Error sending reset link:', error)
-    resetSuccess.value = false
-    resetMessage.value = 'An error occurred. Please try again.'
-  } finally {
+         if (result.status) {
+       resetSuccess.value = true
+       resetMessage.value = result.message || t('myPass.resetPassword.success')
+       resetEmail.value = ''
+       // 3 saniye sonra modal'ı kapat
+       setTimeout(() => {
+         showForgotPassword.value = false
+         resetMessage.value = ''
+       }, 3000)
+     } else {
+       resetSuccess.value = false
+       resetMessage.value = result.message || t('myPass.resetPassword.error')
+     }
+   } catch (error) {
+     console.error('Error sending reset link:', error)
+     resetSuccess.value = false
+     resetMessage.value = t('myPass.messages.generalError')
+   } finally {
     resetLoading.value = false
   }
 }

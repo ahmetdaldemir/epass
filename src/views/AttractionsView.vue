@@ -1,10 +1,10 @@
 <template>
-  <div class="attractions">
+  <div class="attractions" :class="{ 'rtl': isRTL }">
     <section class="hero-section">
       <div class="container">
-        <h1>Istanbul Attractions & Tours - Discover Top Cultural Sites</h1>
-        <h2>Explore Hagia Sophia, Topkapi Palace, Basilica Cistern & More</h2>
-        <p>Discover the most popular attractions and guided tours included in your Istanbul Tourist Pass. Visit iconic landmarks and hidden gems with expert guides.</p>
+        <h1>{{ $t('attractions.hero.title') }}</h1>
+        <h2>{{ $t('attractions.hero.subtitle') }}</h2>
+        <p>{{ $t('attractions.hero.description') }}</p>
       </div>
     </section>
 
@@ -13,13 +13,13 @@
         <!-- Loading State -->
         <div v-if="loading" class="loading-state">
           <div class="loading-spinner"></div>
-          <p>Loading Istanbul attractions...</p>
+          <p>{{ $t('attractions.loading') }}</p>
         </div>
 
         <!-- Error State -->
         <div v-else-if="error" class="error-state">
           <p>{{ error }}</p>
-          <button @click="fetchAttractions" class="btn btn-primary">Try Again</button>
+          <button @click="fetchAttractions" class="btn btn-primary">{{ $t('attractions.tryAgain') }}</button>
         </div>
 
         <!-- Attractions Grid -->
@@ -45,7 +45,7 @@
                 </span>
               </div>
               <div class="attraction-actions">
-                <router-link @click.stop :to="`/tour/${attraction.id}`" class="btn btn-primary">View</router-link>
+                <router-link @click.stop :to="`/tour/${attraction.id}`" class="btn btn-primary">{{ $t('attractions.view') }}</router-link>
                 <button @click.stop="addToWishlist(attraction.id)" class="btn btn-secondary">
                   <i class="fas fa-heart"></i>
                 </button>
@@ -56,7 +56,7 @@
 
         <!-- No Results -->
         <div v-if="!loading && !error && attractions.length === 0" class="no-results">
-          <p>No Istanbul attractions found at the moment.</p>
+          <p>{{ $t('attractions.noResults') }}</p>
         </div>
       </div>
     </section>
@@ -65,6 +65,9 @@
 
 <script setup>
 import { ref, onMounted, watch, computed ,onBeforeUnmount } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t, locale } = useI18n()
 
 const attractions = ref([])
 const loading = ref(false)
@@ -74,6 +77,9 @@ const currentCurrency = computed(() => {
   const savedCurrency = localStorage.getItem('selectedCurrency') || 'EUR'
   return getCurrencyId(savedCurrency)
 })
+
+// RTL support for Arabic language
+const isRTL = computed(() => locale.value === 'ar')
 
 // Fetch Istanbul attractions from API with language and currency parameters
 const fetchAttractions = async () => {
@@ -85,20 +91,24 @@ const fetchAttractions = async () => {
     
     const response = await fetch(url)
     if (!response.ok) {
-      throw new Error('Failed to fetch attractions')
+      throw new Error(t('attractions.error'))
     }
     
     const data = await response.json()
     
-    // Filter for Istanbul tours (destination_id: 404) and active tours with content
+    // Filter for Istanbul tours (destination_id: 404), active tours with content, and tours with prices
     const istanbulTours = (data || []).filter(tour => {
       return tour.destination?.id === 404 && 
-             tour.is_active === true
+             tour.is_active === true &&
+             tour.tour_price && 
+             tour.tour_price.length > 0 &&
+             tour.tour_price[0]?.price &&
+             tour.tour_price[0].price > 0
     })
     console.log(istanbulTours)
     attractions.value = istanbulTours
   } catch (err) {
-    error.value = 'Failed to load attractions. Please try again later.'
+    error.value = t('attractions.error')
     console.error('Error fetching attractions:', err)
   } finally {
     loading.value = false
@@ -136,12 +146,12 @@ const getCurrencyId = (currencyCode) => {
 
 // Helper functions to extract data from API response
 const getAttractionName = (attraction) => {
-  return attraction.content?.[0]?.name || 'Unnamed Attraction'
+  return attraction.content?.[0]?.name || t('attractions.unnamedAttraction')
 }
 
 const getAttractionDescription = (attraction) => {
   const metaContent = attraction.content?.[0]?.meta_content
-  if (!metaContent) return 'No description available'
+  if (!metaContent) return t('attractions.noDescription')
   
   // Remove HTML tags and extract plain text
   const tempDiv = document.createElement('div')
@@ -166,18 +176,18 @@ const getAttractionDuration = (attraction) => {
   const duration = attraction.tour_duraction
   const type = attraction.tour_duraction_type
   
-  if (!duration) return 'Duration not specified'
+  if (!duration) return t('attractions.duration.notSpecified')
   
   if (type === 'hour') {
-    return `${duration} ${duration === 1 ? 'Hr' : 'Hr'}`
+    return `${duration} ${duration === 1 ? t('attractions.duration.hour') : t('attractions.duration.hours')}`
   } else if (type === 'day') {
-    return `${duration} ${duration === 1 ? 'Day' : 'Day'}`
+    return `${duration} ${duration === 1 ? t('attractions.duration.day') : t('attractions.duration.days')}`
   } else if (type === 'week') {
-    return `${duration} ${duration === 1 ? 'Week' : 'Week'}`
+    return `${duration} ${duration === 1 ? t('attractions.duration.week') : t('attractions.duration.weeks')}`
   } else if (type === 'month') {
-    return `${duration} ${duration === 1 ? 'Month' : 'Month'}`
+    return `${duration} ${duration === 1 ? t('attractions.duration.month') : t('attractions.duration.months')}`
   } else if (type === 'minutes' || type === 'minute' || type === 'min') {
-    return `${duration} Min`
+    return `${duration} ${t('attractions.duration.minute')}`
   }
   
   return `${duration} ${type}s`
@@ -397,6 +407,24 @@ watch(() => localStorage.getItem('selectedLanguage'), (newLanguage) => {
   color: #fc6421;
 }
 
+/* RTL Support for Arabic */
+.attractions.rtl {
+  direction: rtl;
+  text-align: right;
+}
+
+.attractions.rtl .attraction-meta {
+  flex-direction: row-reverse;
+}
+
+.attractions.rtl .attraction-actions {
+  flex-direction: row-reverse;
+}
+
+.attractions.rtl .duration {
+  flex-direction: row-reverse;
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .hero-section h1 {
@@ -517,6 +545,11 @@ watch(() => localStorage.getItem('selectedLanguage'), (newLanguage) => {
     align-items: center;
     justify-content: space-between;
     margin-top: 0.7rem;
+  }
+
+  /* RTL Support for Arabic on Mobile */
+  .attractions.rtl .attraction-actions {
+    grid-template-columns: 1fr 3fr;
   }
   .attraction-actions .btn-primary, .attraction-actions .btn-secondary {
     flex: 1 1 60%;

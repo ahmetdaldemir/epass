@@ -53,7 +53,7 @@
           <ul>
             <li><router-link to="/about">{{ $t('footer.links.about') }}</router-link></li>
             <li><router-link to="/attractions">{{ $t('footer.links.istanbulAttractions') }}</router-link></li>
-            <li><router-link to="/tours">{{ $t('footer.links.guidedTours') }}</router-link></li>
+            <li><router-link to="/attractions">{{ $t('footer.links.guidedTours') }}</router-link></li>
             <li><router-link to="/istanbul-pass">{{ $t('footer.links.searchYourTourPass') }}</router-link></li>
             <li><a href="#">{{ $t('footer.links.careers') }}</a></li>
             <li><a href="#">{{ $t('footer.links.blog') }}</a></li>

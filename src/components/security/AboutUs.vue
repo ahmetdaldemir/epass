@@ -1,15 +1,27 @@
 <template>
   <div class="about-container">
-    <h1>About SearchYourTour</h1>
-    <div class="subtitle">Who We Are</div>
-    <div class="last-updated">Last Updated: May 2024</div>
+    <h1>{{ $t('aboutUs.title') }}</h1>
+    <div class="subtitle">{{ $t('aboutUs.subtitle') }}</div>
+    <div class="last-updated">{{ $t('aboutUs.lastUpdated') }}</div>
     <section>
-      <p>SearchYourTour is dedicated to making travel in Istanbul easy, affordable, and unforgettable. As a brand of TLG Turizm, we bring together the city's most iconic attractions, tours, and experiences in one convenient pass. Our mission is to help visitors discover Istanbul's rich history and vibrant culture while saving time and money. With a focus on customer satisfaction, security, and innovation, SearchYourTour is your trusted partner for exploring Istanbul.</p>
+      <div class="about-content" v-html="formattedDescription"></div>
     </section>
   </div>
 </template>
 
 <script setup>
+import { useI18n } from 'vue-i18n'
+import { computed } from 'vue'
+
+const { t } = useI18n()
+
+const formattedDescription = computed(() => {
+  const description = t('aboutUs.description')
+  // Convert line breaks to HTML paragraphs
+  return description.split('\n\n').map(paragraph => 
+    paragraph.trim() ? `<p>${paragraph.trim()}</p>` : ''
+  ).join('')
+})
 </script>
 
 <style scoped>
@@ -41,5 +53,15 @@ h1, h2, h3 {
 }
 section {
   margin-bottom: 2rem;
+}
+
+.about-content p {
+  margin-bottom: 1.5rem;
+  line-height: 1.7;
+  color: #444;
+}
+
+.about-content p:last-child {
+  margin-bottom: 0;
 }
 </style> 

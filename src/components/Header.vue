@@ -23,14 +23,12 @@
               </button>
             </div>
             <div class="mobile-menu-links">
-              <router-link to="/faqs" @click="closeMobileMenu">{{ $t('nav.faqs') }}</router-link>
+              <router-link to="/" @click="closeMobileMenu">{{ $t('nav.home') }}</router-link>
+              <router-link to="/attractions" @click="closeMobileMenu">{{ $t('nav.tours') }}</router-link>
               <router-link to="/contact" @click="closeMobileMenu">{{ $t('nav.contact') }}</router-link>
               <router-link to="/my-pass" @click="closeMobileMenu">{{ $t('nav.myPass') }}</router-link>
-              <router-link to="/attractions" @click="closeMobileMenu">{{ $t('nav.attractions') }}</router-link>
-              <router-link to="/things-to-do-in-istanbul" @click="closeMobileMenu">{{ $t('nav.thingsToDo') }}</router-link>
-              <router-link to="/tours" @click="closeMobileMenu">{{ $t('nav.tours') }}</router-link>
               <router-link to="/about" @click="closeMobileMenu">{{ $t('nav.about') }}</router-link>
-              <router-link to="/istanbul-pass" class="mobile-buy-btn" @click="closeMobileMenu">{{ $t('nav.buyNow') }}</router-link>
+              <router-link to="/faqs" @click="closeMobileMenu">{{ $t('nav.faqs') }}</router-link>
             </div>
           </nav>
         </div>
@@ -39,16 +37,18 @@
                       <div class="header-right">
               <div class="top-links">
                 <ul>
-                  <li><router-link to="/faqs">{{ $t('nav.faqs') }}</router-link></li>
+                  <li><router-link to="/">{{ $t('nav.home') }}</router-link></li>
+                  <li><router-link to="/attractions">{{ $t('nav.tours') }}</router-link></li>
+                  <li><router-link to="/about">{{ $t('nav.about') }}</router-link></li>
                   <li><router-link to="/contact">{{ $t('nav.contact') }}</router-link></li>
+                  <li><router-link to="/faqs">{{ $t('nav.faqs') }}</router-link></li>
                   <li><router-link to="/my-pass">{{ $t('nav.myPass') }}</router-link></li>
                 </ul>
               </div>
             <nav class="main-menu">
               <ul>
-                <li><router-link to="/attractions">{{ $t('nav.attractions') }}</router-link></li>
-                <li><router-link to="/tours">{{ $t('nav.tours') }}</router-link></li>
-                <li><router-link to="/about">{{ $t('nav.about') }}</router-link></li>
+                <!--<li><router-link to="/attractions">{{ $t('nav.attractions') }}</router-link></li>-->
+                <!--<li><router-link to="/faqs">{{ $t('nav.faqs') }}</router-link></li>-->
               </ul>
             </nav>
           </div>
@@ -154,7 +154,7 @@ watch(showMobileMenu, (val) => {
   text-decoration: none;
   color: #333;
   font-weight: 500;
-  font-size: 12px;
+  font-size: 20px;
   transition: color 0.3s ease;
   white-space: nowrap;
 }

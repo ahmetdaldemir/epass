@@ -2,43 +2,43 @@
   <div class="not-found">
     <div class="container">
       <div class="not-found-content">
-        <h1>404</h1>
-        <h2>Page Not Found</h2>
-        <p>Sorry, the page you're looking for doesn't exist. But don't worry, we have plenty of amazing things to do in Istanbul!</p>
+        <h1>{{ $t('notFound.title') }}</h1>
+        <h2>{{ $t('notFound.subtitle') }}</h2>
+        <p>{{ $t('notFound.description') }}</p>
         
         <div class="helpful-links">
-          <h3>Popular Pages</h3>
+          <h3>{{ $t('notFound.helpfulLinks.title') }}</h3>
           <div class="links-grid">
             <router-link to="/" class="helpful-link">
               <i class="fas fa-home"></i>
-              <span>Home</span>
+              <span>{{ $t('notFound.helpfulLinks.home') }}</span>
             </router-link>
             <router-link to="/istanbul-pass" class="helpful-link">
               <i class="fas fa-ticket-alt"></i>
-              <span>Istanbul Tourist Pass</span>
+              <span>{{ $t('notFound.helpfulLinks.istanbulPass') }}</span>
             </router-link>
             <router-link to="/attractions" class="helpful-link">
               <i class="fas fa-landmark"></i>
-              <span>Attractions</span>
+              <span>{{ $t('notFound.helpfulLinks.attractions') }}</span>
             </router-link>
             <router-link to="/tours" class="helpful-link">
               <i class="fas fa-map-marked-alt"></i>
-              <span>Guided Tours</span>
+              <span>{{ $t('notFound.helpfulLinks.tours') }}</span>
             </router-link>
             <router-link to="/contact" class="helpful-link">
               <i class="fas fa-envelope"></i>
-              <span>Contact Us</span>
+              <span>{{ $t('notFound.helpfulLinks.contact') }}</span>
             </router-link>
             <router-link to="/faqs" class="helpful-link">
               <i class="fas fa-question-circle"></i>
-              <span>FAQs</span>
+              <span>{{ $t('notFound.helpfulLinks.faqs') }}</span>
             </router-link>
           </div>
         </div>
         
         <div class="cta-section">
-          <p>Ready to explore Istanbul?</p>
-          <router-link to="/istanbul-pass" class="btn btn-primary">Get Your Tourist Pass</router-link>
+          <p>{{ $t('notFound.cta.text') }}</p>
+          <router-link to="/istanbul-pass" class="btn btn-primary">{{ $t('notFound.cta.button') }}</router-link>
         </div>
       </div>
     </div>
@@ -55,7 +55,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #df3603 0%, #fc7100 100%);
   color: white;
   text-align: center;
 }

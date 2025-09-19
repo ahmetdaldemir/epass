@@ -1,9 +1,9 @@
 <template>
   <div class="home">
-    <!-- Top Banner (Price & Buy Now) -->
-    <div class="top-banner">
-              <span>{{ $t('home.hero.startingFrom') }}</span>
-        <router-link to="/istanbul-pass" class="buy-now-btn">{{ $t('home.hero.buyNow') }}</router-link>
+    <!-- Top Banner (Istanbul Sunset Yacht Tour) -->
+    <div class="top-banner" v-if="sunsetYachtTour">
+      <span>{{ sunsetYachtTour.content?.[0]?.name || 'Istanbul Sunset Yacht Tour' }} - {{ getReactiveTourPrice(sunsetYachtTour) }}</span>
+      <router-link :to="`/tour/${sunsetYachtTour.id}`" class="buy-now-btn">{{ $t('home.hero.buyNow') }}</router-link>
     </div>
 
     <!-- Hero Section with Main Visual and Badge -->
@@ -14,11 +14,11 @@
             <span class="text-atom--headline-2">{{ $t('home.hero.title') }}</span>
           </h1>
         </div>
-        <img class="hero-img"
-          src="https://c4.wallpaperflare.com/wallpaper/683/300/1022/sunken-palace-or-basilica-cistern-istanbul-wallpaper-preview.jpg"
-          alt="Basilica Cistern" loading="eager" fetchpriority="high" />
+        
+        <!-- Hero Image -->
+        <img class="hero-img" :src="currentHeroImage" :alt="currentHeroAlt" loading="eager" fetchpriority="high" />
+        
         <div class="hero-img-gradient"></div>
-        <div class="hero-badge">{{ $t('home.hero.badge') }}</div>
         <div class="hero-label">{{ $t('home.hero.subtitle') }}</div>
         <!-- Main H1 Heading for SEO -->
     
@@ -312,6 +312,34 @@ import 'swiper/css'
 import 'swiper/css/pagination'
 import { useCurrencyStore } from '../stores/currency'
 
+// Import hero images
+import heroImage1 from '../assets/images/1.jpg'
+import heroImage2 from '../assets/images/2.jpg'
+import heroImage3 from '../assets/images/3.jpg'
+import heroImage4 from '../assets/images/4.jpg'
+import heroImage5 from '../assets/images/5.jpg'
+
+// Hero slider data
+const heroImages = [
+  { src: heroImage1, alt: 'Istanbul Attraction 1' },
+  { src: heroImage2, alt: 'Istanbul Attraction 2' },
+  { src: heroImage3, alt: 'Istanbul Attraction 3' },
+  { src: heroImage4, alt: 'Istanbul Attraction 4' },
+  { src: heroImage5, alt: 'Istanbul Attraction 5' }
+]
+
+const currentHeroIndex = ref(0)
+const heroSliderInterval = ref(null)
+
+// Computed properties for current image
+const currentHeroImage = computed(() => {
+  return heroImages[currentHeroIndex.value]?.src || heroImages[0].src
+})
+
+const currentHeroAlt = computed(() => {
+  return heroImages[currentHeroIndex.value]?.alt || heroImages[0].alt
+})
+
 // Reactive data
 const features = ref([
   {
@@ -344,6 +372,7 @@ const attractions = ref([])
 const loading = ref(false)
 const error = ref(null)
 const currentLanguage = ref('en')
+const sunsetYachtTour = ref(null)
 
 // Likely to sell out system
 const sellOutInterval = ref(null)
@@ -427,6 +456,12 @@ const fetchAttractions = async () => {
   try {
     loading.value = true
     error.value = null
+    
+    // Clear existing sell out interval before fetching new data
+    if (sellOutInterval.value) {
+      clearInterval(sellOutInterval.value)
+      sellOutInterval.value = null
+    }
 
     // Güvenli değer alma - localStorage'dan güncel dili al
     const savedLanguage = localStorage.getItem('selectedLanguage') || 'en'
@@ -475,6 +510,25 @@ const fetchAttractions = async () => {
       console.log(`   Price type: ${typeof tour.tour_price?.[0]?.price}`)
       console.log(`   Currency code: ${tour.tour_price?.[0]?.currency_code}`)
     })
+    
+    // Istanbul Sunset Yacht Tour'u bul (ID: 63)
+    const foundSunsetYachtTour = istanbulTours.find(tour => tour.id === 63)
+    
+    if (foundSunsetYachtTour) {
+      sunsetYachtTour.value = foundSunsetYachtTour
+      console.log('\n=== ISTANBUL SUNSET YACHT TOUR FOUND ===')
+      console.log(`Tour ID: ${foundSunsetYachtTour.id}`)
+      console.log(`Name: ${foundSunsetYachtTour.content?.[0]?.name}`)
+      console.log(`Price: ${foundSunsetYachtTour.tour_price?.[0]?.price}`)
+      console.log('=========================================')
+    } else {
+      console.log('\n=== ISTANBUL SUNSET YACHT TOUR (ID: 63) NOT FOUND ===')
+      console.log('Available tour IDs:')
+      istanbulTours.slice(0, 10).forEach(tour => {
+        console.log(`- ID: ${tour.id}, Name: ${tour.content?.[0]?.name}`)
+      })
+      console.log('=====================================================')
+    }
     console.log('=== END API DEBUG ===')
 
     attractions.value = istanbulTours
@@ -517,26 +571,92 @@ const rotateSellOutBadge = () => {
   
   // Randomly select a new tour for the badge
   const randomIndex = Math.floor(Math.random() * attractions.value.length)
-  currentSellOutTourId.value = attractions.value[randomIndex].id
+  const newTourId = attractions.value[randomIndex].id
+  currentSellOutTourId.value = newTourId
   
-  console.log(`"Likely to sell out" badge moved to tour ID: ${currentSellOutTourId.value}`)
+  // Save to localStorage with timestamp
+  const badgeData = {
+    tourId: newTourId,
+    timestamp: Date.now(),
+    interval: Math.random() * (4 * 60 * 60 * 1000 - 3 * 60 * 60 * 1000) + 3 * 60 * 60 * 1000
+  }
+  localStorage.setItem('sellOutBadge', JSON.stringify(badgeData))
+  
+  console.log(`"Likely to sell out" badge moved to tour ID: ${newTourId}`)
 }
 
 const startSellOutRotation = () => {
-  // Set initial tour
-  rotateSellOutBadge()
+  // Clear any existing interval first
+  if (sellOutInterval.value) {
+    clearInterval(sellOutInterval.value)
+    sellOutInterval.value = null
+  }
   
-  // Random interval between 3-4 hours (10800000-14400000 milliseconds)
-  const minInterval = 3 * 60 * 60 * 1000  // 3 hours in milliseconds
-  const maxInterval = 4 * 60 * 60 * 1000  // 4 hours in milliseconds
-  const interval = Math.random() * (maxInterval - minInterval) + minInterval
+  // Check if there's existing badge data in localStorage
+  const existingBadgeData = localStorage.getItem('sellOutBadge')
+  let shouldRotate = true
+  let interval = 0
   
+  if (existingBadgeData) {
+    try {
+      const badgeData = JSON.parse(existingBadgeData)
+      const timeElapsed = Date.now() - badgeData.timestamp
+      
+      // If the interval hasn't passed yet, keep the same tour
+      if (timeElapsed < badgeData.interval) {
+        currentSellOutTourId.value = badgeData.tourId
+        shouldRotate = false
+        interval = badgeData.interval - timeElapsed
+        
+        const remainingHours = Math.round(interval / (60 * 60 * 1000) * 10) / 10
+        console.log(`"Likely to sell out" badge continuing with tour ID: ${badgeData.tourId}, remaining time: ${remainingHours} hours`)
+      }
+    } catch (error) {
+      console.warn('Error parsing badge data from localStorage:', error)
+    }
+  }
+  
+  // If we should rotate (no existing data or interval has passed)
+  if (shouldRotate) {
+    rotateSellOutBadge()
+    // Get the interval from the badge data we just saved
+    const badgeData = JSON.parse(localStorage.getItem('sellOutBadge'))
+    interval = badgeData.interval
+  }
+  
+  // Set up the interval for the next rotation
   sellOutInterval.value = setInterval(() => {
     rotateSellOutBadge()
   }, interval)
   
   const hours = Math.round(interval / (60 * 60 * 1000) * 10) / 10
   console.log(`Sell out badge rotation started with ${hours} hour interval`)
+}
+
+// Hero slider functions
+const nextHeroSlide = () => {
+  currentHeroIndex.value = (currentHeroIndex.value + 1) % heroImages.length
+  console.log(`Hero image changed to index: ${currentHeroIndex.value}`)
+}
+
+const startHeroSlider = () => {
+  // Clear any existing interval first
+  stopHeroSlider()
+  
+  // Change image every 10 seconds
+  heroSliderInterval.value = setInterval(() => {
+    nextHeroSlide()
+  }, 10000)
+  
+  console.log('Hero slider started with 10 second intervals')
+}
+
+const stopHeroSlider = () => {
+  if (heroSliderInterval.value) {
+    clearInterval(heroSliderInterval.value)
+    heroSliderInterval.value = null
+    console.log('Hero slider stopped')
+  }
 }
 
 // Price conversion functions
@@ -767,6 +887,9 @@ onMounted(() => {
 
   fetchAttractions()
   
+  // Start hero slider
+  startHeroSlider()
+  
   // Start sell out badge rotation after attractions are loaded
   watch(attractions, (newAttractions) => {
     if (newAttractions.length > 0 && !sellOutInterval.value) {
@@ -778,8 +901,14 @@ onMounted(() => {
   watch(() => currentLanguage.value, (newLang, oldLang) => {
     if (newLang !== oldLang) {
       console.log('Language changed from', oldLang, 'to', newLang)
+      // Clear existing badge data for new language
+      localStorage.removeItem('sellOutBadge')
       // API'den yeni dilde veri çek
       fetchAttractions()
+      // Sell out badge rotation'ı yeniden başlat
+      if (attractions.value.length > 0) {
+        startSellOutRotation()
+      }
     }
   })
 })
@@ -788,6 +917,9 @@ onBeforeUnmount(() => {
   // Remove event listeners
   window.removeEventListener('currency-changed', handleCurrencyChange)
   window.removeEventListener('language-changed', handleLanguageChange)
+  
+  // Clear hero slider interval
+  stopHeroSlider()
   
   // Clear sell out interval
   if (sellOutInterval.value) {
@@ -925,6 +1057,7 @@ const cultureTours = attractions
     justify-content: flex-start;
   }
 
+  /* Hero image mobile responsive */
   .hero-img-wrap {
     height: 400px;
   }
@@ -992,6 +1125,8 @@ const cultureTours = attractions
   height: 500px;
   object-fit: cover;
   filter: brightness(0.85);
+  display: block;
+  transition: opacity 0.5s ease-in-out;
 }
 
 .hero-img-gradient {

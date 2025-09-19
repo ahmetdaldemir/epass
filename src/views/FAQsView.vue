@@ -2,8 +2,8 @@
   <div class="faqs">
     <section class="hero-section">
       <div class="container">
-        <h1>Frequently Asked Questions</h1>
-        <p>Find answers to common questions about SearchYourTour</p>
+        <h1>{{ $t('faqs.title') }}</h1>
+        <p>{{ $t('faqs.subtitle') }}</p>
       </div>
     </section>
 
@@ -12,7 +12,7 @@
         <div class="faqs-list">
           <div 
             class="faq-item" 
-            v-for="faq in faqs" 
+            v-for="faq in translatedFaqs" 
             :key="faq.id"
             @click="toggleFaq(faq.id)"
           >
@@ -31,40 +31,52 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t, locale } = useI18n()
 
 const faqs = ref([
   {
     id: 1,
-    question: 'What is included in the SearchYourTour Pass?',
-    answer: 'The SearchYourTour Pass includes access to 100+ attractions, museums, and tours across Istanbul. You also get skip-the-line entry, free guided tours, and a mobile ticket.',
+    questionKey: 'faqs.q1.question',
+    answerKey: 'faqs.q1.answer',
     isOpen: false
   },
   {
     id: 2,
-    question: 'How long is the pass valid?',
-    answer: 'The pass is valid for the duration you choose: 1 day, 3 days, 5 days, or 7 days from the first use.',
+    questionKey: 'faqs.q2.question',
+    answerKey: 'faqs.q2.answer',
     isOpen: false
   },
   {
     id: 3,
-    question: 'Can I visit the same attraction multiple times?',
-    answer: 'Most attractions allow one visit per pass. However, some attractions may allow multiple visits - please check the specific attraction details.',
+    questionKey: 'faqs.q3.question',
+    answerKey: 'faqs.q3.answer',
     isOpen: false
   },
   {
     id: 4,
-    question: 'How do I use my pass?',
-    answer: 'Simply show your mobile pass or printed pass at the entrance of any included attraction. No need to buy separate tickets.',
+    questionKey: 'faqs.q4.question',
+    answerKey: 'faqs.q4.answer',
     isOpen: false
   },
   {
     id: 5,
-    question: 'Can I get a refund if I don\'t use the pass?',
-    answer: 'Yes, you can get a full refund if you haven\'t used the pass and request it within 30 days of purchase.',
+    questionKey: 'faqs.q5.question',
+    answerKey: 'faqs.q5.answer',
     isOpen: false
   }
 ])
+
+// Computed property for translated FAQs
+const translatedFaqs = computed(() => {
+  return faqs.value.map(faq => ({
+    ...faq,
+    question: t(faq.questionKey),
+    answer: t(faq.answerKey)
+  }))
+})
 
 const toggleFaq = (id) => {
   const faq = faqs.value.find(f => f.id === id)

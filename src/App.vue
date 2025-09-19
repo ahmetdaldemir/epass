@@ -23,11 +23,37 @@ onMounted(() => {
 
 // Methods
 const loadExternalScripts = () => {
-  // Load Flag Icons
+  // Load Flag Icons with error handling and fallback (original working version)
   const flagIcons = document.createElement('link')
   flagIcons.rel = 'stylesheet'
   flagIcons.href = 'https://cdn.jsdelivr.net/gh/lipis/flag-icons@6.6.6/css/flag-icons.min.css'
+  flagIcons.onload = () => {
+    console.log('Flag Icons CSS loaded successfully from primary CDN')
+    window.dispatchEvent(new Event('flag-icons-loaded'))
+  }
+  flagIcons.onerror = () => {
+    console.warn('Flag Icons CSS failed to load from primary CDN, trying alternative source')
+    // Fallback to alternative CDN
+    const fallbackFlagIcons = document.createElement('link')
+    fallbackFlagIcons.rel = 'stylesheet'
+    fallbackFlagIcons.href = 'https://cdnjs.cloudflare.com/ajax/libs/flag-icons/6.6.6/css/flag-icons.min.css'
+    fallbackFlagIcons.onload = () => {
+      console.log('Flag Icons CSS loaded successfully from fallback CDN')
+      window.dispatchEvent(new Event('flag-icons-loaded'))
+    }
+    fallbackFlagIcons.onerror = () => {
+      console.error('Both Flag Icons CDNs failed to load')
+      window.dispatchEvent(new Event('flag-icons-failed'))
+    }
+    document.head.appendChild(fallbackFlagIcons)
+  }
   document.head.appendChild(flagIcons)
+  
+  // Also load Font Awesome for additional icons if needed
+  const fontAwesome = document.createElement('link')
+  fontAwesome.rel = 'stylesheet'
+  fontAwesome.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css'
+  document.head.appendChild(fontAwesome)
   
   // Load jQuery and other dependencies if needed
   loadScript('https://code.jquery.com/jquery-3.6.0.min.js').then(() => {
@@ -52,8 +78,46 @@ const initializeGlobalFeatures = () => {
   // Initialize any global features that were in the original script
   console.log('Initializing global features')
   
+  // Wait for flag icons CSS to load before initializing
+  const waitForFlagIcons = () => {
+    const testElement = document.createElement('span')
+    testElement.className = 'fi fi-gb'
+    testElement.style.display = 'none'
+    document.body.appendChild(testElement)
+    
+    // Check if flag icons CSS is loaded by testing computed styles
+    const computedStyle = window.getComputedStyle(testElement)
+    const isLoaded = computedStyle.backgroundImage && 
+                    computedStyle.backgroundImage !== 'none' && 
+                    computedStyle.backgroundImage !== 'initial'
+    
+    document.body.removeChild(testElement)
+    
+    if (isLoaded) {
+      console.log('Flag Icons CSS is ready')
+      return true
+    }
+    return false
+  }
+  
+  // Check every 100ms for flag icons CSS to load
+  const checkFlagIcons = setInterval(() => {
+    if (waitForFlagIcons()) {
+      clearInterval(checkFlagIcons)
+      console.log('Flag Icons CSS loaded successfully')
+      // Dispatch event to notify components
+      window.dispatchEvent(new Event('flag-icons-ready'))
+    }
+  }, 100)
+  
   // Add global functions that might be called from components
   window.doGTranslate = function(element) {
+    // Safety check for element and its properties
+    if (!element || !element.dataset) {
+      console.warn('doGTranslate: Invalid element parameter')
+      return
+    }
+    
     const lang = element.dataset.lang
     const value = element.dataset.value
     
@@ -62,17 +126,19 @@ const initializeGlobalFeatures = () => {
     
     // Update the active language display
     const activeLang = document.querySelector('.active-lang')
-    if (activeLang) {
+    if (activeLang && element.innerHTML) {
       activeLang.innerHTML = element.innerHTML.trim()
         .replaceAll('\t', '')
         .replaceAll('\n', '')
     }
     
     // Store language preference
-    localStorage.setItem('selectedLanguage', lang)
-    
-    // Update RTL support
-    updateRTLSupport(lang)
+    if (lang) {
+      localStorage.setItem('selectedLanguage', lang)
+      
+      // Update RTL support
+      updateRTLSupport(lang)
+    }
   }
   
   // RTL support function

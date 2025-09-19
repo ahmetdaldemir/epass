@@ -18,8 +18,8 @@ export default {
   // Homepage
   home: {
     hero: {
-      title: 'Discover Istanbul with SearchYourTour Pass - Save 40% on Top Attractions',
-      subtitle: 'Basilica Cistern / Included with pass',
+      title: 'Discover Istanbul with Us - Save 40% on Top Attractions',
+      subtitle: 'Istanbul',
       badge: 'NOW WITH 5GB SIM FREE',
       buyNow: 'Buy Now',
       startingFrom: 'Starting from just €139'
@@ -183,5 +183,528 @@ export default {
     terms: 'Terms',
     privacy: 'Privacy',
     cookies: 'Cookies'
+  },
+
+  // Tour Detail
+  tourDetail: {
+    loading: 'Loading tour details...',
+    tryAgain: 'Try Again',
+    likelyToSellOut: 'Likely to sell out',
+    tourInformation: 'Tour Information',
+    destination: 'Destination',
+    duration: 'Duration',
+    time: 'Time',
+    maxGroupSize: 'Max Group Size',
+    notSpecified: 'Not specified',
+    availableDays: 'Available Days',
+    minimumAge: 'Minimum Age',
+    hour: 'Hr',
+    hours: 'Hr',
+    minute: 'Min',
+    minutes: 'Min',
+    tabs: {
+      overview: 'Overview',
+      whatsIncluded: 'What\'s Included',
+      additionalInfo: 'Additional Info'
+    },
+    bookNow: 'Book Now',
+            adult: 'Adult',
+        child: 'Child',
+        infant: 'Infant',
+        pricePerAdult: '/ adult',
+        pricePerChild: '/ child',
+        pricePerInfant: '/ infant',
+        privateTourPrice: 'Private Tour Price',
+        privateTourInfo: 'This is a private tour with a fixed price for the entire group.',
+    age0to2: 'Age 0-2 years',
+    age3to6: 'Age 3-6 years',
+    age7plus: 'Age 7+ years',
+    orderTotal: 'Order Total',
+    taxesIncluded: 'All taxes and fees included',
+    emailAddress: 'E-mail Address',
+    pickDate: 'Pick a date',
+    pleaseSelectDate: 'Please Select Date',
+    save: 'Save',
+    onThisTour: 'on this tour versus original price.'
+  },
+
+  // FAQs
+  faqs: {
+    title: 'Frequently Asked Questions',
+    subtitle: 'Find answers to common questions about SearchYourTour',
+    q1: {
+      question: 'What is included in the SearchYourTour Pass?',
+      answer: 'The SearchYourTour Pass includes access to 100+ attractions, museums, and tours across Istanbul. You also get skip-the-line entry, free guided tours, and a mobile ticket.'
+    },
+    q2: {
+      question: 'How long is the pass valid?',
+      answer: 'The pass is valid for the duration you choose: 1 day, 3 days, 5 days, or 7 days from the first use.'
+    },
+    q3: {
+      question: 'Can I visit the same attraction multiple times?',
+      answer: 'Most attractions allow one visit per pass. However, some attractions may allow multiple visits - please check the specific attraction details.'
+    },
+    q4: {
+      question: 'How do I use my pass?',
+      answer: 'Simply show your mobile pass or printed pass at the entrance of any included attraction. No need to buy separate tickets.'
+    },
+    q5: {
+      question: 'Can I get a refund if I don\'t use the pass?',
+      answer: 'Yes, you can get a full refund if you haven\'t used the pass and request it within 30 days of purchase.'
+    }
+  },
+
+  // Contact
+  contact: {
+    title: 'Contact Us',
+    subtitle: 'Get in touch with our customer support team',
+    getInTouch: 'Get in Touch',
+    email: 'Email',
+    phone: 'Phone',
+    address: 'Address',
+    companyName: 'Search Your Tour LLC',
+    streetAddress: '30 N Gould St Ste N',
+    cityStateZip: 'Sheridan, WY 82801',
+    country: 'USA',
+    sendMessage: 'Send us a Message',
+    whatsappNote: 'Click to chat on WhatsApp',
+    form: {
+      name: 'Name',
+      namePlaceholder: 'Enter your full name',
+      email: 'Email',
+      emailPlaceholder: 'Enter your email address',
+      subject: 'Subject',
+      subjectPlaceholder: 'Enter message subject',
+      message: 'Message',
+      messagePlaceholder: 'Type your message here...',
+      sendMessage: 'Send Message',
+      successMessage: 'Thank you for your message! We will get back to you soon.'
+    }
+  },
+
+  // MyPass
+  myPass: {
+    login: {
+      title: 'Customer Login',
+      email: 'E-mail',
+      password: 'Password',
+      forgotPassword: 'Forgot Password?',
+      loginBtn: 'Login',
+      signupBtn: 'Sign Up',
+      error: 'Invalid email or password',
+      generalError: 'An error occurred during login. Please try again.'
+    },
+    resetPassword: {
+      title: 'Reset Password',
+      email: 'Email Address',
+      emailPlaceholder: 'Enter your email address',
+      sendBtn: 'Send Reset Link',
+      sending: 'Sending...',
+      success: 'Password reset link sent successfully!',
+      error: 'Failed to send reset link'
+    },
+    dashboard: {
+      account: 'Account',
+      myReservations: 'My Reservations',
+      profile: 'Profile',
+      changePassword: 'Change Password',
+      logout: 'Logout'
+    },
+    reservations: {
+      title: 'My Reservations',
+      subtitle: 'Manage your tour bookings',
+      date: 'Date:',
+      time: 'Time:',
+      total: 'Total:',
+      attendees: 'Attendees:',
+      edit: 'Edit',
+      cancel: 'Cancel',
+      tbd: 'TBD',
+      adults: 'Adults',
+      children: 'Children',
+      infants: 'Infants',
+      buggy: 'Buggy',
+      noAttendees: 'No attendees',
+      emptyState: {
+        title: 'No Reservations Found',
+        description: 'You haven\'t made any reservations yet.',
+        browseTours: 'Browse Tours'
+      }
+    },
+    profile: {
+      title: 'Profile Details',
+      subtitle: 'Update your personal information',
+      personalInfo: 'Personal Information',
+      firstName: 'First Name',
+      firstNamePlaceholder: 'Enter your first name',
+      lastName: 'Last Name',
+      lastNamePlaceholder: 'Enter your last name',
+      contactInfo: 'Contact Information',
+      emailAddress: 'Email Address',
+      emailPlaceholder: 'Enter your email',
+      emailNote: 'Email cannot be changed',
+      mobilePhone: 'Mobile Phone',
+      phonePlaceholder: 'Enter your phone number',
+      addressInfo: 'Address Information',
+      address: 'Address',
+      addressPlaceholder: 'Enter your address',
+      city: 'City',
+      cityPlaceholder: 'Enter your city',
+      country: 'Country',
+      countryPlaceholder: 'Enter your country',
+      zipCode: 'ZIP Code',
+      zipPlaceholder: 'Enter your ZIP code',
+      saveChanges: 'Save Changes'
+    },
+    password: {
+      title: 'Change Password',
+      subtitle: 'Update your account password',
+      currentPassword: 'Current Password',
+      currentPasswordPlaceholder: 'Enter your current password',
+      newPassword: 'New Password',
+      newPasswordPlaceholder: 'Enter your new password',
+      confirmPassword: 'Confirm New Password',
+      confirmPasswordPlaceholder: 'Confirm your new password',
+      passwordNote: 'Password must be at least 6 characters',
+      changePasswordBtn: 'Change Password',
+      success: 'Password changed successfully!',
+      error: 'Failed to change password',
+      generalError: 'An error occurred while changing password. Please try again.',
+      validation: {
+        tooShort: 'New password must be at least 6 characters.',
+        noMatch: 'New passwords do not match.'
+      }
+    },
+    messages: {
+      reservationEdit: 'To make changes to your reservation, please contact us via email. Reservation ID: ',
+      confirmCancel: 'Are you sure you want to cancel this reservation?',
+      reservationCancel: 'To cancel your reservation, please contact us via email. Reservation ID: ',
+      userNotFound: 'User not found. Please login again.',
+      profileUpdated: 'Profile updated successfully!',
+      profileUpdateFailed: 'Failed to update profile: ',
+      unknownError: 'Unknown error',
+      generalError: 'An error occurred. Please try again.',
+      reservationCancelled: 'Reservation cancelled successfully!',
+      reservationCancelFailed: 'Failed to cancel reservation: '
+    }
+  },
+
+  // About Us
+  aboutUs: {
+    title: 'About Search Your Tour',
+    subtitle: 'Who We Are',
+    lastUpdated: 'Last Updated: December 2024',
+    description: `Welcome to Search Your Tour
+
+We are a trusted provider of curated travel experiences in Istanbul, with offices in both the United States and Türkiye. Our company is dedicated to delivering exceptional tours, skip-the-line tickets, and cultural experiences designed to make your visit to Istanbul seamless and memorable.
+
+We collaborate exclusively with licensed professional guides, reputable operators, and experienced service providers to ensure the highest standards of quality and reliability. At Search Your Tour, we believe that every traveler deserves an authentic connection with Istanbul.
+
+Our carefully designed itineraries include visits to iconic landmarks such as Hagia Sophia, Topkapi Palace, and the Basilica Cistern, as well as unique experiences like Bosphorus sunset yacht cruises, Turkish night dinner shows, and tailor-made private tours.
+
+Our mission is to combine efficiency, comfort, and cultural enrichment, allowing you to focus on enjoying the city while we take care of the details.
+
+SearchYourTour – where exceptional service meets unforgettable experiences.`
+  },
+
+  // Attractions
+  attractions: {
+    hero: {
+      title: 'Istanbul Attractions & Tours - Discover Top Cultural Sites',
+      subtitle: 'Explore Hagia Sophia, Topkapi Palace, Basilica Cistern & More',
+      description: 'Discover the most popular attractions and guided tours included in your Istanbul Tourist Pass. Visit iconic landmarks and hidden gems with expert guides.'
+    },
+    loading: 'Loading Istanbul attractions...',
+    error: 'Failed to load attractions. Please try again later.',
+    tryAgain: 'Try Again',
+    noResults: 'No Istanbul attractions found at the moment.',
+    view: 'View',
+    unnamedAttraction: 'Unnamed Attraction',
+    noDescription: 'No description available',
+    duration: {
+      hour: 'Hr',
+      hours: 'Hr',
+      day: 'Day',
+      days: 'Day',
+      week: 'Week',
+      weeks: 'Week',
+      month: 'Month',
+      months: 'Month',
+      minute: 'Min',
+      minutes: 'Min',
+      notSpecified: 'Duration not specified'
+    }
+  },
+
+  // Not Found
+  notFound: {
+    title: '404',
+    subtitle: 'Page Not Found',
+    description: 'Sorry, the page you\'re looking for doesn\'t exist. But don\'t worry, we have plenty of amazing things to do in Istanbul!',
+    helpfulLinks: {
+      title: 'Popular Pages',
+      home: 'Home',
+      istanbulPass: 'Istanbul Tourist Pass',
+      attractions: 'Attractions',
+      tours: 'Guided Tours',
+      contact: 'Contact Us',
+      faqs: 'FAQs'
+    },
+    cta: {
+      text: 'Ready to explore Istanbul?',
+      button: 'Get Your Tourist Pass'
+    }
+  },
+
+  // Become Partner
+  becomePartner: {
+    title: 'Become a Partner',
+    subtitle: 'Join the SearchYourTour family and grow your business',
+    form: {
+      logo: {
+        title: 'Logo',
+        description: '150×150px JPEG, PNG Image',
+        uploadText: 'SVG, PNG, JPG',
+        maxSize: '(max. 800x400)',
+        selectedFile: 'Selected file'
+      },
+      companyInfo: {
+        title: 'Company Information *',
+        username: {
+          label: 'Username *',
+          placeholder: 'Username *',
+          description: 'Your system login username. Ex: agency123'
+        },
+        companyName: {
+          label: 'Company Name *',
+          placeholder: 'Company Name *',
+          description: 'Your agency\'s official trade name. Ex: Amazing Tours and Travel Ltd.'
+        }
+      },
+      contactInfo: {
+        title: 'Email / Phone *',
+        email: {
+          label: 'Email *',
+          placeholder: 'Email *',
+          description: 'Email address for communication. Ex: info@youragency.com'
+        },
+        phone: {
+          label: 'Phone *',
+          placeholder: 'Phone *',
+          description: 'Phone number for communication. Ex: 5XX XXX XX XX'
+        }
+      },
+      location: {
+        title: 'Country / Region (City) *',
+        country: {
+          label: 'Country *',
+          placeholder: 'Select Country *',
+          description: 'Country where your agency is located'
+        },
+        city: {
+          label: 'City *',
+          placeholder: 'Select City *',
+          description: 'City where your agency is located'
+        }
+      },
+      address: {
+        title: 'Address *',
+        label: 'Address *',
+        placeholder: 'Address *',
+        description: 'Complete address of your agency. Ex: Republic St. Ataturk Ave. No:123 Apt:4'
+      },
+      businessInfo: {
+        title: 'Foundation Date / Employee Count *',
+        foundationDate: {
+          label: 'Foundation Date *',
+          placeholder: 'Foundation Date *',
+          description: 'Official foundation date of your agency'
+        },
+        employeeCount: {
+          label: 'Employee Count *',
+          placeholder: 'Employee Count *',
+          description: 'Number of employees in your agency. Ex: 5'
+        }
+      },
+      revenue: {
+        title: 'Monthly Revenue / Website *',
+        monthlyRevenue: {
+          label: 'Monthly Revenue *',
+          placeholder: 'Monthly Revenue *',
+          description: 'Approximate monthly revenue of your agency. Ex: 100,000'
+        },
+        website: {
+          label: 'Website',
+          placeholder: 'Website',
+          description: 'Your agency\'s website. Ex: www.youragency.com'
+        }
+      },
+      taxInfo: {
+        title: 'Tax Office / Number *',
+        taxOffice: {
+          label: 'Tax Office *',
+          placeholder: 'Tax Office *',
+          description: 'Tax office your agency is registered with. Ex: Kadikoy Tax Office'
+        },
+        taxNumber: {
+          label: 'Tax Number *',
+          placeholder: 'Tax Number *',
+          description: 'Your 10 or 11-digit tax number. Ex: 1234567890'
+        },
+        pibNumber: {
+          title: 'PIB Number *',
+          label: 'PIB Number *',
+          placeholder: 'PIB Number *',
+          description: 'P.I.B. Number example: 1234567890'
+        }
+      },
+      banking: {
+        title: 'IBAN *',
+        iban: {
+          label: 'IBAN *',
+          placeholder: 'IBAN *',
+          description: 'Your IBAN number. Ex: TR12 3456 7890 1234 5678 9012 34'
+        },
+        accountHolder: {
+          label: 'Full Name *',
+          placeholder: 'Full Name *',
+          description: 'Account holder\'s name. Ex: Amazing Tours and Travel Ltd.'
+        },
+        bank: {
+          label: 'Bank *',
+          placeholder: 'Bank *',
+          description: 'Bank name. Ex: Ziraat Bank'
+        },
+        swiftCode: {
+          title: 'Swift Code / Account Number',
+          label: 'Swift Code',
+          placeholder: 'Swift Code',
+          description: 'Swift/BIC code for international bank transactions. Ex: TGBATRISXXX'
+        },
+        accountNumber: {
+          label: 'Account Number',
+          placeholder: 'Account Number',
+          description: 'Your bank account number. Ex: 12345678'
+        }
+      },
+      services: {
+        title: 'Service Area / Language / How Did You Hear About Us *',
+        serviceArea: {
+          label: 'Service Area *',
+          placeholder: 'Select Service Area *',
+          description: 'Service categories your agency offers. You can select multiple options.'
+        },
+        language: {
+          label: 'Language',
+          placeholder: '🌐 Select Language',
+          description: 'Your agency\'s preferred communication language'
+        },
+        heardFrom: {
+          label: 'How Did You Hear About Us? *',
+          placeholder: 'How Did You Hear About Us? *',
+          description: 'How did you hear about us?'
+        }
+      },
+      documents: {
+        title: 'Documents',
+        taxDocument: {
+          label: 'Tax Certificate *',
+          description: 'Your tax certificate (current dated) in PDF or image format. Required document.',
+          montenegroDescription: 'Your license document in PDF or image format. Required document.'
+        },
+        tursabDocument: {
+          label: 'TÜRSAB Certificate',
+          description: 'Your TÜRSAB certificate in PDF or image format (if available)'
+        },
+        expertiseDocument: {
+          label: 'Business / Expertise Certificate',
+          description: 'Your expertise certificate in PDF or image format (if available)'
+        },
+        otherDocuments: {
+          label: 'Other Documents',
+          description: 'Other documents (if available)'
+        },
+        fileTypes: 'PDF, JPG, PNG, DOC, DOCX, XLS, XLSX',
+        maxSize: '(max. 10MB)',
+        ifAvailable: '(if available)'
+      },
+      manager: {
+        title: 'Manager',
+        gender: {
+          label: 'Gender *',
+          placeholder: 'Select Gender *',
+          options: {
+            male: 'Male',
+            female: 'Female',
+            notSpecified: 'Prefer not to specify'
+          }
+        },
+        title: {
+          label: 'Title *',
+          placeholder: 'Title *'
+        },
+        firstName: {
+          label: 'First Name *',
+          placeholder: 'First Name *'
+        },
+        lastName: {
+          label: 'Last Name *',
+          placeholder: 'Last Name *'
+        },
+        phone: {
+          label: 'Phone Number *',
+          placeholder: 'Phone Number *'
+        },
+        birthDate: {
+          label: 'Date of Birth *',
+          placeholder: 'Date of Birth *'
+        }
+      },
+      password: {
+        title: 'Password',
+        password: {
+          label: 'Your Password *',
+          placeholder: 'Your Password *',
+          description: 'Password must be at least 6 characters long and contain at least one number.'
+        },
+        passwordRepeat: {
+          label: 'Repeat Password *',
+          placeholder: 'Repeat Password *'
+        }
+      },
+      agreements: {
+        title: 'Agreements',
+        cookies: {
+          label: 'I have read and accept the SearchYourTour Cookie Policy.',
+          link: 'Read SearchYourTour Cookie Policy'
+        },
+        contract: {
+          label: 'I have read and accept the SearchYourTour E-Commerce Intermediary Agreement.',
+          link: 'Read E-Commerce Intermediary Agreement'
+        }
+      },
+      submit: 'Complete Application',
+      success: 'Your application has been received!',
+      passwordMismatch: 'Passwords do not match!'
+    },
+    serviceAreas: {
+      tourCategories: 'Tour Categories',
+      activityCategories: 'Activity Categories',
+      courseCategories: 'Course Categories',
+      otherCategories: 'Other Categories'
+    },
+    heardFromOptions: [
+      'Instagram',
+      'Facebook',
+      'Twitter',
+      'LinkedIn',
+      'YouTube',
+      'TikTok',
+      'WhatsApp',
+      'Telegram',
+      'Website',
+      'Regional Representative',
+      'Other'
+    ]
   }
 }

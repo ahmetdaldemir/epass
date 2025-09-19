@@ -2,8 +2,8 @@
   <div class="contact">
     <section class="hero-section">
       <div class="container">
-        <h1>Contact Us</h1>
-        <p>Get in touch with our customer support team</p>
+        <h1>{{ $t('contact.title') }}</h1>
+        <p>{{ $t('contact.subtitle') }}</p>
       </div>
     </section>
 
@@ -11,70 +11,77 @@
       <div class="container">
         <div class="contact-grid">
           <div class="contact-info">
-            <h2>Get in Touch</h2>
+            <h2>{{ $t('contact.getInTouch') }}</h2>
             <div class="contact-item">
               <i class="fas fa-envelope"></i>
               <div>
-                <h3>Email</h3>
+                <h3>{{ $t('contact.email') }}</h3>
                 <p>info@searchyourtour.com</p>
               </div>
             </div>
             <div class="contact-item">
-              <i class="fas fa-phone"></i>
-              <div>
-                <h3>Phone</h3>
-                <p>+90 212 123 45 67</p>
-              </div>
+              <a href="https://wa.me/905373257204" target="_blank" rel="noopener" class="whatsapp-link">
+                <i class="fab fa-whatsapp"></i>
+                <div>
+                  <h3>{{ $t('contact.phone') }}</h3>
+                  <p>+90 537 325 72 04</p>
+                  <small>{{ $t('contact.whatsappNote') }}</small>
+                </div>
+              </a>
             </div>
             <div class="contact-item">
               <i class="fas fa-map-marker-alt"></i>
               <div>
-                <h3>Address</h3>
-                <p>Search Your Tour LLC <br> 30 N Gould St Ste N <br> Sheridan, WY 82801 <br> USA</p>
+                <h3>{{ $t('contact.address') }}</h3>
+                <p>{{ $t('contact.companyName') }} <br> {{ $t('contact.streetAddress') }} <br> {{ $t('contact.cityStateZip') }} <br> {{ $t('contact.country') }}</p>
               </div>
             </div>
           </div>
 
           <div class="contact-form">
-            <h2>Send us a Message</h2>
+            <h2>{{ $t('contact.sendMessage') }}</h2>
             <form @submit.prevent="submitForm">
               <div class="form-group">
-                <label for="name">Name</label>
+                <label for="name">{{ $t('contact.form.name') }}</label>
                 <input 
                   type="text" 
                   id="name" 
                   v-model="form.name" 
+                  :placeholder="$t('contact.form.namePlaceholder')"
                   required
                 >
               </div>
               <div class="form-group">
-                <label for="email">Email</label>
+                <label for="email">{{ $t('contact.form.email') }}</label>
                 <input 
                   type="email" 
                   id="email" 
                   v-model="form.email" 
+                  :placeholder="$t('contact.form.emailPlaceholder')"
                   required
                 >
               </div>
               <div class="form-group">
-                <label for="subject">Subject</label>
+                <label for="subject">{{ $t('contact.form.subject') }}</label>
                 <input 
                   type="text" 
                   id="subject" 
                   v-model="form.subject" 
+                  :placeholder="$t('contact.form.subjectPlaceholder')"
                   required
                 >
               </div>
               <div class="form-group">
-                <label for="message">Message</label>
+                <label for="message">{{ $t('contact.form.message') }}</label>
                 <textarea 
                   id="message" 
                   v-model="form.message" 
+                  :placeholder="$t('contact.form.messagePlaceholder')"
                   rows="5" 
                   required
                 ></textarea>
               </div>
-              <button type="submit" class="btn btn-primary">Send Message</button>
+              <button type="submit" class="btn btn-primary">{{ $t('contact.form.sendMessage') }}</button>
             </form>
           </div>
         </div>
@@ -85,6 +92,9 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 const form = ref({
   name: '',
@@ -96,7 +106,7 @@ const form = ref({
 const submitForm = () => {
   console.log('Form submitted:', form.value)
   // Add form submission logic here
-  alert('Thank you for your message! We will get back to you soon.')
+  alert(t('contact.form.successMessage'))
   
   // Reset form
   form.value = {
@@ -152,6 +162,32 @@ const submitForm = () => {
   font-size: 1.5rem;
   color: #FC6421;
   width: 30px;
+}
+
+.whatsapp-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  text-decoration: none;
+  color: inherit;
+  transition: all 0.3s ease;
+}
+
+.whatsapp-link:hover {
+  transform: translateY(-2px);
+  text-decoration: none;
+  color: inherit;
+}
+
+.whatsapp-link i {
+  color: #25D366 !important;
+  font-size: 1.8rem;
+}
+
+.whatsapp-link small {
+  color: #25D366;
+  font-weight: 500;
+  font-size: 0.85rem;
 }
 
 .contact-item h3 {

@@ -3,13 +3,13 @@
     <!-- Loading State -->
     <div v-if="loading" class="loading-state">
       <div class="loading-spinner"></div>
-      <p>Loading tour details...</p>
+      <p>{{ $t('tourDetail.loading') }}</p>
     </div>
 
     <!-- Error State -->
     <div v-else-if="error" class="error-state">
       <p>{{ error }}</p>
-      <button @click="fetchTourData" class="btn btn-primary">Try Again</button>
+      <button @click="fetchTourData" class="btn btn-primary">{{ $t('tourDetail.tryAgain') }}</button>
     </div>
 
     <!-- Tour Content -->
@@ -55,9 +55,9 @@
             </div>
             <div class="tour-info">
               <nav class="breadcrumb">
-                <router-link to="/">Home</router-link>
+                <router-link to="/">{{ $t('nav.home') }}</router-link>
                 <span>/</span>
-                <router-link to="/tours">Tours</router-link>
+                <router-link to="/tours">{{ $t('nav.tours') }}</router-link>
                 <span>/</span>
                 <span>{{ getTourName(tour) }}</span>
               </nav>
@@ -72,15 +72,16 @@
                 </div>
                 <!-- Likely to sell out badge for tour detail -->
                 <div v-if="isLikelyToSellOut" class="sell-out-badge-detail">
-                  Likely to sell out
+                  {{ $t('tourDetail.likelyToSellOut') }}
                 </div>
-                <div class="duration">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fc6421" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="10"/>
-                    <polyline points="12,6 12,12 16,14"/>
-                  </svg>
-                  <span>{{ tour.tour_duraction }} {{ tour.tour_duraction_type }}{{ tour.tour_duraction > 1 ? '' : '' }}</span>
-                </div>
+                                 <div class="duration">
+                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fc6421" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                     <circle cx="12" cy="12" r="10"/>
+                     <polyline points="12,6 12,12 16,14"/>
+                   </svg>
+                   <span>{{ formatDuration(tour.tour_duraction, tour.tour_duraction_type) }}
+                   </span>
+                 </div>
                 <div class="destination">
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="#fc6421">
                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
@@ -93,37 +94,46 @@
               </div>
            
                              <div class="info-card">
-                 <h4>Tour Information</h4>
-                 <div class="info-item">
-                   <svg width="16" height="16" viewBox="0 0 24 24" fill="#fc6421">
-                     <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                   </svg>
-                   <span>Destination: {{ getDestinationName(tour) }}</span>
-                 </div>
-                                   <div class="info-item">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fc6421" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                      <circle cx="12" cy="12" r="10"/>
-                      <polyline points="12,6 12,12 16,14"/>
-                    </svg>
-                    <span>Duration: {{ tour.tour_duraction }} {{ tour.tour_duraction_type }}{{ tour.tour_duraction > 1 ? '' : '' }}</span>
-                  </div>
+                 <h4>{{ $t('tourDetail.tourInformation') }}</h4>
+                                    <div class="info-item">
+                     <svg width="16" height="16" viewBox="0 0 24 24" fill="#fc6421">
+                       <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                     </svg>
+                     <span>{{ $t('tourDetail.destination') }}: {{ getDestinationName(tour) }}</span>
+                   </div>
+                                                      <div class="info-item">
+                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fc6421" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                       <circle cx="12" cy="12" r="10"/>
+                       <polyline points="12,6 12,12 16,14"/>
+                     </svg>
+                     <span>{{ $t('tourDetail.duration') }}: {{ formatDuration(tour.tour_duraction, tour.tour_duraction_type) }}
+                     </span>
+                   </div>
+                   <div class="info-item">
+                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fc6421" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                       <circle cx="12" cy="12" r="10"/>
+                       <polyline points="12,6 12,12 16,14"/>
+                     </svg>
+                     <span>{{ $t('tourDetail.time') }}: {{ formatTourTime(tour.tour_time) || $t('tourDetail.notSpecified') }}
+                     </span>
+                   </div>
                  <div class="info-item">
                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#fc6421">
                      <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zm4 18v-6h2.5l-2.54-7.63A1.5 1.5 0 0 0 18.54 8H17c-.8 0-1.54.37-2.01 1l-1.7 2.26V16h-1.5v6h5zM12.5 11.5c.83 0 1.5-.67 1.5-1.5s-.67-1.5-1.5-1.5S11 9.17 11 10s.67 1.5 1.5 1.5zM5.5 6c1.11 0 2-.89 2-2s-.89-2-2-2-2 .89-2 2 .89 2 2 2zm2 16v-7H9V9c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v6h1.5v7h4z"/>
                    </svg>
-                   <span>Max Group Size: {{ tour.pax || 'Not specified' }}</span>
+                   <span>{{ $t('tourDetail.maxGroupSize') }}: {{ tour.pax || $t('tourDetail.notSpecified') }}</span>
                  </div>
                  <div class="info-item">
                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#fc6421">
                      <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM7 10h5v5H7z"/>
                    </svg>
-                   <span>Available Days: {{ getAvailableDays(tour) }}</span>
+                   <span>{{ $t('tourDetail.availableDays') }}: {{ getAvailableDays(tour) }}</span>
                  </div>
                  <div class="info-item" v-if="tour.min_age">
                    <svg width="16" height="16" viewBox="0 0 24 24" fill="#fc6421">
                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                    </svg>
-                   <span>Minimum Age: {{ tour.min_age }}</span>
+                   <span>{{ $t('tourDetail.minimumAge') }}: {{ tour.min_age }}</span>
                  </div>
                </div>
             </div>
@@ -142,21 +152,21 @@
                   :class="{ active: activeTab === 'overview' }"
                   @click="activeTab = 'overview'"
                 >
-                  Overview
+                  {{ $t('tourDetail.tabs.overview') }}
                 </button>
                 <button 
                   class="tab-btn" 
                   :class="{ active: activeTab === 'inclusions' }"
                   @click="activeTab = 'inclusions'"
                 >
-                  What's Included
+                  {{ $t('tourDetail.tabs.whatsIncluded') }}
                 </button>
                 <button 
                   class="tab-btn" 
                   :class="{ active: activeTab === 'additional' }"
                   @click="activeTab = 'additional'"
                 >
-                  Additional Info
+                  {{ $t('tourDetail.tabs.additionalInfo') }}
                 </button>
               </div>
     
@@ -205,11 +215,9 @@
                     <div>
                       <div class="additional-info">
                         <div class="info-section">
-                          <h4>Tour Details</h4>
-                          <div class="detail-item"><strong>Tour Code:</strong> {{ tour.code }}</div>
-                          <div class="detail-item"><strong>Duration Type:</strong> {{ tour.tour_duraction_type }}</div>
-                          <div class="detail-item"><strong>Status:</strong> <span :class="tour.is_active ? 'status-active' : 'status-inactive'">{{ tour.is_active ? 'Active' : 'Inactive' }}</span></div>
-                          <div class="detail-item" v-if="tour.ask_for_price"><strong>Pricing:</strong> Price on request</div>
+                          
+                          <div class="tour-additional-html" v-html="getTourFullAdditionalInfo(tour)"></div>
+                         
                         </div>
                       </div>
                     </div>
@@ -241,8 +249,8 @@
                         <ul class="inclusions-list">
                           <li v-for="service in tour.tour_include_service" :key="service.id">
                             <svg width="16" height="16" viewBox="0 0 24 24" fill="#27ae60">
-                              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
-                            </svg>
+                            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                           </svg> 
                             {{ service.include_service }}
                           </li>
                         </ul>
@@ -264,20 +272,10 @@
                   <!-- Additional Info Tab -->
                   <div v-if="activeTab === 'additional'" class="tab-panel">
                     <div class="additional-info">
-                      <div class="info-section">
-                        <h3>Tour Details</h3>
+                      <div class="info-section">              
                         <div class="detail-item">
-                          <strong>Tour Code:</strong> {{ tour.code }}
-                        </div>
-                        <div class="detail-item">
-                          <strong>Duration Type:</strong> {{ tour.tour_duraction_type }}
-                        </div>
-                        <div class="detail-item">
-                          <strong>Status:</strong> 
-                          <span :class="tour.is_active ? 'status-active' : 'status-inactive'">
-                            {{ tour.is_active ? 'Active' : 'Inactive' }}
-                          </span>
-                        </div>
+                          <div class="tour-additional-html" v-html="getTourFullAdditionalInfo(tour)"></div>
+                        </div>              
                         <div class="detail-item" v-if="tour.ask_for_price">
                           <strong>Pricing:</strong> Price on request
                         </div>
@@ -288,45 +286,59 @@
               </div>
             </div>
             <div class="content-row-booking">
-                               <!-- Rezervasyon/Ödeme Kutusu Başlangıç -->
                                <div v-if="tour" class="pass-box" ref="bookingBox">
-                                <h2 style="cursor:pointer" @click="scrollToBookingBox">Book Now</h2>
+                                <h2 style="cursor:pointer" @click="scrollToBookingBox">{{ $t('tourDetail.bookNow') }}</h2>
                                 <div class="pass-select-row">
                                   <div class="pass-select">{{ getTourName(tour) }}</div>
-                                  <span class="pass-price">{{ currentCurrencySymbol }}{{ adultPrice }}<small> / adult</small></span>
-                                  <span class="pass-price" style="margin-left:12px;">{{ currentCurrencySymbol }}{{ childPrice }}<small> / child</small></span>
-                                  <span class="pass-price" style="margin-left:12px;">{{ currentCurrencySymbol }}{{ infantPrice }}<small> / infant</small></span>
+                                  <template v-if="!isPrivateTour">
+                                    <span class="pass-price">{{ currentCurrencySymbol }}{{ adultPrice }}<small>{{ $t('tourDetail.pricePerAdult') }}</small></span>
+                                    <span class="pass-price" style="margin-left:12px;">{{ currentCurrencySymbol }}{{ childPrice }}<small>{{ $t('tourDetail.pricePerChild') }}</small></span>
+                                    <span class="pass-price" style="margin-left:12px;">{{ currentCurrencySymbol }}{{ infantPrice }}<small>{{ $t('tourDetail.pricePerInfant') }}</small></span>
+                                  </template>
+                                  <template v-else>
+                                    <span class="pass-price">{{ currentCurrencySymbol }}{{ adultPrice }}<small>{{ $t('tourDetail.privateTourPrice') }}</small></span>
+                                  </template>
                                 </div>
-                                                                 <div class="quantity-row" style="display: flex; gap: 16px; align-items: flex-start; justify-content: flex-start; margin-bottom: 12px;">
+                                <div v-if="!isPrivateTour" class="quantity-row" style="display: flex; gap: 16px; align-items: flex-start; justify-content: flex-start; margin-bottom: 12px;">
                                    <!-- Desktop layout -->
-                                   <div class="desktop-quantity-controls" style="display:flex;align-items:center;gap:6px; min-width: 110px;">
-                                     <span style="width:50px; font-size: 1.1rem; font-weight: 500;">Adult</span>
-                                     <button @click="decrement('adult')" :disabled="adultQuantity <= 0" style="width:32px; height:32px; font-size: 18px; padding: 0; border-radius: 6px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s;">-</button>
-                                     <span style="width:30px; text-align:center; font-size: 1.1rem; font-weight: 500;">{{ adultQuantity }}</span>
-                                     <button @click="increment('adult')" style="width:32px; height:32px; font-size: 18px; padding: 0; border-radius: 6px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s;">+</button>
-                                   </div>
-                                   <div class="desktop-quantity-controls" style="display:flex;align-items:center;gap:6px; min-width: 110px;">
-                                     <span style="width:50px; font-size: 1.1rem; font-weight: 500;">Child</span>
-                                     <button @click="decrement('child')" :disabled="childQuantity <= 0" style="width:32px; height:32px; font-size: 18px; padding: 0; border-radius: 6px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s;">-</button>
-                                     <span style="width:30px; text-align:center; font-size: 1.1rem; font-weight: 500;">{{ childQuantity }}</span>
-                                     <button @click="increment('child')" style="width:32px; height:32px; font-size: 18px; padding: 0; border-radius: 6px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s;">+</button>
+                                   <div class="desktop-quantity-controls" style="display:flex;flex-direction:column;gap:3px; min-width: 110px;">
+                                     <div style="display:flex;align-items:center;gap:6px;">
+                                       <span style="width:50px; font-size: 1.1rem; font-weight: 500;">{{ $t('tourDetail.adult') }}</span>
+                                       <button @click="decrement('adult')" :disabled="adultQuantity <= 0" style="width:32px; height:32px; font-size: 18px; padding: 0; border-radius: 6px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s;">-</button>
+                                       <span style="width:30px; text-align:center; font-size: 1.1rem; font-weight: 500;">{{ adultQuantity }}</span>
+                                       <button @click="increment('adult')" style="width:32px; height:32px; font-size: 18px; padding: 0; border-radius: 6px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s;">+</button>
+                                     </div>
+                                     <div style="color: #888; font-size: 0.85rem; margin-left: 50px;">
+                                       {{ $t('tourDetail.age7plus') }}
+                                     </div>
                                    </div>
                                    <div class="desktop-quantity-controls" style="display:flex;flex-direction:column;gap:3px; min-width: 110px;">
                                      <div style="display:flex;align-items:center;gap:6px;">
-                                       <span style="width:50px; font-size: 1.1rem; font-weight: 500;">Infant</span>
+                                       <span style="width:50px; font-size: 1.1rem; font-weight: 500;">{{ $t('tourDetail.child') }}</span>
+                                       <button @click="decrement('child')" :disabled="childQuantity <= 0" style="width:32px; height:32px; font-size: 18px; padding: 0; border-radius: 6px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s;">-</button>
+                                       <span style="width:30px; text-align:center; font-size: 1.1rem; font-weight: 500;">{{ childQuantity }}</span>
+                                       <button @click="increment('child')" style="width:32px; height:32px; font-size: 18px; padding: 0; border-radius: 6px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s;">+</button>
+                                     </div>
+                                     <div style="color: #888; font-size: 0.85rem; margin-left: 50px;">
+                                       {{ $t('tourDetail.age3to6') }}
+                                     </div>
+                                   </div>
+                                                                        <div class="desktop-quantity-controls" style="display:flex;flex-direction:column;gap:3px; min-width: 110px;">
+                                       <div style="display:flex;align-items:center;gap:6px;">
+                                         <span style="width:50px; font-size: 1.1rem; font-weight: 500;">{{ $t('tourDetail.infant') }}</span>
                                        <button @click="decrement('infant')" :disabled="infantQuantity <= 0" style="width:32px; height:32px; font-size: 18px; padding: 0; border-radius: 6px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s;">-</button>
                                        <span style="width:30px; text-align:center; font-size: 1.1rem; font-weight: 500;">{{ infantQuantity }}</span>
                                        <button @click="increment('infant')" style="width:32px; height:32px; font-size: 18px; padding: 0; border-radius: 6px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s;">+</button>
                                      </div>
                                      <div style="color: #888; font-size: 0.85rem; margin-left: 50px;">
-                                       Age 0-2 years
+                                       {{ $t('tourDetail.age0to2') }}
                                      </div>
                                    </div>
                                    
                                    <!-- Mobile layout -->
                                    <div class="mobile-quantity-controls" style="display: none; flex-direction: column; width: 100%;">
                                      <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 0;">
-                                       <span style="font-size: 1.1rem; font-weight: 500;">Adult</span>
+                                       <span style="font-size: 1.1rem; font-weight: 500;">{{ $t('tourDetail.adult') }}</span>
                                        <div style="display: flex; align-items: center; gap: 12px;">
                                          <button @click="decrement('adult')" :disabled="adultQuantity <= 0" style="width:44px; height:44px; font-size: 20px; padding: 0; border-radius: 8px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center;">-</button>
                                          <span style="width:40px; text-align:center; font-size: 1.2rem; font-weight: 600;">{{ adultQuantity }}</span>
@@ -334,7 +346,7 @@
                                        </div>
                                      </div>
                                      <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 0;">
-                                       <span style="font-size: 1.1rem; font-weight: 500;">Child</span>
+                                       <span style="font-size: 1.1rem; font-weight: 500;">{{ $t('tourDetail.child') }}</span>
                                        <div style="display: flex; align-items: center; gap: 12px;">
                                          <button @click="decrement('child')" :disabled="childQuantity <= 0" style="width:44px; height:44px; font-size: 20px; padding: 0; border-radius: 8px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center;">-</button>
                                          <span style="width:40px; text-align:center; font-size: 1.2rem; font-weight: 600;">{{ childQuantity }}</span>
@@ -343,8 +355,8 @@
                                      </div>
                                      <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 0;">
                                        <div style="display: flex; flex-direction: column; gap: 2px;">
-                                         <span style="font-size: 1.1rem; font-weight: 500;">Infant</span>
-                                         <span style="color: #888; font-size: 0.85rem;">Age 0-2 years</span>
+                                         <span style="font-size: 1.1rem; font-weight: 500;">{{ $t('tourDetail.infant') }}</span>
+                                         <span style="color: #888; font-size: 0.85rem;">{{ $t('tourDetail.age0to2') }}</span>
                                        </div>
                                        <div style="display: flex; align-items: center; gap: 12px;">
                                          <button @click="decrement('infant')" :disabled="infantQuantity <= 0" style="width:44px; height:44px; font-size: 20px; padding: 0; border-radius: 8px; background: #f2f2f2; border: none; cursor: pointer; transition: background 0.2s; display: flex; align-items: center; justify-content: center;">-</button>
@@ -354,18 +366,21 @@
                                      </div>
                                    </div>
                                  </div>
+                                 
+                                 <div v-else class="private-tour-info" style="padding: 12px; background: #f8f9fa; border-radius: 8px; margin-bottom: 12px; text-align: center; color: #666;">
+                                   <p style="margin: 0; font-size: 0.95rem;">{{ $t('tourDetail.privateTourInfo') }}</p>
+                                 </div>
                                 <div class="price-summary">
                                   <div class="old-price" v-if="getOldTourPrice(tour)"><s>{{ getOldTourPrice(tour) }}</s></div>
-                                  <div class="new-price">{{ getTourPrice(tour) }}</div>
                                   <div class="discount" v-if="getDiscount(tour)"><span>Sale Discount</span><span>-{{ getDiscount(tour) }}</span></div>
                                 </div>
                                 <hr />                    
                                 <div class="order-total-row">
-                                  <span>Order Total</span>
+                                  <span>{{ $t('tourDetail.orderTotal') }}</span>
                                   <span class="order-total">{{ orderTotal }}</span>
                                 </div>
-                                <div class="tax-note">All taxes and fees included</div>
-                                <input type="email" placeholder="E-mail Address" class="input" v-model="email" />
+                                <div class="tax-note">{{ $t('tourDetail.taxesIncluded') }}</div>
+                                <input type="email" :placeholder="$t('tourDetail.emailAddress')" class="input" v-model="email" />
                                 <div class="date-input-wrapper" ref="dateInputWrapper">
                                   <input
                                     type="text"
@@ -402,7 +417,7 @@
                                   <!-- Mobilde tam ekran ve scrollable v-calendar -->
                                   <div v-if="isMobile && showDatePicker" class="mobile-calendar-modal">
                                     <div class="calendar-modal-header">
-                                      <span>Pick a date</span>
+                                      <span>{{ $t('tourDetail.pickDate') }}</span>
                                       <button class="calendar-modal-close" @click="showDatePicker = false">&times;</button>
                                     </div>
                                     <div class="calendar-scroll-container">
@@ -423,9 +438,9 @@
                                   :disabled="!isDateSelected"
                                   :class="{ 'disabled': !isDateSelected }"
                                 >
-                                  {{ isDateSelected ? 'Book Now' : 'Please Select Date' }}
+                                  {{ isDateSelected ? $t('tourDetail.bookNow') : $t('tourDetail.pleaseSelectDate') }}
                                 </button>
-                                <div class="save-note" v-if="getDiscount(tour)"><b>Save {{ getDiscount(tour) }}</b> on this tour versus original price.</div>
+                                <div class="save-note" v-if="getDiscount(tour)"><b>{{ $t('tourDetail.save') }} {{ getDiscount(tour) }}</b> {{ $t('tourDetail.onThisTour') }}</div>
                               </div>
                               <!-- Rezervasyon/Ödeme Kutusu Son -->
             </div>
@@ -450,7 +465,7 @@
       class="sticky-book-btn"
       @click="scrollToBookingBox"
     >
-      Book Now
+      {{ $t('tourDetail.bookNow') }}
     </button>
 
     <!-- Mobilde Element Plus DatePicker tam ekran modal -->
@@ -462,12 +477,15 @@ import { ref, onMounted, computed, nextTick, onUnmounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useSelectedTourStore } from '../stores/selectedTour'
 import { useCurrencyStore } from '../stores/currency'
+import { useI18n } from 'vue-i18n'
 import { ElDatePicker } from 'element-plus'
 import 'element-plus/dist/index.css'
 import { Calendar } from 'v-calendar';
 import 'v-calendar/style.css';
 import { onClickOutside } from '@vueuse/core'
 import MobileAccordion from '../components/MobileAccordion.vue'
+
+const { t } = useI18n()
 const selectedTourStore = useSelectedTourStore()
 const currencyStore = useCurrencyStore()
 
@@ -482,6 +500,14 @@ const error = ref(null)
 const adultQuantity = ref(1)
 const childQuantity = ref(0)
 const infantQuantity = ref(0)
+
+// Private tour kontrolü
+const isPrivateTour = computed(() => {
+  if (!tour.value) return false
+  const tourName = getTourName(tour.value).toLowerCase()
+  return tourName.includes('private')
+})
+
 const adultPrice = computed(() => {
   const price = tour.value?.tour_price?.[0]?.price
   return price ? parseFloat(price) : 0
@@ -600,6 +626,12 @@ const currentCurrencySymbol = computed(() => {
   return getCurrencySymbol(currentCurrency)
 })
 
+// Check if we should add plural 's' to duration unit (only for English)
+const shouldAddPluralS = computed(() => {
+  const currentLanguage = localStorage.getItem('selectedLanguage') || 'en'
+  return currentLanguage === 'en' && tour.value?.tour_duraction > 1
+})
+
 // Handle currency change
 const handleCurrencyChange = () => {
   console.log('Currency changed, updating prices...')
@@ -627,6 +659,9 @@ const getTourDescription = (tour) => {
 
 const getTourFullDescription = (tour) => {
   return tour.content?.[0]?.description || 'No detailed description available'
+}
+const getTourFullAdditionalInfo = (tour) => {
+  return tour.content?.[0]?.additional || 'No additional info available'
 }
 
 const getTourImage = (tour) => {
@@ -674,7 +709,14 @@ const getDiscount = (tour) => {
 }
 
 const orderTotal = computed(() => {
-  // Backend'den gelen fiyatlar zaten seçili currency'de
+  // Private tour ise sabit fiyat göster
+  if (isPrivateTour.value) {
+    const currentCurrencyCode = currencyStore.getCurrentCurrency()
+    const formattedTotal = currencyStore.formatPrice(adultPrice.value, currentCurrencyCode)
+    return formattedTotal
+  }
+  
+  // Normal tour için mevcut hesaplama
   const adultTotal = parseFloat(adultQuantity.value) * parseFloat(adultPrice.value || 0)
   const childTotal = parseFloat(childQuantity.value) * parseFloat(childPrice.value || 0)
   const infantTotal = parseFloat(infantQuantity.value) * parseFloat(infantPrice.value || 0)
@@ -718,21 +760,30 @@ const proceedToBooking = () => {
     return;
   }
   if (tour.value) {
+    // Private tour için participants bilgisini farklı göster
+    let participantsText
+    if (isPrivateTour.value) {
+      participantsText = 'Private Tour'
+    } else {
+      participantsText = `${adultQuantity.value} adult${adultQuantity.value > 1 ? 's' : ''}${childQuantity.value > 0 ? ', ' + childQuantity.value + ' child' + (childQuantity.value > 1 ? 'ren' : '') : ''}${infantQuantity.value > 0 ? ', ' + infantQuantity.value + ' infant' + (infantQuantity.value > 1 ? 's' : '') : ''}`
+    }
+    
     selectedTourStore.setTour({
       id: tour.value.id,
       image: getTourImage(tour.value),
       title: getTourName(tour.value),
       description: getTourDescription(tour.value),
       date: startDate.value ? startDate.value : 'Select date',
-      participants: `${adultQuantity.value} adult${adultQuantity.value > 1 ? 's' : ''}${childQuantity.value > 0 ? ', ' + childQuantity.value + ' child' + (childQuantity.value > 1 ? 'ren' : '') : ''}${infantQuantity.value > 0 ? ', ' + infantQuantity.value + ' infant' + (infantQuantity.value > 1 ? 's' : '') : ''}`,
-      adult: adultQuantity.value,
-      child: childQuantity.value,
-      infant: infantQuantity.value,
+      participants: participantsText,
+      adult: isPrivateTour.value ? 1 : adultQuantity.value,
+      child: isPrivateTour.value ? 0 : childQuantity.value,
+      infant: isPrivateTour.value ? 0 : infantQuantity.value,
       rating: tour.value.rating || 4.6,
       reviewCount: tour.value.reviewCount || 1200,
       price: orderTotal.value,
       email: email.value,
-      bookingDate: startDate.value
+      bookingDate: startDate.value,
+      isPrivate: isPrivateTour.value
     })
     router.push('/checkout')
   }
@@ -755,36 +806,133 @@ const getAvailableDays = (tour) => {
   return tour.days.map(day => dayNames[day - 1]).join(', ')
 }
 
+const formatTourTime = (timeString) => {
+  if (!timeString) return null
+  
+  // Eğer zaten HH:MM formatındaysa direkt döndür
+  if (/^\d{2}:\d{2}$/.test(timeString)) {
+    return timeString
+  }
+  
+  // Eğer HH:MM:SS formatındaysa saniye kısmını kaldır
+  if (/^\d{2}:\d{2}:\d{2}$/.test(timeString)) {
+    return timeString.substring(0, 5)
+  }
+  
+  // Diğer durumlarda orijinal değeri döndür
+  return timeString
+}
+
+const formatDuration = (duration, durationType) => {
+  if (!duration) return null
+
+  // Eğer zaten saat cinsindense direkt döndür
+  if (durationType === 'hour') {
+    const hours = Math.floor(duration)
+    const minutes = Math.round((duration - hours) * 60)
+
+    if (minutes === 0) {
+      return `${hours} ${hours === 1 ? t('hour') : t('hours')}`
+    } else {
+      return `${hours} ${hours === 1 ? t('hour') : t('hours')} ${minutes} ${minutes === 1 ? t('minute') : t('minutes')}`
+    }
+  }
+
+  // Eğer dakika cinsindense saate çevir
+  if (durationType === 'minutes') {
+    const totalMinutes = parseInt(duration)
+    const hours = Math.floor(totalMinutes / 60)
+    const minutes = totalMinutes % 60
+
+    if (hours === 0) {
+      return `${minutes} ${minutes === 1 ? t('minute') : t('minutes')}`
+    } else if (minutes === 0) {
+      return `${hours} ${hours === 1 ? t('hour') : t('hours')}`
+    } else {
+      return `${hours} ${hours === 1 ? t('hour') : t('hours')} ${minutes} ${minutes === 1 ? t('minute') : t('minutes')}`
+    }
+  }
+
+  // Diğer durumlarda orijinal değeri döndür
+  return `${duration} ${durationType}`
+}
+
 // Likely to sell out functions
 const isLikelyToSellOut = computed(() => {
   return currentSellOutTourId.value === tour.value?.id
 })
 
 const rotateSellOutBadge = () => {
-  // For tour detail, we'll randomly show/hide the badge
-  const shouldShow = Math.random() > 0.5
-  if (shouldShow) {
-    currentSellOutTourId.value = tour.value?.id
+  if (!tour.value) return
+  
+  // Only set badge if this tour is the one selected in HomeView
+  const existingBadgeData = localStorage.getItem('sellOutBadge')
+  if (existingBadgeData) {
+    try {
+      const badgeData = JSON.parse(existingBadgeData)
+      if (badgeData.tourId === tour.value.id) {
+        currentSellOutTourId.value = tour.value.id
+        console.log(`Tour detail "Likely to sell out" badge shown for tour ID: ${tour.value.id}`)
+      } else {
+        currentSellOutTourId.value = null
+        console.log(`Tour detail "Likely to sell out" badge hidden - different tour selected`)
+      }
+    } catch (error) {
+      console.warn('Error parsing badge data:', error)
+      currentSellOutTourId.value = null
+    }
   } else {
     currentSellOutTourId.value = null
+    console.log(`Tour detail "Likely to sell out" badge hidden - no badge data`)
   }
-  
-  console.log(`Tour detail "Likely to sell out" badge: ${shouldShow ? 'SHOWN' : 'HIDDEN'}`)
 }
 
 const startSellOutRotation = () => {
-  // Set initial state
-  rotateSellOutBadge()
+  if (!tour.value) return
   
-  // For testing: rotate every 10 seconds, for production: 3-4 hours
-  const isDevelopment = process.env.NODE_ENV === 'development'
-  const interval = isDevelopment ? 10000 : Math.random() * (4 * 60 * 60 * 1000 - 3 * 60 * 60 * 1000) + 3 * 60 * 60 * 1000
+  // Clear any existing interval first
+  if (sellOutInterval.value) {
+    clearInterval(sellOutInterval.value)
+    sellOutInterval.value = null
+  }
   
+  // Check if there's existing badge data in localStorage
+  const existingBadgeData = localStorage.getItem('sellOutBadge')
+  let interval = 0
+  
+  if (existingBadgeData) {
+    try {
+      const badgeData = JSON.parse(existingBadgeData)
+      const timeElapsed = Date.now() - badgeData.timestamp
+      
+      // If the interval hasn't passed yet and it's the same tour, keep showing
+      if (timeElapsed < badgeData.interval && badgeData.tourId === tour.value.id) {
+        currentSellOutTourId.value = tour.value.id
+        interval = badgeData.interval - timeElapsed
+        
+        const remainingHours = Math.round(interval / (60 * 60 * 1000) * 10) / 10
+        console.log(`Tour detail "Likely to sell out" badge continuing for tour ID: ${tour.value.id}, remaining time: ${remainingHours} hours`)
+      } else {
+        // Either interval has passed or different tour - hide badge
+        currentSellOutTourId.value = null
+        console.log(`Tour detail "Likely to sell out" badge hidden - interval passed or different tour`)
+      }
+    } catch (error) {
+      console.warn('Error parsing badge data from localStorage:', error)
+      currentSellOutTourId.value = null
+    }
+  } else {
+    // No badge data - hide badge
+    currentSellOutTourId.value = null
+    console.log(`Tour detail "Likely to sell out" badge hidden - no badge data`)
+  }
+  
+  // Set up the interval for checking badge status (check every 30 seconds)
   sellOutInterval.value = setInterval(() => {
     rotateSellOutBadge()
-  }, interval)
+  }, 30000) // Check every 30 seconds
   
-  console.log(`Tour detail sell out badge rotation started with ${Math.round(interval / 1000)} second interval`)
+  console.log(`Tour detail sell out badge monitoring started`)
 }
 
 function increment(type) {
@@ -923,6 +1071,8 @@ onMounted(() => {
 const handleLanguageChange = (event) => {
   if (event.detail && event.detail.language) {
     console.log('Language changed to:', event.detail.language)
+    // Clear existing badge data for new language
+    localStorage.removeItem('sellOutBadge')
     fetchTourData() // Refetch tour data with new language
   }
 }

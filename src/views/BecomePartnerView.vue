@@ -6,17 +6,17 @@
       <section class="form-section">
         <div class="logo-upload-grid">
           <div class="logo-upload-info">
-            <div class="logo-label form-group-title">Logo</div>
-            <span class="logo-desc">150×150px JPEG, PNG Image</span>
+            <div class="logo-label form-group-title">{{ $t('becomePartner.form.logo.title') }}</div>
+            <span class="logo-desc">{{ $t('becomePartner.form.logo.description') }}</span>
           </div>
           <div class="custom-upload-box">
             <label class="upload-label">
               <input type="file" accept="image/*" @change="onLogoChange" />
               <div class="upload-placeholder">
                 <span class="emoji-icon">📷</span>
-                <div class="upload-desc">SVG, PNG, JPG</div>
-                <div class="upload-desc">(max. 800x400)</div>
-                <div v-if="logoPreview" class="upload-filename">Selected file</div>
+                <div class="upload-desc">{{ $t('becomePartner.form.logo.uploadText') }}</div>
+                <div class="upload-desc">{{ $t('becomePartner.form.logo.maxSize') }}</div>
+                <div v-if="logoPreview" class="upload-filename">{{ $t('becomePartner.form.logo.selectedFile') }}</div>
               </div>
             </label>
             <div v-if="logoPreview" class="logo-upload-preview" style="margin-top:4px; text-align:center;">
@@ -27,25 +27,25 @@
       </section>
       <!-- Company Information -->
       <section class="form-section">
-        <div class="form-group-title">Company Information *</div>
+        <div class="form-group-title">{{ $t('becomePartner.form.companyInfo.title') }}</div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.username" type="text" placeholder="Username *" required />
-            <div class="input-desc">Your system login username. Ex: agency123</div>
+            <input v-model="form.username" type="text" :placeholder="$t('becomePartner.form.companyInfo.username.placeholder')" required />
+            <div class="input-desc">{{ $t('becomePartner.form.companyInfo.username.description') }}</div>
           </div>
           <div class="form-group">
-            <input v-model="form.companyName" type="text" placeholder="Company Name *" required />
-            <div class="input-desc">Your agency's official trade name. Ex: Amazing Tours and Travel Ltd.</div>
+            <input v-model="form.companyName" type="text" :placeholder="$t('becomePartner.form.companyInfo.companyName.placeholder')" required />
+            <div class="input-desc">{{ $t('becomePartner.form.companyInfo.companyName.description') }}</div>
           </div>
         </div>
       </section>
       <!-- Email / Phone -->
       <section class="form-section">
-        <div class="form-group-title">Email / Phone *</div>
+        <div class="form-group-title">{{ $t('becomePartner.form.contactInfo.title') }}</div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.email" type="email" placeholder="Email *" required pattern="[^\s@]+@[^\s@]+\.[^\s@]+" />
-            <div class="input-desc">Email address for communication. Ex: info@youragency.com</div>
+            <input v-model="form.email" type="email" :placeholder="$t('becomePartner.form.contactInfo.email.placeholder')" required pattern="[^\s@]+@[^\s@]+\.[^\s@]+" />
+            <div class="input-desc">{{ $t('becomePartner.form.contactInfo.email.description') }}</div>
           </div>
           <div class="form-group phone-group">
             <div class="phone-input-combined">
@@ -55,15 +55,15 @@
                   <option v-for="c in countryCodes" :key="c.code" :value="c.code">{{ c.flag }} {{ c.code }}</option>
                 </select>
               </div>
-              <input v-model="form.phone" type="tel" placeholder="Phone *" required />
+              <input v-model="form.phone" type="tel" :placeholder="$t('becomePartner.form.contactInfo.phone.placeholder')" required />
             </div>
-            <div class="input-desc">Phone number for communication. Ex: 5XX XXX XX XX</div>
+            <div class="input-desc">{{ $t('becomePartner.form.contactInfo.phone.description') }}</div>
           </div>
         </div>
       </section>
       <!-- Country / Region (City) -->
       <section class="form-section">
-        <div class="form-group-title">Country / Region (City) *</div>
+        <div class="form-group-title">{{ $t('becomePartner.form.location.title') }}</div>
         <div class="form-row">
           <div class="form-group">
             <div class="custom-country-select" ref="countryDropdownRef">
@@ -72,7 +72,7 @@
                   <img :src="selectedCountry.flagUrl" :alt="selectedCountry.name" class="lang-flag" />
                   <span>{{ selectedCountry.name }}</span>
                 </span>
-                <span v-else class="lang-placeholder">Select Country *</span>
+                <span v-else class="lang-placeholder">{{ $t('becomePartner.form.location.country.placeholder') }}</span>
                 <span class="dropdown-arrow">▼</span>
               </div>
               <div v-if="countryDropdownOpen" class="custom-country-dropdown">
@@ -82,140 +82,140 @@
                 </div>
               </div>
             </div>
-            <div class="input-desc">Country where your agency is located</div>
+            <div class="input-desc">{{ $t('becomePartner.form.location.country.description') }}</div>
           </div>
           <div class="form-group">
             <select v-model="form.city" :disabled="!form.country" required>
-              <option value="">Select City *</option>
+              <option value="">{{ $t('becomePartner.form.location.city.placeholder') }}</option>
               <option v-for="city in cities" :key="city">{{ city }}</option>
             </select>
-            <div class="input-desc">City where your agency is located</div>
+            <div class="input-desc">{{ $t('becomePartner.form.location.city.description') }}</div>
           </div>
         </div>
       </section>
       <!-- Address -->
       <section class="form-section">
-        <div class="form-group-title">Address *</div>
+        <div class="form-group-title">{{ $t('becomePartner.form.address.title') }}</div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.address" type="text" placeholder="Address *" required />
-            <div class="input-desc">Complete address of your agency. Ex: Republic St. Ataturk Ave. No:123 Apt:4</div>
+            <input v-model="form.address" type="text" :placeholder="$t('becomePartner.form.address.placeholder')" required />
+            <div class="input-desc">{{ $t('becomePartner.form.address.description') }}</div>
           </div>
         </div>
       </section>
       <!-- Foundation Date / Employee Count -->
       <section class="form-section">
-        <div class="form-group-title">Foundation Date / Employee Count *</div>
+        <div class="form-group-title">{{ $t('becomePartner.form.businessInfo.title') }}</div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.foundationDate" type="date" placeholder="Foundation Date *" required />
-            <div class="input-desc">Official foundation date of your agency</div>
+            <input v-model="form.foundationDate" type="date" :placeholder="$t('becomePartner.form.businessInfo.foundationDate.placeholder')" required />
+            <div class="input-desc">{{ $t('becomePartner.form.businessInfo.foundationDate.description') }}</div>
           </div>
           <div class="form-group">
-            <input v-model="form.employeeCount" type="number" min="1" placeholder="Employee Count *" required />
-            <div class="input-desc">Number of employees in your agency. Ex: 5</div>
+            <input v-model="form.employeeCount" type="number" min="1" :placeholder="$t('becomePartner.form.businessInfo.employeeCount.placeholder')" required />
+            <div class="input-desc">{{ $t('becomePartner.form.businessInfo.employeeCount.description') }}</div>
           </div>
         </div>
       </section>
       <!-- Monthly Revenue / Website -->
       <section class="form-section">
-        <div class="form-group-title">Monthly Revenue / Website *</div>
+        <div class="form-group-title">{{ $t('becomePartner.form.revenue.title') }}</div>
         <div class="form-row">
           <div class="form-group ciro-group">
             <div class="ciro-input-row">
-              <input v-model="form.monthlyRevenue" type="text" placeholder="Monthly Revenue *" required />
+              <input v-model="form.monthlyRevenue" type="text" :placeholder="$t('becomePartner.form.revenue.monthlyRevenue.placeholder')" required />
               <select v-model="form.currency" class="currency-select">
                 <option v-for="opt in currencyOptions" :key="opt.value" :value="opt.value">{{ opt.label }}</option>
               </select>
             </div>
-            <div class="input-desc">Approximate monthly revenue of your agency. Ex: 100,000</div>
+            <div class="input-desc">{{ $t('becomePartner.form.revenue.monthlyRevenue.description') }}</div>
           </div>
           <div class="form-group">
-            <input v-model="form.website" type="url" placeholder="Website" />
-            <div class="input-desc">Your agency's website. Ex: www.youragency.com</div>
+            <input v-model="form.website" type="url" :placeholder="$t('becomePartner.form.revenue.website.placeholder')" />
+            <div class="input-desc">{{ $t('becomePartner.form.revenue.website.description') }}</div>
           </div>
         </div>
       </section>
       <!-- Tax Office / Number -->
       <section class="form-section" v-if="form.country !== 'Montenegro'">
-        <div class="form-group-title">Tax Office / Number *</div>
+        <div class="form-group-title">{{ $t('becomePartner.form.taxInfo.title') }}</div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.taxOffice" type="text" placeholder="Tax Office *" required />
-            <div class="input-desc">Tax office your agency is registered with. Ex: Kadikoy Tax Office</div>
+            <input v-model="form.taxOffice" type="text" :placeholder="$t('becomePartner.form.taxInfo.taxOffice.placeholder')" required />
+            <div class="input-desc">{{ $t('becomePartner.form.taxInfo.taxOffice.description') }}</div>
           </div>
           <div class="form-group">
-            <input v-model="form.taxNumber" type="text" placeholder="Tax Number *" required />
-            <div class="input-desc">Your 10 or 11-digit tax number. Ex: 1234567890</div>
+            <input v-model="form.taxNumber" type="text" :placeholder="$t('becomePartner.form.taxInfo.taxNumber.placeholder')" required />
+            <div class="input-desc">{{ $t('becomePartner.form.taxInfo.taxNumber.description') }}</div>
           </div>
         </div>
       </section>
 
       <!-- PIB Number for Montenegro -->
       <section class="form-section" v-else>
-        <div class="form-group-title">PIB Number *</div>
+        <div class="form-group-title">{{ $t('becomePartner.form.taxInfo.pibNumber.title') }}</div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.pibNumber" type="text" placeholder="PIB Number *" required />
-            <div class="input-desc">P.I.B. Number example: 1234567890</div>
+            <input v-model="form.pibNumber" type="text" :placeholder="$t('becomePartner.form.taxInfo.pibNumber.placeholder')" required />
+            <div class="input-desc">{{ $t('becomePartner.form.taxInfo.pibNumber.description') }}</div>
           </div>
         </div>
       </section>
       
       <!-- IBAN -->
       <section class="form-section">
-        <div class="form-group-title">IBAN *</div>
+        <div class="form-group-title">{{ $t('becomePartner.form.banking.title') }}</div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.iban" type="text" placeholder="IBAN *" required />
-            <div class="input-desc">Your IBAN number. Ex: TR12 3456 7890 1234 5678 9012 34</div>
+            <input v-model="form.iban" type="text" :placeholder="$t('becomePartner.form.banking.iban.placeholder')" required />
+            <div class="input-desc">{{ $t('becomePartner.form.banking.iban.description') }}</div>
           </div>
           <div class="form-group">
-            <input v-model="form.accountHolder" type="text" placeholder="Full Name *" required />
-            <div class="input-desc">Account holder's name. Ex: Amazing Tours and Travel Ltd.</div>
+            <input v-model="form.accountHolder" type="text" :placeholder="$t('becomePartner.form.banking.accountHolder.placeholder')" required />
+            <div class="input-desc">{{ $t('becomePartner.form.banking.accountHolder.description') }}</div>
           </div>
           <div class="form-group">
-            <input v-model="form.bank" type="text" placeholder="Bank *" required />
-            <div class="input-desc">Bank name. Ex: Ziraat Bank</div>
+            <input v-model="form.bank" type="text" :placeholder="$t('becomePartner.form.banking.bank.placeholder')" required />
+            <div class="input-desc">{{ $t('becomePartner.form.banking.bank.description') }}</div>
           </div>
         </div>
       </section>
       <!-- Swift Code / Account Number -->
       <section class="form-section">
-        <div class="form-group-title">Swift Code / Account Number</div>
+        <div class="form-group-title">{{ $t('becomePartner.form.banking.swiftCode.title') }}</div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.swiftCode" type="text" placeholder="Swift Code" />
-            <div class="input-desc">Swift/BIC code for international bank transactions. Ex: TGBATRISXXX</div>
+            <input v-model="form.swiftCode" type="text" :placeholder="$t('becomePartner.form.banking.swiftCode.placeholder')" />
+            <div class="input-desc">{{ $t('becomePartner.form.banking.swiftCode.description') }}</div>
           </div>
           <div class="form-group">
-            <input v-model="form.accountNumber" type="text" placeholder="Account Number" />
-            <div class="input-desc">Your bank account number. Ex: 12345678</div>
+            <input v-model="form.accountNumber" type="text" :placeholder="$t('becomePartner.form.banking.accountNumber.placeholder')" />
+            <div class="input-desc">{{ $t('becomePartner.form.banking.accountNumber.description') }}</div>
           </div>
         </div>
       </section>
       <!-- Service Area / Language / How Did You Hear About Us -->
       <section class="form-section">
-        <div class="form-group-title">Service Area / Language / How Did You Hear About Us *</div>
+        <div class="form-group-title">{{ $t('becomePartner.form.services.title') }}</div>
         <div class="form-row">
           <div class="form-group" style="position:relative;">
             <div class="multi-select-input" @click="toggleServiceAreaDropdown" :class="{open: serviceAreaDropdownOpen}" ref="dropdownRef">
               <div class="chips">
-                <span v-if="!form.serviceAreas.length" class="placeholder">Select Service Area *</span>
+                <span v-if="!form.serviceAreas.length" class="placeholder">{{ $t('becomePartner.form.services.serviceArea.placeholder') }}</span>
                 <span v-for="area in form.serviceAreas" :key="area" class="chip">{{ area }} <span class="remove-chip" @click.stop="toggleServiceArea(area)">&times;</span></span>
               </div>
               <span class="dropdown-arrow">▼</span>
             </div>
             <div v-if="serviceAreaDropdownOpen" class="multi-select-dropdown">
               <div v-for="group in serviceAreaOptions" :key="group.group">
-                <div class="dropdown-group-title">{{ group.group }}</div>
+                <div class="dropdown-group-title">{{ $t(`becomePartner.serviceAreas.${group.groupKey}`) }}</div>
                 <div v-for="area in group.options" :key="area" class="dropdown-option" @click.stop="toggleServiceArea(area)">
                   <input type="checkbox" :checked="isServiceAreaSelected(area)" readonly />
                   <span>{{ area }}</span>
                 </div>
               </div>
             </div>
-            <div class="input-desc">Service categories your agency offers. You can select multiple options.</div>
+            <div class="input-desc">{{ $t('becomePartner.form.services.serviceArea.description') }}</div>
           </div>
           <div class="form-group">
             <div class="custom-language-select" ref="languageDropdownRef">
@@ -224,7 +224,7 @@
                   <img :src="selectedLanguage.flagUrl" :alt="selectedLanguage.name" class="lang-flag" />
                   <span>{{ selectedLanguage.name }}</span>
                 </span>
-                <span v-else class="lang-placeholder">🌐 Select Language</span>
+                <span v-else class="lang-placeholder">{{ $t('becomePartner.form.services.language.placeholder') }}</span>
                 <span class="dropdown-arrow">▼</span>
               </div>
               <div v-if="languageDropdownOpen" class="custom-language-dropdown">
@@ -234,150 +234,153 @@
                 </div>
               </div>
             </div>
-            <div class="input-desc">Your agency's preferred communication language</div>
+            <div class="input-desc">{{ $t('becomePartner.form.services.language.description') }}</div>
           </div>
           <div class="form-group">
             <select v-model="form.heardFrom" required>
-              <option value="">How Did You Hear About Us? *</option>
+              <option value="">{{ $t('becomePartner.form.services.heardFrom.placeholder') }}</option>
               <option v-for="h in heardFromOptions" :key="h">{{ h }}</option>
             </select>
-            <div class="input-desc">How did you hear about us?</div>
+            <div class="input-desc">{{ $t('becomePartner.form.services.heardFrom.description') }}</div>
           </div>
         </div>
       </section>
       <!-- Document Upload Areas -->
       <section class="form-section">
-        <div class="form-group-title">Documents</div>
+        <div class="form-group-title">{{ $t('becomePartner.form.documents.title') }}</div>
         <div class="form-row file-upload-row">
-          <label>{{ form.country === 'Montenegro' ? 'License Document *' : 'Tax Certificate *' }}</label>
+          <label>{{ form.country === 'Montenegro' ? $t('becomePartner.form.documents.taxDocument.label') : $t('becomePartner.form.documents.taxDocument.label') }}</label>
           <div class="file-upload-box custom-upload-box">
             <label class="upload-label">
               <input type="file" @change="onFileChange($event, 'taxDocument')" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx" required />
               <div class="upload-placeholder">
                 <span class="emoji-icon">📁</span>
-                <div class="upload-desc">PDF, JPG, PNG, DOC, DOCX, XLS, XLSX</div>
-                <div class="upload-desc">(max. 10MB)</div>
+                <div class="upload-desc">{{ $t('becomePartner.form.documents.fileTypes') }}</div>
+                <div class="upload-desc">{{ $t('becomePartner.form.documents.maxSize') }}</div>
                 <div v-if="form.taxDocument" class="upload-filename">{{ form.taxDocument.name }}</div>
               </div>
             </label>
-            <div class="input-desc">{{ form.country === 'Montenegro' ? 'Your license document in PDF or image format. Required document.' : 'Your tax certificate (current dated) in PDF or image format. Required document.' }}</div>
+            <div class="input-desc">{{ form.country === 'Montenegro' ? $t('becomePartner.form.documents.taxDocument.montenegroDescription') : $t('becomePartner.form.documents.taxDocument.description') }}</div>
           </div>
         </div>
         <div class="form-row file-upload-row" v-if="form.country !== 'Montenegro'">
-          <label>TÜRSAB Certificate</label>
+          <label>{{ $t('becomePartner.form.documents.tursabDocument.label') }}</label>
           <div class="file-upload-box custom-upload-box">
             <label class="upload-label">
               <input type="file" @change="onFileChange($event, 'tursabDocument')" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx" />
               <div class="upload-placeholder">
                 <span class="emoji-icon">📁</span>
-                <div class="upload-desc">PDF, JPG, PNG, DOC, DOCX, XLS, XLSX</div>
-                <div class="upload-desc">(if available)</div>
+                <div class="upload-desc">{{ $t('becomePartner.form.documents.fileTypes') }}</div>
+                <div class="upload-desc">{{ $t('becomePartner.form.documents.ifAvailable') }}</div>
                 <div v-if="form.tursabDocument" class="upload-filename">{{ form.tursabDocument.name }}</div>
               </div>
             </label>
-            <div class="input-desc">Your TÜRSAB certificate in PDF or image format (if available)</div>
+            <div class="input-desc">{{ $t('becomePartner.form.documents.tursabDocument.description') }}</div>
           </div>
         </div>
         <div class="form-row file-upload-row" v-if="form.country !== 'Montenegro'">
-          <label>Business / Expertise Certificate</label>
+          <label>{{ $t('becomePartner.form.documents.expertiseDocument.label') }}</label>
           <div class="file-upload-box custom-upload-box">
             <label class="upload-label">
               <input type="file" @change="onFileChange($event, 'expertiseDocument')" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx" />
               <div class="upload-placeholder">
                 <span class="emoji-icon">📁</span>
-                <div class="upload-desc">PDF, JPG, PNG, DOC, DOCX, XLS, XLSX</div>
-                <div class="upload-desc">(if available)</div>
+                <div class="upload-desc">{{ $t('becomePartner.form.documents.fileTypes') }}</div>
+                <div class="upload-desc">{{ $t('becomePartner.form.documents.ifAvailable') }}</div>
                 <div v-if="form.expertiseDocument" class="upload-filename">{{ form.expertiseDocument.name }}</div>
               </div>
             </label>
-            <div class="input-desc">Your expertise certificate in PDF or image format (if available)</div>
+            <div class="input-desc">{{ $t('becomePartner.form.documents.expertiseDocument.description') }}</div>
           </div>
         </div>
         <div class="form-row file-upload-row">
-          <label>Other Documents</label>
+          <label>{{ $t('becomePartner.form.documents.otherDocuments.label') }}</label>
           <div class="file-upload-box custom-upload-box">
             <label class="upload-label">
               <input type="file" @change="onFileChange($event, 'otherDocuments')" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx,.xls,.xlsx" multiple />
               <div class="upload-placeholder">
                 <span class="emoji-icon">📁</span>
-                <div class="upload-desc">PDF, JPG, PNG, DOC, DOCX, XLS, XLSX</div>
-                <div class="upload-desc">(if available)</div>
+                <div class="upload-desc">{{ $t('becomePartner.form.documents.fileTypes') }}</div>
+                <div class="upload-desc">{{ $t('becomePartner.form.documents.ifAvailable') }}</div>
                 <div v-if="form.otherDocuments && form.otherDocuments.length" class="upload-filename">
                   <div v-for="file in form.otherDocuments" :key="file.name">{{ file.name }}</div>
                 </div>
               </div>
             </label>
-            <div class="input-desc">Other documents (if available)</div>
+            <div class="input-desc">{{ $t('becomePartner.form.documents.otherDocuments.description') }}</div>
           </div>
         </div>
       </section>
       <!-- Manager Information -->
       <section class="form-section">
-        <div class="form-group-title">Manager</div>
+        <div class="form-group-title">{{ $t('becomePartner.form.manager.title') }}</div>
         <div class="form-row">
           <div class="form-group">
             <select v-model="form.managerGender" required>
-              <option value="">Select Gender *</option>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Prefer not to specify">Prefer not to specify</option>
+              <option value="">{{ $t('becomePartner.form.manager.gender.placeholder') }}</option>
+              <option value="Male">{{ $t('becomePartner.form.manager.gender.options.male') }}</option>
+              <option value="Female">{{ $t('becomePartner.form.manager.gender.options.female') }}</option>
+              <option value="Prefer not to specify">{{ $t('becomePartner.form.manager.gender.options.notSpecified') }}</option>
             </select>
           </div>
           <div class="form-group">
-            <input v-model="form.managerTitle" type="text" placeholder="Title *" required />
+            <input v-model="form.managerTitle" type="text" :placeholder="$t('becomePartner.form.manager.title.placeholder')" required />
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.managerName" type="text" placeholder="First Name *" required />
+            <input v-model="form.managerName" type="text" :placeholder="$t('becomePartner.form.manager.firstName.placeholder')" required />
           </div>
           <div class="form-group">
-            <input v-model="form.managerSurname" type="text" placeholder="Last Name *" required />
+            <input v-model="form.managerSurname" type="text" :placeholder="$t('becomePartner.form.manager.lastName.placeholder')" required />
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.managerPhone" type="tel" placeholder="Phone Number *" required />
+            <input v-model="form.managerPhone" type="tel" :placeholder="$t('becomePartner.form.manager.phone.placeholder')" required />
           </div>
           <div class="form-group">
-            <input v-model="form.managerBirthDate" type="date" placeholder="Date of Birth *" required />
+            <input v-model="form.managerBirthDate" type="date" :placeholder="$t('becomePartner.form.manager.birthDate.placeholder')" required />
           </div>
         </div>
       </section>
       <!-- Password Field -->
       <section class="form-section">
-        <div class="form-group-title">Password</div>
+        <div class="form-group-title">{{ $t('becomePartner.form.password.title') }}</div>
         <div class="form-row">
           <div class="form-group">
-            <input v-model="form.password" type="password" placeholder="Your Password *" required minlength="6" />
-            <div class="input-desc">Password must be at least 6 characters long and contain at least one number.</div>
+            <input v-model="form.password" type="password" :placeholder="$t('becomePartner.form.password.password.placeholder')" required minlength="6" />
+            <div class="input-desc">{{ $t('becomePartner.form.password.password.description') }}</div>
           </div>
           <div class="form-group">
-            <input v-model="form.passwordRepeat" type="password" placeholder="Repeat Password *" required minlength="6" />
+            <input v-model="form.passwordRepeat" type="password" :placeholder="$t('becomePartner.form.password.passwordRepeat.placeholder')" required minlength="6" />
           </div>
         </div>
       </section>
       <!-- Agreements -->
       <section class="form-section">
-        <div class="form-group-title">Agreements</div>
+        <div class="form-group-title">{{ $t('becomePartner.form.agreements.title') }}</div>
         <div class="form-row agreements">
-          <label><input type="checkbox" v-model="form.agreeCookies" required /> I have read and accept the SearchYourTour Cookie Policy.
+          <label><input type="checkbox" v-model="form.agreeCookies" required /> {{ $t('becomePartner.form.agreements.cookies.label') }}
             <br>
-            <a href="/docs/cookie-policy.pdf" target="_blank" style="color:#3498db;">Read SearchYourTour Cookie Policy</a>
+            <a href="/docs/cookie-policy.pdf" target="_blank" style="color:#3498db;">{{ $t('becomePartner.form.agreements.cookies.link') }}</a>
           </label>
-          <label><input type="checkbox" v-model="form.agreeContract" required /> I have read and accept the SearchYourTour E-Commerce Intermediary Agreement.
+          <label><input type="checkbox" v-model="form.agreeContract" required /> {{ $t('becomePartner.form.agreements.contract.label') }}
             <br>
-            <a href="/docs/e-commerce-agreement.pdf" target="_blank" style="color:#3498db;">Read E-Commerce Intermediary Agreement</a>
+            <a href="/docs/e-commerce-agreement.pdf" target="_blank" style="color:#3498db;">{{ $t('becomePartner.form.agreements.contract.link') }}</a>
           </label>
         </div>
       </section>
-      <button class="submit-btn" type="submit">Complete Application</button>
+      <button class="submit-btn" type="submit">{{ $t('becomePartner.form.submit') }}</button>
     </form>
   </div>
 </template>
 
 <script setup>
 import { reactive, ref, computed, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+
+const { t } = useI18n()
 
 // Header yüksekliğini dinamik olarak hesapla
 const headerHeight = ref(100)
@@ -537,16 +540,16 @@ const currencyOptions = [
 ]
 
 const serviceAreaOptions = [
-  { group: 'Tour Categories', options: [
+  { group: 'Tour Categories', groupKey: 'tourCategories', options: [
     'Culture', 'Day Trip', 'Ship', 'Experience', 'Nature', 'Accommodation', 'Hajj / Umrah', 'Sacred Places', 'Adventure', 'Tasting', 'Guided', 'VIP', 'With Visa', 'Visa Free', 'International', 'Package', 'Trekking'
   ]},
-  { group: 'Activity Categories', options: [
+  { group: 'Activity Categories', groupKey: 'activityCategories', options: [
     'Golf', 'Rowing', 'Airsoft', 'Helicopter', 'Microlight', 'Turkish Bath', 'Glider', 'Paragliding', 'Parasailing', 'Jetski', 'Paragliding', 'Bungee Jumping', 'Balloon', 'Diving', 'Horseback Riding', 'Rafting', 'Skydiving', 'Boat', 'SUP', 'Zipline', 'Workshop', 'Buggy', 'Adventure Park', 'Camping', 'Spa & Massage', 'Golf Cart', 'Shooting Range', 'ATV-UTV', 'Jeep Safari', 'Skiing', 'Canoe', 'Swing', 'Horse Safari', 'Canal'
   ]},
-  { group: 'Course Categories', options: [
+  { group: 'Course Categories', groupKey: 'courseCategories', options: [
     'Paragliding', 'Glider', 'Paragliding', 'Skating', 'Airsoft', 'Tennis', 'Workshop', 'Horseback Riding', 'Swimming', 'Golf', 'Rowing', 'Yoga', 'Sailing', 'Diving', 'Surfing', 'Skydiving', 'Skiing', 'Dance', 'Kiteboarding', 'Motorcycle', 'Nature', 'Adventure', 'Yacht Captain'
   ]},
-  { group: 'Other Categories', options: [
+  { group: 'Other Categories', groupKey: 'otherCategories', options: [
     'Transfer', 'Car Rental', 'Museum Ticket', 'E-sim', 'Ferry', 'Entrance Ticket', 'Event', 'Organization'
   ]}
 ]
@@ -624,10 +627,10 @@ onUnmounted(() => {
 
 function submitForm() {
   if (form.password !== form.passwordRepeat) {
-    alert('Şifreler eşleşmiyor!')
+    alert(t('becomePartner.form.passwordMismatch'))
     return
   }
-  alert('Başvurunuz alınmıştır!')
+  alert(t('becomePartner.form.success'))
   console.log('Form:', JSON.parse(JSON.stringify(form)))
 }
 </script>

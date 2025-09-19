@@ -1,7 +1,7 @@
 <template>
   <div class="lang-switch">
     <span class="active-lang" @click="toggleDropdown">
-      <i :class="getLanguageIcon(currentLanguage)" :data-active-language="currentLanguage"></i>
+      <span :class="getLanguageIcon(currentLanguage)" :data-active-language="currentLanguage"></span>
       {{ getLanguageCode(currentLanguage) }}
     </span>
     <ul class="lang-dropdown" v-show="isDropdownOpen">
@@ -12,7 +12,7 @@
           href="#" 
           @click.prevent="changeLanguage(lang.code)"
         >
-          <i :class="getLanguageIcon(lang.code)"></i>
+          <span :class="getLanguageIcon(lang.code)"></span>
           {{ lang.name }}
         </a>
       </li>
@@ -37,6 +37,32 @@ const { locale } = useI18n()
 // Computed properties
 const currentLanguage = computed(() => languageStore.getCurrentLanguage)
 const languages = computed(() => languageStore.getAvailableLanguages)
+
+// Check if flag icons CSS is loaded
+const flagIconsLoaded = computed(() => {
+  // Test if flag-icons CSS is loaded by checking if a flag element has background-image
+  if (typeof window !== 'undefined' && document) {
+    try {
+      const testElement = document.createElement('span')
+      testElement.className = 'fi fi-gb'
+      testElement.style.display = 'none'
+      document.body.appendChild(testElement)
+      
+      const computedStyle = window.getComputedStyle(testElement)
+      const isLoaded = computedStyle.backgroundImage && 
+                      computedStyle.backgroundImage !== 'none' && 
+                      computedStyle.backgroundImage !== 'initial'
+      
+      document.body.removeChild(testElement)
+      
+      return isLoaded
+    } catch (error) {
+      console.warn('Error checking flag icons:', error)
+      return false
+    }
+  }
+  return false
+})
 
 // Static language list based on database IDs
 const fetchLanguages = () => {
@@ -71,15 +97,31 @@ const changeLanguage = (langCode) => {
   // Call the original doGTranslate function if it exists
   if (typeof window.doGTranslate === 'function') {
     const lang = languages.value.find(l => l && l.code === langCode)
-    window.doGTranslate({ dataset: { lang: langCode, value: lang ? lang.name : langCode } })
+    // Create a mock element with the required dataset properties
+    const mockElement = {
+      dataset: { lang: langCode, value: lang ? lang.name : langCode },
+      innerHTML: lang ? lang.name : langCode
+    }
+    window.doGTranslate(mockElement)
   }
 }
 
 const getLanguageIcon = (langCode) => {
   const lang = languages.value.find(l => l && l.code === langCode)
   if (!lang) return 'fi fi-gb'
-  return lang.flag ? `fi fi-${lang.flag}` : 'fi fi-gb'
+  
+  // Flag icons mapping - using flag-icons library
+  const flagMapping = {
+    'tr': 'fi fi-tr',
+    'de': 'fi fi-de', 
+    'en': 'fi fi-gb',
+    'ar': 'fi fi-sa'
+  }
+  
+  return flagMapping[langCode] || 'fi fi-gb'
 }
+
+
 
 const getLanguageCode = (langCode) => {
   const lang = languages.value.find(l => l && l.code === langCode)
@@ -102,8 +144,24 @@ const handleClickOutside = (event) => {
 const emit = defineEmits(['language-changed'])
 
 // Lifecycle
+const handleFlagIconsLoaded = () => {
+  console.log('Flag Icons CSS loaded event received')
+  // Force re-computation of flagIconsLoaded
+  // This will trigger a re-render with the updated computed value
+}
+
+const handleFlagIconsFailed = () => {
+  console.log('Flag Icons CSS failed to load event received')
+  // Force re-computation of flagIconsLoaded
+  // This will trigger a re-render with the updated computed value
+}
+
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
+  
+  // Listen for flag icons CSS loading events
+  window.addEventListener('flag-icons-loaded', handleFlagIconsLoaded)
+  window.addEventListener('flag-icons-failed', handleFlagIconsFailed)
   
   // Initialize language store
   languageStore.initializeLanguage()
@@ -114,6 +172,10 @@ onMounted(() => {
 
 onUnmounted(() => {
   document.removeEventListener('click', handleClickOutside)
+  
+  // Remove flag icons event listeners
+  window.removeEventListener('flag-icons-loaded', handleFlagIconsLoaded)
+  window.removeEventListener('flag-icons-failed', handleFlagIconsFailed)
 })
 </script>
 
@@ -209,8 +271,30 @@ onUnmounted(() => {
 }
 
 .fi {
-  font-size: 16px;
+  display: inline-block;
+  width: 24px;
+  height: 16px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  vertical-align: middle;
+  margin-right: 8px;
 }
+
+/* Ensure flag icons are visible */
+.fi.fi-tr,
+.fi.fi-de,
+.fi.fi-gb,
+.fi.fi-sa {
+  display: inline-block;
+  min-width: 24px;
+  min-height: 16px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+
 
 @media (max-width: 768px) {
   .lang-dropdown {
