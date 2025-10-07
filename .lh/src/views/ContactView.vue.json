@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 10,
+            "activePatchIndex": 12,
             "patches": [
                 {
                     "date": 1755247774944,
@@ -48,6 +48,14 @@
                 {
                     "date": 1757975171431,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -19,13 +19,16 @@\n                 <p>info@searchyourtour.com</p>\r\n               </div>\r\n             </div>\r\n             <div class=\"contact-item\">\r\n-              <i class=\"fas fa-phone\"></i>\r\n-              <div>\r\n-                <h3>{{ $t('contact.phone') }}</h3>\r\n-                <p>+90 212 123 45 67</p>\r\n-              </div>\r\n+              <a href=\"https://wa.me/905373257204\" target=\"_blank\" rel=\"noopener\" class=\"whatsapp-link\">\r\n+                <i class=\"fab fa-whatsapp\"></i>\r\n+                <div>\r\n+                  <h3>{{ $t('contact.phone') }}</h3>\r\n+                  <p>+90 537 325 72 04</p>\r\n+                  <small>{{ $t('contact.whatsappNote') }}</small>\r\n+                </div>\r\n+              </a>\r\n             </div>\r\n             <div class=\"contact-item\">\r\n               <i class=\"fas fa-map-marker-alt\"></i>\r\n               <div>\r\n@@ -160,8 +163,34 @@\n   color: #FC6421;\r\n   width: 30px;\r\n }\r\n \r\n+.whatsapp-link {\r\n+  display: flex;\r\n+  align-items: center;\r\n+  gap: 1rem;\r\n+  text-decoration: none;\r\n+  color: inherit;\r\n+  transition: all 0.3s ease;\r\n+}\r\n+\r\n+.whatsapp-link:hover {\r\n+  transform: translateY(-2px);\r\n+  text-decoration: none;\r\n+  color: inherit;\r\n+}\r\n+\r\n+.whatsapp-link i {\r\n+  color: #25D366 !important;\r\n+  font-size: 1.8rem;\r\n+}\r\n+\r\n+.whatsapp-link small {\r\n+  color: #25D366;\r\n+  font-weight: 500;\r\n+  font-size: 0.85rem;\r\n+}\r\n+\r\n .contact-item h3 {\r\n   margin-bottom: 0.5rem;\r\n   color: #2c3e50;\r\n }\r\n"
+                },
+                {
+                    "date": 1759133934291,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,6 +1,10 @@\n <template>\r\n   <div class=\"contact\">\r\n+    <div class=\"container\">\r\n+      <Breadcrumb />\r\n+    </div>\r\n+    \r\n     <section class=\"hero-section\">\r\n       <div class=\"container\">\r\n         <h1>{{ $t('contact.title') }}</h1>\r\n         <p>{{ $t('contact.subtitle') }}</p>\r\n@@ -92,8 +96,9 @@\n \r\n <script setup>\r\n import { ref } from 'vue'\r\n import { useI18n } from 'vue-i18n'\r\n+import Breadcrumb from '../components/Breadcrumb.vue'\r\n \r\n const { t } = useI18n()\r\n \r\n const form = ref({\r\n"
+                },
+                {
+                    "date": 1759134375232,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -1,17 +1,17 @@\n <template>\r\n   <div class=\"contact\">\r\n-    <div class=\"container\">\r\n-      <Breadcrumb />\r\n-    </div>\r\n-    \r\n     <section class=\"hero-section\">\r\n       <div class=\"container\">\r\n         <h1>{{ $t('contact.title') }}</h1>\r\n         <p>{{ $t('contact.subtitle') }}</p>\r\n       </div>\r\n     </section>\r\n \r\n+    <div class=\"container\">\r\n+      <Breadcrumb />\r\n+    </div>\r\n+\r\n     <section class=\"contact-content\">\r\n       <div class=\"container\">\r\n         <div class=\"contact-grid\">\r\n           <div class=\"contact-info\">\r\n"
                 }
             ],
             "date": 1755247774944,

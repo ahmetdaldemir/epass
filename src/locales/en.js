@@ -11,7 +11,7 @@ export default {
     becomePartner: 'Become a Partner',
     myPass: 'My Pass',
     myListing: 'My Listing',
-    thingsToDo: 'Things to Do in Istanbul',
+    blog: 'Blog',
     buyNow: 'Buy Now'
   },
 
@@ -94,6 +94,7 @@ export default {
     },
     common: {
       likelyToSellOut: 'Likely to sell out',
+      bestseller: 'Bestseller',
       bookNow: 'Book Now'
     }
   },
@@ -233,24 +234,76 @@ export default {
     title: 'Frequently Asked Questions',
     subtitle: 'Find answers to common questions about SearchYourTour',
     q1: {
-      question: 'What is included in the SearchYourTour Pass?',
-      answer: 'The SearchYourTour Pass includes access to 100+ attractions, museums, and tours across Istanbul. You also get skip-the-line entry, free guided tours, and a mobile ticket.'
+      question: 'What is SearchYourTour.com?',
+      answer: 'SearchYourTour.com is a travel platform that helps you discover, compare, and book the best tours, activities, and holiday packages from trusted tour operators across various destinations.'
     },
     q2: {
-      question: 'How long is the pass valid?',
-      answer: 'The pass is valid for the duration you choose: 1 day, 3 days, 5 days, or 7 days from the first use.'
+      question: 'How does it work?',
+      answer: 'Simply search for your desired destination or activity, compare different tour packages, read verified reviews, and book directly through the platform.'
     },
     q3: {
-      question: 'Can I visit the same attraction multiple times?',
-      answer: 'Most attractions allow one visit per pass. However, some attractions may allow multiple visits - please check the specific attraction details.'
+      question: 'Who are the tour providers listed on the site?',
+      answer: 'We partner with licensed and experienced tour operators who meet our quality standards. Each provider is reviewed and vetted before being listed.'
     },
     q4: {
-      question: 'How do I use my pass?',
-      answer: 'Simply show your mobile pass or printed pass at the entrance of any included attraction. No need to buy separate tickets.'
+      question: 'How do I book a tour?',
+      answer: 'Once you find a tour you like, click on it to view full details, select your dates, and follow the booking process. You\'ll receive a confirmation email once your booking is complete.'
     },
     q5: {
-      question: 'Can I get a refund if I don\'t use the pass?',
-      answer: 'Yes, you can get a full refund if you haven\'t used the pass and request it within 30 days of purchase.'
+      question: 'Is it safe to make payments on your site?',
+      answer: 'Yes, we use secure payment gateways and encryption protocols to protect your data and transactions.'
+    },
+    q6: {
+      question: 'What payment methods do you accept?',
+      answer: 'We accept all major credit/debit cards, UPI, net banking, and other secure payment options.'
+    },
+    q7: {
+      question: 'Can I make group bookings?',
+      answer: 'Yes, many of our tour packages support group bookings. You can contact the tour operator directly via the tour page or reach out to our support team for assistance.'
+    },
+    q8: {
+      question: 'Can I cancel or reschedule my booking?',
+      answer: 'Cancellation and rescheduling policies vary by tour operator. Please refer to the cancellation policy listed on the tour page before booking.'
+    },
+    q9: {
+      question: 'Will I get a full refund if I cancel?',
+      answer: 'Cancellations made 24 hours prior to the scheduled time are eligible for a full refund.'
+    },
+    q10: {
+      question: 'Can I customize a tour package?',
+      answer: 'Yes, some tours offer customization options such as itinerary changes, hotel upgrades, or private group tours. Use the "Contact Tour Operator" option on the tour page to discuss your preferences.'
+    },
+    q11: {
+      question: 'Are flights included in the tour packages?',
+      answer: 'Unless specified, flights are generally not included. Check the "Inclusions/Exclusions" section of each tour for details.'
+    },
+    q12: {
+      question: 'Are the tours guided?',
+      answer: 'Most tours include professional guides, especially for sightseeing and adventure packages. Details are available in the individual tour descriptions.'
+    },
+    q13: {
+      question: 'How will I receive my booking confirmation?',
+      answer: 'After booking, you\'ll receive a confirmation email with your itinerary, booking ID, and contact details of the tour operator.'
+    },
+    q14: {
+      question: 'What if I don\'t receive a confirmation email?',
+      answer: 'Please check your spam or promotions folder. If you still don\'t see it, contact our support team immediately at info@searchyourtour.com.'
+    },
+    q15: {
+      question: 'How can I contact customer support?',
+      answer: 'You can email us at info@searchyourtour.com or use the contact form on our website. We\'re here to help 24/7.'
+    },
+    q16: {
+      question: 'Can I list my tour on your platform?',
+      answer: 'Yes! If you\'re a verified tour operator, you can apply to list your packages by visiting the Partner With Us section.'
+    },
+    q17: {
+      question: 'Is SearchYourTour.com available in multiple languages?',
+      answer: 'Currently, the platform is available in English. We\'re working on adding more languages soon.'
+    },
+    q18: {
+      question: 'Do you offer mobile app access?',
+      answer: 'Yes, our mobile app is coming soon! For now, you can access our mobile-optimized website on any device.'
     }
   },
 
@@ -280,6 +333,12 @@ export default {
       sendMessage: 'Send Message',
       successMessage: 'Thank you for your message! We will get back to you soon.'
     }
+  },
+
+  // WhatsApp
+  whatsapp: {
+    tooltip: 'Need help? Chat with us on WhatsApp!',
+    defaultMessage: 'Hello! I need help with my tour booking.'
   },
 
   // MyPass
@@ -706,5 +765,28 @@ SearchYourTour – where exceptional service meets unforgettable experiences.`
       'Regional Representative',
       'Other'
     ]
+  },
+
+  // Blog
+  blog: {
+    title: 'Blog',
+    subtitle: 'Latest articles and guides',
+    loading: 'Loading articles...',
+    emptyState: {
+      title: 'No articles found',
+      description: 'We\'ll be here soon with amazing content!'
+    },
+    readMore: 'Read More →',
+    pagination: {
+      previous: '← Previous',
+      next: 'Next →'
+    },
+    post: {
+      loading: 'Loading article...',
+      notFound: 'Article not found',
+      backToBlog: '← Back to Blog',
+      share: '📤 Share',
+      linkCopied: 'Link copied!'
+    }
   }
 }

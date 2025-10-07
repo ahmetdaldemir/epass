@@ -3,24 +3,46 @@
     <!-- Top Banner (Istanbul Sunset Yacht Tour) -->
     <div class="top-banner" v-if="sunsetYachtTour">
       <span>{{ sunsetYachtTour.content?.[0]?.name || 'Istanbul Sunset Yacht Tour' }} - {{ getReactiveTourPrice(sunsetYachtTour) }}</span>
-      <router-link :to="`/tour/${sunsetYachtTour.id}`" class="buy-now-btn">{{ $t('home.hero.buyNow') }}</router-link>
+      <router-link :to="`${sunsetYachtTour.slug_url}`" class="buy-now-btn">{{ $t('home.hero.buyNow') }}</router-link>
     </div>
 
     <!-- Hero Section with Main Visual and Badge -->
     <section class="hero-section">
-      <div class="hero-img-wrap">
+      <!-- Desktop Hero -->
+      <div class="hero-img-wrap desktop-only">
         <div class="hero-title-content">
           <h1 class="hero-section__header">
             <span class="text-atom--headline-2">{{ $t('home.hero.title') }}</span>
           </h1>
         </div>
         
-        <!-- Hero Image -->
+        <!-- Desktop Hero Image -->
         <img class="hero-img" :src="currentHeroImage" :alt="currentHeroAlt" loading="eager" fetchpriority="high" />
         
         <div class="hero-img-gradient"></div>
-        <div class="hero-label">{{ $t('home.hero.subtitle') }}</div>
-        <!-- Main H1 Heading for SEO -->
+    
+        <!-- Kategori Butonları -->
+        <div class="category-tabs">
+          <button v-for="cat in categories" :key="cat.value"
+            :class="['category-tab', { active: selectedCategory === cat.value }]" @click="selectedCategory = cat.value">
+            <span class="cat-icon" v-html="cat.icon"></span>
+            <span>{{ $t(cat.label) }}</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Hero -->
+      <div class="hero-img-wrap mobile-only">
+        <div class="hero-title-content">
+          <h1 class="hero-section__header">
+            <span class="text-atom--headline-2">{{ $t('home.hero.title') }}</span>
+          </h1>
+        </div>
+        
+        <!-- Mobile Hero Image -->
+        <img class="hero-img" :src="currentMobileHeroImage" :alt="currentMobileHeroAlt" loading="eager" fetchpriority="high" />
+        
+        <div class="hero-img-gradient"></div>
     
         <!-- Kategori Butonları -->
         <div class="category-tabs">
@@ -40,7 +62,7 @@
           <h2 class="category-title">{{ $t('home.categories.title') }}</h2>
           <!-- Masaüstü: Grid, Mobil: Swiper -->
           <div class="tour-card-grid desktop-only">
-            <router-link v-for="tour in cultureTours" :key="tour.id" :to="`/tour/${tour.id}`" class="tour-card"
+            <router-link v-for="tour in cultureTours" :key="tour.id" :to="`${tour.slug_url}`" class="tour-card"
               style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
               <div class="" style="    border: 1px solid #dcdfe4;height: 100%;">
               <div class="tour-card-img-wrap">
@@ -48,6 +70,10 @@
                 <!-- Likely to sell out badge -->
                 <div v-if="isLikelyToSellOut(tour.id)" class="sell-out-badge">
                   {{ $t('home.common.likelyToSellOut') }}
+                </div>
+                <!-- Bestseller badge -->
+                <div v-if="isBestseller(tour.id)" class="bestseller-badge">
+                  {{ $t('home.common.bestseller') }}
                 </div>
               </div>
               <!-- Kart içeriği -->
@@ -59,7 +85,7 @@
                   <div class="tour-card-action-row">
                     <span class="tour-card-price">{{ getReactiveTourPrice(tour) }} <span class="tour-card-price-label">/
                         1 adult</span></span>
-                    <router-link :to="`/tour/${tour.id}`" class="tour-card-book-btn">{{ $t('home.common.bookNow') }}</router-link>
+                    <router-link :to="`${tour.slug_url}`" class="tour-card-book-btn">{{ $t('home.common.bookNow') }}</router-link>
                   </div>
                 </div>
               </div>
@@ -67,16 +93,23 @@
             </router-link>
           </div>
         </div>
-        <swiper class="tour-card-swiper mobile-only" :slides-per-view="1" :space-between="0" :centered-slides="true"
-          :pagination="{ clickable: true }" style="padding-bottom: 32px;">
+        <swiper class="tour-card-swiper mobile-only" :slides-per-view="1" :space-between="0" :centered-slides="false"
+          :pagination="{ clickable: true }" :breakpoints="{
+            0: { slidesPerView: 1, spaceBetween: 0, centeredSlides: false },
+            769: { slidesPerView: 2, spaceBetween: 16, centeredSlides: false }
+          }" style="padding-bottom: 32px;">
           <swiper-slide v-for="tour in cultureTours" :key="tour.id">
-            <router-link :to="`/tour/${tour.id}`" class="tour-card"
+            <router-link :to="`${tour.slug_url}`" class="tour-card"
               style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
               <div class="tour-card-img-wrap">
                 <img :src="getAttractionImage(tour)" :alt="getAttractionName(tour)" />
                 <!-- Likely to sell out badge -->
                 <div v-if="isLikelyToSellOut(tour.id)" class="sell-out-badge">
                   {{ $t('home.common.likelyToSellOut') }}
+                </div>
+                <!-- Bestseller badge -->
+                <div v-if="isBestseller(tour.id)" class="bestseller-badge">
+                  {{ $t('home.common.bestseller') }}
                 </div>
               </div>
               <div class="tour-card-content">
@@ -87,7 +120,7 @@
                   <div class="tour-card-action-row">
                     <span class="tour-card-price">{{ getReactiveTourPrice(tour) }} <span class="tour-card-price-label">/
                         1 adult</span></span>
-                    <router-link :to="`/tour/${tour.id}`" class="tour-card-book-btn">{{ $t('home.common.bookNow') }}</router-link>
+                    <router-link :to="`${tour.slug_url}`" class="tour-card-book-btn">{{ $t('home.common.bookNow') }}</router-link>
                   </div>
                 </div>
               </div>
@@ -161,23 +194,19 @@
           <swiper class="desktop-only" :slides-per-view="3" :space-between="16" :centered-slides="false"
             :pagination="{ clickable: true }" :breakpoints="{
               0: { slidesPerView: 1, spaceBetween: 0, centeredSlides: false },
-              769: { slidesPerView: 3, spaceBetween: 16, centeredSlides: false }
+              769: { slidesPerView: 3, spaceBetween: 16, centeredSlides: false },
+              1200: { slidesPerView: 3, spaceBetween: 16, centeredSlides: false }
             }" style="padding-bottom: 32px;">
             <swiper-slide v-for="attraction in attractions" :key="attraction.id">
-              <router-link :to="`/tour/${attraction.id}`" class="attraction-card slider-card"
+              <router-link :to="`${attraction.slug_url}`" class="attraction-card slider-card"
                 style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
                 <div class="attraction-image">
                   <img :src="getAttractionImage(attraction)" :alt="getAttractionName(attraction)" />
                 </div>
                 <div class="attraction-content">
                   <h3>{{ getAttractionName(attraction) }}</h3>
-                  <p>{{ getAttractionDescription(attraction) }}</p>
+                  <!-- <p>{{ getAttractionDescription(attraction) }}</p> -->
                   <div class="attraction-meta">
-                    <span class="price">{{ $t('home.attractions.freeWithPass') }}</span>
-                    <span class="rating">
-                      <i class="fas fa-star"></i>
-                      {{ attraction.rating || '4.5' }}
-                    </span>
                   </div>
                 </div>
               </router-link>
@@ -186,22 +215,20 @@
           </swiper>
           <!-- Mobil Swiper -->
           <swiper class="attractions-slider-mobile mobile-only" :slides-per-view="1" :space-between="0"
-            :centered-slides="true" :pagination="{ clickable: true }" style="padding-bottom: 32px;">
+            :centered-slides="false" :pagination="{ clickable: true }" :breakpoints="{
+              0: { slidesPerView: 1, spaceBetween: 0, centeredSlides: false },
+              769: { slidesPerView: 2, spaceBetween: 16, centeredSlides: false }
+            }" style="padding-bottom: 32px;">
             <swiper-slide v-for="attraction in attractions" :key="attraction.id">
-              <router-link :to="`/tour/${attraction.id}`" class="attraction-card slider-card"
+              <router-link :to="`${attraction.slug_url}`" class="attraction-card slider-card"
                 style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
                 <div class="attraction-image">
                   <img :src="getAttractionImage(attraction)" :alt="getAttractionName(attraction)" />
                 </div>
                 <div class="attraction-content">
                   <h3>{{ getAttractionName(attraction) }}</h3>
-                  <p>{{ getAttractionDescription(attraction) }}</p>
+                  <!-- <p>{{ getAttractionDescription(attraction) }}</p> -->
                   <div class="attraction-meta">
-                    <span class="price">{{ $t('home.attractions.freeWithPass') }}</span>
-                    <span class="rating">
-                      <i class="fas fa-star"></i>
-                      {{ attraction.rating || '4.5' }}
-                    </span>
                   </div>
                 </div>
               </router-link>
@@ -213,7 +240,7 @@
     </section>
 
     <!-- Pass Types Section -->
-    <section class="pass-types-section">
+    <section class="pass-types-section" v-if="passTypes.length > 0">
       <div class="section-list-wrap">
         <div class="container swiper-no-padding">
           <h2 class="section-title">{{ $t('home.passTypes.title') }}</h2>
@@ -224,9 +251,9 @@
               769: { slidesPerView: 3, spaceBetween: 16, centeredSlides: false }
             }">
             <swiper-slide v-for="pass in passTypes" :key="pass.id">
-              <div class="pass-card">
+              <router-link :to="pass.link" class="pass-card" style="text-decoration: none; color: inherit; display: block; width: 100%; height: 100%;">
                 <div class="pass-header">
-                  <h3>{{ $t(pass.name) }}</h3>
+                  <h3>{{ pass.name }}</h3>
                   <div class="pass-price">{{ pass.price }}</div>
                 </div>
                 <div class="pass-features">
@@ -235,9 +262,9 @@
                   </ul>
                 </div>
                 <div class="pass-action">
-                  <router-link :to="pass.link" class="btn btn-primary">{{ $t('home.passTypes.selectPass') }}</router-link>
+                  <span class="btn btn-primary">{{ $t('home.passTypes.selectPass') }}</span>
                 </div>
-              </div>
+              </router-link>
             </swiper-slide>
             <div class="swiper-pagination" slot="pagination"></div>
           </swiper>
@@ -254,7 +281,8 @@
           <swiper :slides-per-view="3" :space-between="16" :centered-slides="false" :pagination="{ clickable: true }"
             :breakpoints="{
               0: { slidesPerView: 1, spaceBetween: 0, centeredSlides: false },
-              769: { slidesPerView: 3, spaceBetween: 16, centeredSlides: false }
+              769: { slidesPerView: 2, spaceBetween: 16, centeredSlides: false },
+              1200: { slidesPerView: 3, spaceBetween: 16, centeredSlides: false }
             }">
             <swiper-slide v-for="testimonial in testimonials" :key="testimonial.id">
               <div class="testimonial-card slider-card" :class="{ active: activeTestimonialId === testimonial.id }"
@@ -313,11 +341,18 @@ import 'swiper/css/pagination'
 import { useCurrencyStore } from '../stores/currency'
 
 // Import hero images
-import heroImage1 from '../assets/images/1.jpg'
-import heroImage2 from '../assets/images/2.jpg'
-import heroImage3 from '../assets/images/3.jpg'
-import heroImage4 from '../assets/images/4.jpg'
-import heroImage5 from '../assets/images/5.jpg'
+import heroImage1 from '../assets/images/1.webp'
+import heroImage2 from '../assets/images/2.webp'
+import heroImage3 from '../assets/images/3.webp'
+import heroImage4 from '../assets/images/4.webp'
+import heroImage5 from '../assets/images/5.webp'
+
+// Import mobile hero images
+import mobileHeroImage1 from '../assets/images/mobile/1.webp'
+import mobileHeroImage2 from '../assets/images/mobile/2.webp'
+import mobileHeroImage3 from '../assets/images/mobile/3.webp'
+import mobileHeroImage4 from '../assets/images/mobile/4.webp'
+import mobileHeroImage5 from '../assets/images/mobile/5.webp'
 
 // Hero slider data
 const heroImages = [
@@ -328,8 +363,21 @@ const heroImages = [
   { src: heroImage5, alt: 'Istanbul Attraction 5' }
 ]
 
+// Mobile hero slider data
+const mobileHeroImages = [
+  { src: mobileHeroImage1, alt: 'Istanbul Mobile Attraction 1' },
+  { src: mobileHeroImage2, alt: 'Istanbul Mobile Attraction 2' },
+  { src: mobileHeroImage3, alt: 'Istanbul Mobile Attraction 3' },
+  { src: mobileHeroImage4, alt: 'Istanbul Mobile Attraction 4' },
+  { src: mobileHeroImage5, alt: 'Istanbul Mobile Attraction 5' }
+]
+
 const currentHeroIndex = ref(0)
 const heroSliderInterval = ref(null)
+
+// Mobile hero slider variables
+const currentMobileHeroIndex = ref(0)
+const mobileHeroSliderInterval = ref(null)
 
 // Computed properties for current image
 const currentHeroImage = computed(() => {
@@ -338,6 +386,15 @@ const currentHeroImage = computed(() => {
 
 const currentHeroAlt = computed(() => {
   return heroImages[currentHeroIndex.value]?.alt || heroImages[0].alt
+})
+
+// Computed properties for mobile hero image
+const currentMobileHeroImage = computed(() => {
+  return mobileHeroImages[currentMobileHeroIndex.value]?.src || mobileHeroImages[0].src
+})
+
+const currentMobileHeroAlt = computed(() => {
+  return mobileHeroImages[currentMobileHeroIndex.value]?.alt || mobileHeroImages[0].alt
 })
 
 // Reactive data
@@ -377,6 +434,9 @@ const sunsetYachtTour = ref(null)
 // Likely to sell out system
 const sellOutInterval = ref(null)
 const currentSellOutTourId = ref(null)
+
+// Bestseller system - API'den gelen best_seller alanını kullan
+const bestsellerTours = ref([]) // API'den gelen bestseller turları
 
 // i18n
 const { t } = useI18n()
@@ -532,6 +592,12 @@ const fetchAttractions = async () => {
     console.log('=== END API DEBUG ===')
 
     attractions.value = istanbulTours
+    
+    // Bestseller turları filtrele
+    bestsellerTours.value = istanbulTours
+      .filter(tour => tour.best_seller === true)
+      .map(tour => tour.id)
+    
   } catch (err) {
     console.error('Detailed error:', err)
     error.value = 'Sorry, we are unable to load attraction information at the moment. Please try again later.'
@@ -564,6 +630,11 @@ const getAttractionImage = (attraction) => {
 // Likely to sell out functions
 const isLikelyToSellOut = (tourId) => {
   return currentSellOutTourId.value === tourId
+}
+
+// Bestseller functions
+const isBestseller = (tourId) => {
+  return bestsellerTours.value.includes(tourId)
 }
 
 const rotateSellOutBadge = () => {
@@ -659,6 +730,32 @@ const stopHeroSlider = () => {
   }
 }
 
+// Mobile hero slider functions
+const nextMobileHeroSlide = () => {
+  currentMobileHeroIndex.value = (currentMobileHeroIndex.value + 1) % mobileHeroImages.length
+  console.log(`Mobile hero image changed to index: ${currentMobileHeroIndex.value}`)
+}
+
+const startMobileHeroSlider = () => {
+  // Clear any existing interval first
+  stopMobileHeroSlider()
+  
+  // Change image every 10 seconds
+  mobileHeroSliderInterval.value = setInterval(() => {
+    nextMobileHeroSlide()
+  }, 10000)
+  
+  console.log('Mobile hero slider started with 10 second intervals')
+}
+
+const stopMobileHeroSlider = () => {
+  if (mobileHeroSliderInterval.value) {
+    clearInterval(mobileHeroSliderInterval.value)
+    mobileHeroSliderInterval.value = null
+    console.log('Mobile hero slider stopped')
+  }
+}
+
 // Price conversion functions
 const convertAndFormatPrice = (priceInEUR) => {
   if (!priceInEUR) return ''
@@ -731,46 +828,25 @@ const getReactiveTourPrice = (tour) => {
   return currencyStore.formatPrice(convertedPrice, targetCurrency)
 }
 
-const passTypes = ref([
-  {
-    id: 1,
-    name: 'home.passTypes.day1.name',
-    price: '€85',
-    features: [
-      'home.passTypes.features.access',
-      'home.passTypes.features.skipLine',
-      'home.passTypes.features.guidedTours',
-      'home.passTypes.features.mobileTicket'
-    ],
-    link: '/istanbul-pass?duration=1'
-  },
-  {
-    id: 2,
-    name: 'home.passTypes.day3.name',
-    price: '€115',
-    features: [
-      'home.passTypes.features.access',
-      'home.passTypes.features.skipLine',
-      'home.passTypes.features.guidedTours',
-      'home.passTypes.features.mobileTicket',
-      'home.passTypes.features.bestValue'
-    ],
-    link: '/istanbul-pass?duration=3'
-  },
-  {
-    id: 3,
-    name: 'home.passTypes.day7.name',
-    price: '€145',
-    features: [
-      'home.passTypes.features.access',
-      'home.passTypes.features.skipLine',
-      'home.passTypes.features.guidedTours',
-      'home.passTypes.features.mobileTicket',
-      'home.passTypes.features.maxFlexibility'
-    ],
-    link: '/istanbul-pass?duration=7'
-  }
-])
+// Pass turları - API'den gelen pass: true olan turları filtrele
+const passTypes = computed(() => {
+  return attractions.value
+    .filter(tour => tour.pass === true)
+    .slice(0, 3) // Maksimum 3 pass kartı göster
+    .map(tour => ({
+      id: tour.id,
+      name: getAttractionName(tour),
+      price: getReactiveTourPrice(tour),
+      features: [
+        'home.passTypes.features.access',
+        'home.passTypes.features.skipLine',
+        'home.passTypes.features.guidedTours',
+        'home.passTypes.features.mobileTicket'
+      ],
+      link: `${tour.slug_url}`,
+      tour: tour // Orijinal tur verisini de sakla
+    }))
+})
 
 const testimonials = ref([
   {
@@ -827,7 +903,7 @@ const testimonials = ref([
 const activeTestimonialId = ref(null)
 
 function openTestimonialCard(id) {
-  // Sadece masaüstünde büyütme/overlay aç
+  // Masaüstü ve tablet boyutlarında büyütme/overlay aç
   if (window.innerWidth < 769) return;
   activeTestimonialId.value = id
   document.body.style.overflow = 'hidden'
@@ -887,8 +963,9 @@ onMounted(() => {
 
   fetchAttractions()
   
-  // Start hero slider
+  // Start hero sliders
   startHeroSlider()
+  startMobileHeroSlider()
   
   // Start sell out badge rotation after attractions are loaded
   watch(attractions, (newAttractions) => {
@@ -903,6 +980,8 @@ onMounted(() => {
       console.log('Language changed from', oldLang, 'to', newLang)
       // Clear existing badge data for new language
       localStorage.removeItem('sellOutBadge')
+      // Clear bestseller data
+      bestsellerTours.value = []
       // API'den yeni dilde veri çek
       fetchAttractions()
       // Sell out badge rotation'ı yeniden başlat
@@ -918,8 +997,9 @@ onBeforeUnmount(() => {
   window.removeEventListener('currency-changed', handleCurrencyChange)
   window.removeEventListener('language-changed', handleLanguageChange)
   
-  // Clear hero slider interval
+  // Clear hero slider intervals
   stopHeroSlider()
+  stopMobileHeroSlider()
   
   // Clear sell out interval
   if (sellOutInterval.value) {
@@ -997,6 +1077,12 @@ const cultureTours = attractions
     height: 480px;
   }
 
+  /* Popular Attractions slider için özel height */
+  .attractions-slider-mobile .attraction-card {
+    min-height: 320px !important;
+    height: 320px !important;
+  }
+
   .swiper-slide {
     width: 100vw !important;
     min-width: 100vw !important;
@@ -1008,6 +1094,12 @@ const cultureTours = attractions
     margin: 0 !important;
     padding: 0 !important;
     box-sizing: border-box !important;
+  }
+
+  /* Popular Attractions slider için özel swiper-slide height */
+  .attractions-slider-mobile .swiper-slide {
+    min-height: 320px !important;
+    height: 320px !important;
   }
 
   .swiper-wrapper {
@@ -1063,6 +1155,15 @@ const cultureTours = attractions
   }
 
   .hero-img {
+    height: 400px;
+  }
+
+  /* Mobile hero specific styles */
+  .mobile-only .hero-img-wrap {
+    height: 400px;
+  }
+
+  .mobile-only .hero-img {
     height: 400px;
   }
 }
@@ -1579,16 +1680,21 @@ const cultureTours = attractions
   padding: 2rem;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
   text-align: center;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-height: 520px;
   margin-bottom: 0;
+  text-decoration: none;
+  color: inherit;
 }
 
 .pass-card:hover {
   transform: translateY(-5px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
+  color: inherit;
 }
 
 .pass-header {
@@ -1622,6 +1728,28 @@ const cultureTours = attractions
   padding-bottom: 1.2rem;
   display: flex;
   justify-content: center;
+}
+
+.btn-primary {
+  background: #FC6421;
+  color: #fff;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
+  transition: background 0.2s, color 0.2s;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  background: #e6007a;
+  color: #fff;
+  text-decoration: none;
 }
 
 /* Testimonials Section */
@@ -1928,6 +2056,22 @@ const cultureTours = attractions
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
+.bestseller-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: linear-gradient(135deg, #FFD700, #FFA500);
+  color: #333;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 .tour-card-badge {
   position: absolute;
   top: 12px;
@@ -2158,7 +2302,6 @@ const cultureTours = attractions
 
   .attraction-card {
     height: 100%;
-    min-height: 420px;
     display: flex;
     flex-direction: column;
   }
@@ -2259,28 +2402,29 @@ const cultureTours = attractions
   }
 }
 
-/* Tablet boyutları için mobil slider'la aynı ayarlar */
+  /* Tablet boyutları için mobil slider'la aynı ayarlar */
 @media (max-width: 1199px) and (min-width: 769px) {
   .tour-card-swiper {
-    width: 100vw !important;
-    margin-left: calc(-50vw + 50%) !important;
+    width: 100% !important;
+    margin-left: 0 !important;
+    padding: 0 20px !important;
   }
 
   .tour-card-swiper .swiper-slide {
-    width: 100vw !important;
-    max-width: 100vw !important;
-    min-width: 100vw !important;
+    width: 50% !important;
+    max-width: 50% !important;
+    min-width: 50% !important;
     margin: 0 !important;
-    padding: 0 !important;
-    display: flex;
-    justify-content: center;
+    padding: 0 8px !important;
+    display: flex !important;
+    align-items: stretch !important;
   }
 
   .tour-card-swiper .tour-card {
-    width: 92vw !important;
-    max-width: 92vw !important;
-    min-width: 92vw !important;
-    margin: 0 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
   }
 
   .category-section,
@@ -2349,6 +2493,149 @@ const cultureTours = attractions
     padding: 1rem 1rem 1.2rem 1rem;
     height: 60%;
   }
+
+  /* Tablet boyutları için attraction slider düzeltmesi */
+  .attractions-section .desktop-only {
+    display: none !important;
+  }
+
+  .attractions-section .mobile-only {
+    display: block !important;
+  }
+
+  .attractions-slider-mobile {
+    width: 100% !important;
+    margin-left: 0 !important;
+    padding: 0 20px !important;
+  }
+
+  .attractions-slider-mobile .swiper-slide {
+    width: 50% !important;
+    max-width: 50% !important;
+    min-width: 50% !important;
+    margin: 0 !important;
+    padding: 0 8px !important;
+    display: flex !important;
+    align-items: stretch !important;
+  }
+
+  .attractions-slider-mobile .attraction-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+  }
+
+  /* Tablet boyutları için testimonials slider - yeni sistem */
+  .testimonials-section .swiper {
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 20px !important;
+  }
+
+  .testimonials-section .swiper-wrapper {
+    display: flex !important;
+    align-items: stretch !important;
+  }
+
+  .testimonials-section .swiper-slide {
+    width: 50% !important;
+    max-width: 50% !important;
+    min-width: 50% !important;
+    margin: 0 !important;
+    padding: 0 8px !important;
+    display: flex !important;
+    align-items: stretch !important;
+  }
+
+  .testimonials-section .testimonial-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    min-height: 320px !important;
+    height: auto !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+  }
+
+  .testimonials-section .testimonial-content {
+    flex: 1 !important;
+    margin-bottom: 1rem !important;
+    font-size: 0.95rem !important;
+    line-height: 1.5 !important;
+  }
+
+  .testimonials-section .testimonial-author {
+    margin-top: auto !important;
+    padding-top: 1rem !important;
+  }
+
+  /* Tablet boyutları için testimonial modal düzeltmesi */
+  .testimonial-overlay {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: rgba(0, 0, 0, 0.5) !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 20px !important;
+  }
+
+  .active-card-modal {
+    background: #fff !important;
+    border-radius: 12px !important;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.2) !important;
+    max-width: 600px !important;
+    width: 90% !important;
+    min-height: 300px !important;
+    max-height: 80vh !important;
+    padding: 2rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    overflow-y: auto !important;
+  }
+
+  .active-card-modal .testimonial-content {
+    font-size: 1.1rem !important;
+    margin-bottom: 1.5rem !important;
+    text-align: left !important;
+    line-height: 1.6 !important;
+    white-space: pre-line !important;
+  }
+
+  .active-card-modal .testimonial-author {
+    margin-top: auto !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 1rem !important;
+    padding-top: 1rem !important;
+    border-top: 1px solid #eee !important;
+  }
+
+  .active-card-modal .testimonial-author img {
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
+    object-fit: cover !important;
+  }
+
+  .active-card-modal .testimonial-author h4 {
+    font-size: 1.1rem !important;
+    margin: 0 !important;
+    color: #333 !important;
+  }
+
+  .active-card-modal .testimonial-author span {
+    font-size: 0.95rem !important;
+    color: #666 !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -2379,6 +2666,32 @@ const cultureTours = attractions
     padding-left: 0 !important;
     padding-right: 0 !important;
   }
+
+  /* Mobil için testimonials slider - yeni sistem */
+  .testimonials-section .swiper {
+    width: 100vw !important;
+    margin-left: calc(-50vw + 50%) !important;
+    padding: 0 !important;
+  }
+
+  .testimonials-section .swiper-slide {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    min-width: 100vw !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+  }
+
+  .testimonials-section .testimonial-card {
+    width: 92vw !important;
+    max-width: 92vw !important;
+    min-width: 92vw !important;
+    margin: 0 auto !important;
+    min-height: 250px !important;
+    height: auto !important;
+  }
 }
 
 @media (max-width: 768px) {
@@ -2402,6 +2715,26 @@ const cultureTours = attractions
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
+  }
+
+  /* Mobil attraction card için özel yükseklik */
+  .attractions-slider-mobile .attraction-card {
+    min-height: 320px !important;
+    height: 320px !important;
+  }
+
+  .attractions-slider-mobile .attraction-content {
+    padding: 1rem 1rem 1.2rem 1rem !important;
+    height: auto !important;
+    min-height: auto !important;
+  }
+
+  .attractions-slider-mobile .attraction-content h3 {
+    margin-bottom: 0 !important;
+    font-size: 1.1rem !important;
+    line-height: 1.3 !important;
+    text-align: center;
+    padding: 0.5rem 0;
   }
 }
 
@@ -2468,11 +2801,15 @@ const cultureTours = attractions
   }
 }
 
-@media (min-width: 1200px) {
+/* 1200px - 1600px arası için özel kural */
+@media (min-width: 1200px) and (max-width: 1600px) {
+  .testimonials-section {
+    padding: 5rem 0;
+  }
+
   .testimonials-section .section-list-wrap {
-    margin-left: 350px;
-    margin-right: 350px;
-    /* Ortalamak için genişlik ve margin ayarla */
+    margin-left: 200px;
+    margin-right: 200px;
     width: auto;
     max-width: none;
   }
@@ -2497,7 +2834,21 @@ const cultureTours = attractions
     margin: 0;
   }
 
+  .testimonials-section .swiper-slide {
+    width: 33.333% !important;
+    max-width: 33.333% !important;
+    min-width: 33.333% !important;
+    margin: 0 !important;
+    padding: 0 12px !important;
+    display: flex !important;
+    align-items: stretch !important;
+  }
+
   .testimonial-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
     min-height: 320px;
     height: 320px;
     display: flex;
@@ -2511,7 +2862,6 @@ const cultureTours = attractions
   }
 
   .testimonial-card .testimonial-content {
-    /* JS ile kısaltma yapıldığı için satır kırpma kaldırıldı */
     overflow: hidden;
     min-height: 7.5em;
     max-height: 7.5em;
@@ -2521,7 +2871,80 @@ const cultureTours = attractions
   }
 
   .testimonial-short {
-    /* Sadece normal metin, ... JS ile eklenecek */
+    white-space: pre-line;
+  }
+}
+
+/* 1600px üstü için geniş ekran kuralı */
+@media (min-width: 1601px) {
+  .testimonials-section {
+    padding: 5rem 0;
+  }
+
+  .testimonials-section .section-list-wrap {
+    margin-left: 350px;
+    margin-right: 350px;
+    width: auto;
+    max-width: none;
+  }
+
+  .testimonials-section .container.swiper-no-padding {
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .testimonials-section .swiper {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+  }
+
+  .testimonials-section .swiper-wrapper {
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    margin: 0;
+  }
+
+  .testimonials-section .swiper-slide {
+    width: 33.333% !important;
+    max-width: 33.333% !important;
+    min-width: 33.333% !important;
+    margin: 0 !important;
+    padding: 0 8px !important;
+    display: flex !important;
+    align-items: stretch !important;
+  }
+
+  .testimonial-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    margin: 0 !important;
+    min-height: 320px;
+    height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    transition: box-shadow 0.25s;
+    cursor: pointer;
+    z-index: 1;
+    position: relative;
+  }
+
+  .testimonial-card .testimonial-content {
+    overflow: hidden;
+    min-height: 7.5em;
+    max-height: 7.5em;
+    flex: 1 1 auto;
+    transition: all 0.2s;
+    display: block;
+  }
+
+  .testimonial-short {
     white-space: pre-line;
   }
 
@@ -2625,13 +3048,6 @@ const cultureTours = attractions
   }
 }
 
-@media (min-width: 1200px) {
-
-  /* Sağdan 350px margin için swiper'a padding ekle */
-  .testimonials-section .swiper {
-    padding-right: 350px;
-  }
-}
 
 @media (min-width: 769px) {
   .testimonial-card .testimonial-author h4 {

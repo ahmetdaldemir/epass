@@ -88,6 +88,15 @@ const changeLanguage = (langCode) => {
   // Emit event for parent components
   emit('language-changed', langCode)
   
+  // Global event dispatch for all components
+  const languageId = getLanguageId(langCode)
+  window.dispatchEvent(new CustomEvent('language-changed', {
+    detail: {
+      language: langCode,
+      languageId: languageId
+    }
+  }))
+  
   // RTL desteğini güncelle
   const rtlLanguages = ['ar']
   const isRTL = rtlLanguages.includes(langCode)
@@ -131,6 +140,23 @@ const getLanguageCode = (langCode) => {
 const getLanguageName = (langCode) => {
   const lang = languages.value.find(l => l && l.code === langCode)
   return lang ? lang.name : 'English'
+}
+
+const getLanguageId = (langCode) => {
+  const languageMap = {
+    'tr': 2,    // Türkçe
+    'de': 6,    // Deutsch
+    'en': 1,    // English
+    'ar': 3,    // العربية
+    'es': 4,    // Español
+    'fr': 5,    // Français
+    'it': 7,    // Italiano
+    'pt': 8,    // Português
+    'zh': 10,   // 中文
+    'ja': 11,   // 日本語
+    'ru': 9     // Русский
+  }
+  return languageMap[langCode] || 1
 }
 
 // Close dropdown when clicking outside

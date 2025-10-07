@@ -15,7 +15,7 @@ export default {
     becomePartner: 'Partner werden',
     myPass: 'Mein Pass',
     myListing: 'Meine Auflistungen',
-    thingsToDo: 'Aktivitäten in Istanbul',
+    blog: 'Blog',
     buyNow: 'Jetzt kaufen'
   },
 
@@ -23,7 +23,7 @@ export default {
   home: {
     hero: {
       title: 'Entdecken Sie Istanbul mit dem SearchYourTour Pass - Sparen Sie 40% bei Top-Sehenswürdigkeiten',
-      subtitle: 'Istanbul',
+      subtitle: 'Türkiye',
       badge: 'JETZT MIT 5GB SIM KOSTENLOS',
       buyNow: 'Jetzt kaufen',
       startingFrom: 'Ab nur €139'
@@ -98,6 +98,7 @@ export default {
     },
     common: {
       likelyToSellOut: 'Wahrscheinlich ausverkauft',
+      bestseller: 'Bestseller',
       bookNow: 'Jetzt buchen'
     }
   },
@@ -237,24 +238,76 @@ export default {
     title: 'Häufig gestellte Fragen',
     subtitle: 'Finden Sie Antworten auf häufige Fragen zu SearchYourTour',
     q1: {
-      question: 'Was ist im SearchYourTour Pass enthalten?',
-      answer: 'Der SearchYourTour Pass umfasst Zugang zu über 100 Sehenswürdigkeiten, Museen und Touren in Istanbul. Sie erhalten auch Skip-the-Line-Eintritt, kostenlose geführte Touren und ein mobiles Ticket.'
+      question: 'Was ist SearchYourTour.com?',
+      answer: 'SearchYourTour.com ist eine Reiseplattform, die Ihnen hilft, die besten Touren, Aktivitäten und Urlaubspakete von vertrauenswürdigen Reiseveranstaltern in verschiedenen Destinationen zu entdecken, zu vergleichen und zu buchen.'
     },
     q2: {
-      question: 'Wie lange ist der Pass gültig?',
-      answer: 'Der Pass ist für die von Ihnen gewählte Dauer gültig: 1 Tag, 3 Tage, 5 Tage oder 7 Tage ab der ersten Nutzung.'
+      question: 'Wie funktioniert es?',
+      answer: 'Suchen Sie einfach nach Ihrer gewünschten Destination oder Aktivität, vergleichen Sie verschiedene Tourpakete, lesen Sie verifizierte Bewertungen und buchen Sie direkt über die Plattform.'
     },
     q3: {
-      question: 'Kann ich dieselbe Sehenswürdigkeit mehrmals besuchen?',
-      answer: 'Die meisten Sehenswürdigkeiten erlauben einen Besuch pro Pass. Einige Sehenswürdigkeiten können jedoch mehrere Besuche erlauben - bitte überprüfen Sie die spezifischen Details der Sehenswürdigkeit.'
+      question: 'Wer sind die auf der Website gelisteten Reiseveranstalter?',
+      answer: 'Wir arbeiten mit lizenzierten und erfahrenen Reiseveranstaltern zusammen, die unsere Qualitätsstandards erfüllen. Jeder Anbieter wird vor der Auflistung überprüft und verifiziert.'
     },
     q4: {
-      question: 'Wie verwende ich meinen Pass?',
-      answer: 'Zeigen Sie einfach Ihren mobilen Pass oder gedruckten Pass am Eingang jeder inbegriffenen Sehenswürdigkeit. Kein separater Ticketkauf erforderlich.'
+      question: 'Wie buche ich eine Tour?',
+      answer: 'Sobald Sie eine Tour gefunden haben, die Ihnen gefällt, klicken Sie darauf, um vollständige Details anzuzeigen, wählen Sie Ihre Termine aus und folgen Sie dem Buchungsprozess. Sie erhalten eine Bestätigungs-E-Mail, sobald Ihre Buchung abgeschlossen ist.'
     },
     q5: {
-      question: 'Kann ich eine Rückerstattung erhalten, wenn ich den Pass nicht verwende?',
-      answer: 'Ja, Sie können eine vollständige Rückerstattung erhalten, wenn Sie den Pass nicht verwendet haben und dies innerhalb von 30 Tagen nach dem Kauf beantragen.'
+      question: 'Ist es sicher, Zahlungen auf Ihrer Website zu tätigen?',
+      answer: 'Ja, wir verwenden sichere Zahlungsgateways und Verschlüsselungsprotokolle zum Schutz Ihrer Daten und Transaktionen.'
+    },
+    q6: {
+      question: 'Welche Zahlungsmethoden akzeptieren Sie?',
+      answer: 'Wir akzeptieren alle gängigen Kredit-/Debitkarten, UPI, Online-Banking und andere sichere Zahlungsoptionen.'
+    },
+    q7: {
+      question: 'Kann ich Gruppenbuchungen vornehmen?',
+      answer: 'Ja, viele unserer Tourpakete unterstützen Gruppenbuchungen. Sie können den Reiseveranstalter direkt über die Tourseite kontaktieren oder sich an unser Support-Team wenden.'
+    },
+    q8: {
+      question: 'Kann ich meine Buchung stornieren oder umbuchen?',
+      answer: 'Stornierungs- und Umbuchungsrichtlinien variieren je nach Reiseveranstalter. Bitte beachten Sie die auf der Tourseite angegebene Stornierungsrichtlinie vor der Buchung.'
+    },
+    q9: {
+      question: 'Erhalte ich eine vollständige Rückerstattung bei Stornierung?',
+      answer: 'Stornierungen, die 24 Stunden vor der geplanten Zeit vorgenommen werden, sind für eine vollständige Rückerstattung berechtigt.'
+    },
+    q10: {
+      question: 'Kann ich ein Tourpaket anpassen?',
+      answer: 'Ja, einige Touren bieten Anpassungsoptionen wie Reiseroutenänderungen, Hotel-Upgrades oder private Gruppentouren. Verwenden Sie die Option "Reiseveranstalter kontaktieren" auf der Tourseite, um Ihre Wünsche zu besprechen.'
+    },
+    q11: {
+      question: 'Sind Flüge in den Tourpaketen enthalten?',
+      answer: 'Sofern nicht anders angegeben, sind Flüge in der Regel nicht enthalten. Überprüfen Sie den Abschnitt "Inklusive/Nicht inklusive" jeder Tour für Details.'
+    },
+    q12: {
+      question: 'Sind die Touren geführt?',
+      answer: 'Die meisten Touren beinhalten professionelle Führer, besonders für Sightseeing- und Abenteuerpakete. Details sind in den einzelnen Tourbeschreibungen verfügbar.'
+    },
+    q13: {
+      question: 'Wie erhalte ich meine Buchungsbestätigung?',
+      answer: 'Nach der Buchung erhalten Sie eine Bestätigungs-E-Mail mit Ihrer Reiseroute, Buchungs-ID und Kontaktdaten des Reiseveranstalters.'
+    },
+    q14: {
+      question: 'Was ist, wenn ich keine Bestätigungs-E-Mail erhalte?',
+      answer: 'Bitte überprüfen Sie Ihren Spam- oder Promotions-Ordner. Falls Sie sie immer noch nicht sehen, kontaktieren Sie unser Support-Team sofort unter info@searchyourtour.com.'
+    },
+    q15: {
+      question: 'Wie kann ich den Kundensupport kontaktieren?',
+      answer: 'Sie können uns unter info@searchyourtour.com eine E-Mail senden oder das Kontaktformular auf unserer Website verwenden. Wir sind 24/7 für Sie da.'
+    },
+    q16: {
+      question: 'Kann ich meine Tour auf Ihrer Plattform auflisten?',
+      answer: 'Ja! Wenn Sie ein verifizierter Reiseveranstalter sind, können Sie sich bewerben, um Ihre Pakete aufzulisten, indem Sie den Bereich "Partner werden" besuchen.'
+    },
+    q17: {
+      question: 'Ist SearchYourTour.com in mehreren Sprachen verfügbar?',
+      answer: 'Derzeit ist die Plattform auf Englisch verfügbar. Wir arbeiten daran, bald weitere Sprachen hinzuzufügen.'
+    },
+    q18: {
+      question: 'Bieten Sie Zugang zu einer mobilen App?',
+      answer: 'Ja, unsere mobile App kommt bald! Derzeit können Sie auf unsere mobile-optimierte Website auf jedem Gerät zugreifen.'
     }
   },
 
@@ -284,6 +337,12 @@ export default {
       sendMessage: 'Nachricht senden',
       successMessage: 'Vielen Dank für Ihre Nachricht! Wir werden uns bald bei Ihnen melden.'
     }
+  },
+
+  // WhatsApp
+  whatsapp: {
+    tooltip: 'Brauchen Sie Hilfe? Chatten Sie mit uns auf WhatsApp!',
+    defaultMessage: 'Hallo! Ich brauche Hilfe bei meiner Tourbuchung.'
   },
 
   // MyPass
@@ -710,5 +769,28 @@ SearchYourTour – wo außergewöhnlicher Service auf unvergessliche Erlebnisse 
       'Regionaler Vertreter',
       'Andere'
     ]
+  },
+
+  // Blog
+  blog: {
+    title: 'Blog',
+    subtitle: 'Neueste Artikel und Reiseführer',
+    loading: 'Artikel werden geladen...',
+    emptyState: {
+      title: 'Keine Artikel gefunden',
+      description: 'Wir werden bald mit tollen Inhalten hier sein!'
+    },
+    readMore: 'Weiterlesen →',
+    pagination: {
+      previous: '← Zurück',
+      next: 'Weiter →'
+    },
+    post: {
+      loading: 'Artikel wird geladen...',
+      notFound: 'Artikel nicht gefunden',
+      backToBlog: '← Zurück zum Blog',
+      share: '📤 Teilen',
+      linkCopied: 'Link kopiert!'
+    }
   }
 }

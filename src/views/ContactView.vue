@@ -7,6 +7,10 @@
       </div>
     </section>
 
+    <div class="container">
+      <Breadcrumb />
+    </div>
+
     <section class="contact-content">
       <div class="container">
         <div class="contact-grid">
@@ -93,6 +97,7 @@
 <script setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import Breadcrumb from '../components/Breadcrumb.vue'
 
 const { t } = useI18n()
 

@@ -17,7 +17,7 @@
               <a href="https://twitter.com/searchyourtour" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-twitter"></i></a>
               <a href="https://www.instagram.com/searchyourtour" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-instagram"></i></a>
               <a href="https://www.youtube.com/searchyourtour" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-youtube"></i></a>
-              <a href="https://wa.me/905555555555" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-whatsapp"></i></a>
+              <a href="https://wa.me/905373257204" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-whatsapp"></i></a>
               <a href="mailto:info@searchyourtour.com" class="social-link"><i class="fas fa-envelope"></i></a>
             </div>
           </div>
@@ -43,8 +43,8 @@
             <li><router-link to="/security/cookie-policy">{{ $t('footer.links.cookies') }}</router-link></li>
             <li><router-link to="/my-pass" >{{ $t('footer.links.managePass') }}</router-link></li>
             <li><router-link to="/become-partner">{{ $t('footer.links.becomePartner') }}</router-link></li>
-            <li><router-link to="/my-listing">{{ $t('footer.links.manageListings') }}</router-link></li>
-            <li><a href="#">{{ $t('footer.links.digitalServices') }}</a></li>
+            <!-- <li><router-link to="/my-listing">{{ $t('footer.links.manageListings') }}</router-link></li> -->
+            <!-- <li><a href="#">{{ $t('footer.links.digitalServices') }}</a></li> -->
           </ul>
         </div>
         <!-- 4. Sütun: Company -->
@@ -54,11 +54,11 @@
             <li><router-link to="/about">{{ $t('footer.links.about') }}</router-link></li>
             <li><router-link to="/attractions">{{ $t('footer.links.istanbulAttractions') }}</router-link></li>
             <li><router-link to="/attractions">{{ $t('footer.links.guidedTours') }}</router-link></li>
-            <li><router-link to="/istanbul-pass">{{ $t('footer.links.searchYourTourPass') }}</router-link></li>
-            <li><a href="#">{{ $t('footer.links.careers') }}</a></li>
-            <li><a href="#">{{ $t('footer.links.blog') }}</a></li>
-            <li><a href="#">{{ $t('footer.links.press') }}</a></li>
-            <li><a href="#">{{ $t('footer.links.giftCards') }}</a></li>
+            <!-- <li><router-link to="/istanbul-pass">{{ $t('footer.links.searchYourTourPass') }}</router-link></li> -->
+            <!-- <li><a href="#">{{ $t('footer.links.careers') }}</a></li> -->
+            <li><a href="/blog">{{ $t('footer.links.blog') }}</a></li> 
+            <!-- <li><a href="#">{{ $t('footer.links.press') }}</a></li> -->
+            <!-- <li><a href="#">{{ $t('footer.links.giftCards') }}</a></li> -->
             <li><router-link to="/attractions">{{ $t('footer.links.explorer') }}</router-link></li>
           </ul>
         </div>

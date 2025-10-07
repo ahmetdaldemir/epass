@@ -7,6 +7,10 @@
       </div>
     </section>
 
+    <div class="container">
+      <Breadcrumb />
+    </div>
+
     <section class="faqs-content">
       <div class="container">
         <div class="faqs-list">
@@ -33,48 +37,136 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import Breadcrumb from '../components/Breadcrumb.vue'
 
 const { t, locale } = useI18n()
 
-const faqs = ref([
+// FAQ verilerini İngilizce olarak doğrudan koda ekliyoruz
+const faqsData = [
+  // About SearchYourTour.com
   {
     id: 1,
-    questionKey: 'faqs.q1.question',
-    answerKey: 'faqs.q1.answer',
-    isOpen: false
+    question: 'What is SearchYourTour.com?',
+    answer: 'SearchYourTour.com is a travel platform that helps you discover, compare, and book the best tours, activities, and holiday packages from trusted tour operators across various destinations.'
   },
   {
     id: 2,
-    questionKey: 'faqs.q2.question',
-    answerKey: 'faqs.q2.answer',
-    isOpen: false
+    question: 'How does it work?',
+    answer: 'Simply search for your desired destination or activity, compare different tour packages, read verified reviews, and book directly through the platform.'
   },
   {
     id: 3,
-    questionKey: 'faqs.q3.question',
-    answerKey: 'faqs.q3.answer',
-    isOpen: false
+    question: 'Who are the tour providers listed on the site?',
+    answer: 'We partner with licensed and experienced tour operators who meet our quality standards. Each provider is reviewed and vetted before being listed.'
   },
+  // Booking & Payments
   {
     id: 4,
-    questionKey: 'faqs.q4.question',
-    answerKey: 'faqs.q4.answer',
-    isOpen: false
+    question: 'How do I book a tour?',
+    answer: 'Once you find a tour you like, click on it to view full details, select your dates, and follow the booking process. You\'ll receive a confirmation email once your booking is complete.'
   },
   {
     id: 5,
-    questionKey: 'faqs.q5.question',
-    answerKey: 'faqs.q5.answer',
-    isOpen: false
+    question: 'Is it safe to make payments on your site?',
+    answer: 'Yes, we use secure payment gateways and encryption protocols to protect your data and transactions.'
+  },
+  {
+    id: 6,
+    question: 'What payment methods do you accept?',
+    answer: 'We accept all major credit/debit cards, UPI, net banking, and other secure payment options.'
+  },
+  {
+    id: 7,
+    question: 'Can I make group bookings?',
+    answer: 'Yes, many of our tour packages support group bookings. You can contact the tour operator directly via the tour page or reach out to our support team for assistance.'
+  },
+  // Modifications & Cancellations
+  {
+    id: 8,
+    question: 'Can I cancel or reschedule my booking?',
+    answer: 'Cancellation and rescheduling policies vary by tour operator. Please refer to the cancellation policy listed on the tour page before booking.'
+  },
+  {
+    id: 9,
+    question: 'Will I get a full refund if I cancel?',
+    answer: 'Cancellations made 24 hours prior to the scheduled time are eligible for a full refund.'
+  },
+  // Tour Details & Customization
+  {
+    id: 10,
+    question: 'Can I customize a tour package?',
+    answer: 'Yes, some tours offer customization options such as itinerary changes, hotel upgrades, or private group tours. Use the "Contact Tour Operator" option on the tour page to discuss your preferences.'
+  },
+  {
+    id: 11,
+    question: 'Are flights included in the tour packages?',
+    answer: 'Unless specified, flights are generally not included. Check the "Inclusions/Exclusions" section of each tour for details.'
+  },
+  {
+    id: 12,
+    question: 'Are the tours guided?',
+    answer: 'Most tours include professional guides, especially for sightseeing and adventure packages. Details are available in the individual tour descriptions.'
+  },
+  // After Booking
+  {
+    id: 13,
+    question: 'How will I receive my booking confirmation?',
+    answer: 'After booking, you\'ll receive a confirmation email with your itinerary, booking ID, and contact details of the tour operator.'
+  },
+  {
+    id: 14,
+    question: 'What if I don\'t receive a confirmation email?',
+    answer: 'Please check your spam or promotions folder. If you still don\'t see it, contact our support team immediately at info@searchyourtour.com.'
+  },
+  // Support & Contact
+  {
+    id: 15,
+    question: 'How can I contact customer support?',
+    answer: 'You can email us at info@searchyourtour.com or use the contact form on our website. We\'re here to help 24/7.'
+  },
+  {
+    id: 16,
+    question: 'Can I list my tour on your platform?',
+    answer: 'Yes! If you\'re a verified tour operator, you can apply to list your packages by visiting the Partner With Us section.'
+  },
+  // General
+  {
+    id: 17,
+    question: 'Is SearchYourTour.com available in multiple languages?',
+    answer: 'Currently, the platform is available in English. We\'re working on adding more languages soon.'
+  },
+  {
+    id: 18,
+    question: 'Do you offer mobile app access?',
+    answer: 'Yes, our mobile app is coming soon! For now, you can access our mobile-optimized website on any device.'
   }
-])
+]
+
+// Çeviri fonksiyonu - eğer çeviri yoksa İngilizce metni döndürür
+const translateText = (text, key) => {
+  const translationKey = `faqs.q${key}.${text === faqsData.find(f => f.id === key)?.question ? 'question' : 'answer'}`
+  const translation = t(translationKey)
+  
+  // Eğer çeviri bulunamazsa (anahtar bulunamadı hatası), orijinal İngilizce metni döndür
+  if (translation === translationKey) {
+    return text
+  }
+  
+  return translation
+}
+
+// FAQ verilerini reactive hale getir
+const faqs = ref(faqsData.map(faq => ({
+  ...faq,
+  isOpen: false
+})))
 
 // Computed property for translated FAQs
 const translatedFaqs = computed(() => {
   return faqs.value.map(faq => ({
     ...faq,
-    question: t(faq.questionKey),
-    answer: t(faq.answerKey)
+    question: translateText(faq.question, faq.id),
+    answer: translateText(faq.answer, faq.id)
   }))
 })
 

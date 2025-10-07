@@ -180,7 +180,7 @@
                         <h3>About This Tour</h3>
                         <div class="tour-description-html" v-html="getTourFullDescription(tour)"></div>
                       </div>
-                      <div class="overview-sidebar"></div>
+                     
                     </div>
                   </MobileAccordion>
                   <MobileAccordion>
@@ -1397,9 +1397,7 @@ onUnmounted(() => {
 
 /* Overview Tab */
 .overview-content {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 3rem;
+  display: block;
 }
 
 .overview-text h3 {
@@ -1435,10 +1433,6 @@ onUnmounted(() => {
   line-height: 1.6;
 }
 
-.overview-sidebar {
-  position: sticky;
-  top: 2rem;
-}
 
 .info-card {
   background: white;
@@ -1725,7 +1719,7 @@ onUnmounted(() => {
   padding: 32px 24px;
   max-width: 100%;
   min-width: 100%;
-  font-family: 'Inter', sans-serif;
+  font-family: 'GT-Eesti', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   margin-top: 0.5rem;
   border: 1px solid #FC6421;
 }
@@ -1827,6 +1821,7 @@ onUnmounted(() => {
   border: 1px solid #eee;
   margin-bottom: 10px;
   font-size: 1rem;
+  font-family: 'GT-Eesti', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 .pay-btn {
   width: 100%;
@@ -1834,6 +1829,7 @@ onUnmounted(() => {
   color: #fff;
   font-size: 1.1rem;
   font-weight: 700;
+  font-family: 'GT-Eesti', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   border: none;
   border-radius: 10px;
   padding: 14px 0;
@@ -2190,8 +2186,10 @@ html, body {
   overflow: hidden;
 }
 .tour-description-html,
-.tour-description-html * {
-  font-family: 'Open Sans', Arial, sans-serif !important;
+.tour-description-html *,
+.tour-additional-html,
+.tour-additional-html * {
+  font-family: 'GT-Eesti', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
   font-size: 1.08rem;
   color: #222;
 }

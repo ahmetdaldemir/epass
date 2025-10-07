@@ -1,5 +1,8 @@
 <template>
   <div class="become-partner-page">
+    <div class="container">
+      <Breadcrumb />
+    </div>
     
     <form class="partner-form" @submit.prevent="submitForm">
       <!-- Logo Area -->
@@ -379,6 +382,7 @@
 <script setup>
 import { reactive, ref, computed, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import Breadcrumb from '../components/Breadcrumb.vue'
 
 const { t } = useI18n()
 

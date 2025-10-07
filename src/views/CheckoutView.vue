@@ -2,6 +2,9 @@
   <div class="checkout-main-layout">
     <!-- SOL: Kişisel Bilgiler ve Ödeme Formu (Stepper) -->
     <div class="checkout-left">
+      <div class="container">
+        <Breadcrumb />
+      </div>
       <h2>Enter your personal details</h2>
       <div class="secure-checkout">
         <i class="fas fa-lock"></i> Checkout is fast and secure
@@ -41,8 +44,8 @@
             </div>
           </div>
           <div class="form-group">
-            <label>Hotel Address <span class="required">*</span></label>
-            <input v-model="hotelAddress" type="text" required placeholder="Enter your hotel address" />
+            <label>Hotel Address (optional)</label>
+            <input v-model="hotelAddress" type="text" placeholder="Enter your hotel address" />
           </div>
           <div class="form-group">
             <label>Your Location (optional)</label>
@@ -68,8 +71,28 @@
               </a>
             </div>
           </div>
-          <div class="form-note">We’ll only contact you with essential updates or changes to your booking</div>
-          <button class="pay-btn" type="submit">Go to payment</button>
+          <div class="form-note">We'll only contact you with essential updates or changes to your booking</div>
+          
+          <!-- Cancellation Policy Checkbox -->
+          <div class="cancellation-policy-section">
+            <label class="policy-checkbox-label">
+              <input 
+                v-model="policyAccepted" 
+                type="checkbox" 
+                class="policy-checkbox"
+                required
+              />
+              <span class="checkbox-custom"></span>
+              <span class="policy-text">
+                I have read and accept the 
+                <button type="button" @click="showPolicyModal = true" class="policy-link">
+                  Cancellation Policy
+                </button>
+              </span>
+            </label>
+          </div>
+          
+          <button class="pay-btn" type="submit" :disabled="!policyAccepted">Go to payment</button>
         </template>
         <template v-else>
           <div class="form-group">
@@ -153,6 +176,54 @@
         <div class="order-summary-taxes">All taxes and fees included</div>
       </div>
     </div>
+    
+    <!-- Cancellation Policy Modal -->
+    <div v-if="showPolicyModal" class="modal-overlay" @click="showPolicyModal = false">
+      <div class="modal-content" @click.stop>
+        <div class="modal-header">
+          <h3>Cancellation Policy Agreement</h3>
+          <button @click="showPolicyModal = false" class="modal-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="policy-content">
+            <h4>Introduction</h4>
+            <p>We aim to make your travel experience flexible and stress-free. By completing a booking, you agree to the following cancellation and refund terms:</p>
+            
+            <h4>1. Free Cancellation up to 24 Hours Before the Tour</h4>
+            <p>You may cancel your booking up to 24 hours before the scheduled start time and receive a full refund.</p>
+            
+            <h4>2. Cancellation Less Than 24 Hours</h4>
+            <p>Cancellations made less than 24 hours before the tour start time are non-refundable.</p>
+            
+            <h4>3. No-Show</h4>
+            <p>If you fail to appear at the designated meeting point and time, no refund will be issued.</p>
+            
+            <h4>4. Rescheduling</h4>
+            <p>Subject to availability and provider conditions, you may reschedule your tour without additional fees.</p>
+            
+            <h4>5. Cancellations by the Provider</h4>
+            <p>In rare cases where the tour is canceled by the provider due to unforeseen circumstances (such as weather conditions or operational issues), you will be offered either a full refund or the option to reschedule.</p>
+            
+            <h4>6. How to Cancel / Request a Refund</h4>
+            <p>To cancel your booking or request a refund, you must contact us by email at: <strong>info@searchyourtour.com</strong></p>
+            <p>When sending your request, include the following details:</p>
+            <ul>
+              <li>Booking reference number</li>
+              <li>Name on the reservation</li>
+              <li>Tour date</li>
+              <li>Reason for cancellation</li>
+            </ul>
+            <p>Refunds will be processed to the original payment method after your request has been verified.</p>
+            
+            <h4>Acceptance</h4>
+            <p>By completing the booking, you confirm that you have read and accepted this Cancellation Policy Agreement.</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button @click="showPolicyModal = false" class="modal-close-btn">Close</button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -160,6 +231,7 @@
 import { ref, onMounted, watch, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSelectedTourStore } from '../stores/selectedTour'
+import Breadcrumb from '../components/Breadcrumb.vue'
 let stripe, elements, card
 import { loadStripe } from '@stripe/stripe-js';
 
@@ -243,6 +315,8 @@ const errorMsg = ref('')
 const currentStep = ref(1)
 const hotelAddress = ref("");
 const userLocation = ref("");
+const policyAccepted = ref(false);
+const showPolicyModal = ref(false);
 
 // Currency ve language bilgileri
 const currentCurrency = ref(localStorage.getItem('selectedCurrency') || 'EUR')
@@ -336,6 +410,10 @@ const handleStep = async () => {
       errorMsg.value = 'Please fill in all required fields.';
       return;
     }
+    if (!policyAccepted.value) {
+      errorMsg.value = 'Please accept the cancellation policy to continue.';
+      return;
+    }
     currentStep.value = 2;
     return;
   }
@@ -363,7 +441,8 @@ const handleStep = async () => {
           phone: selectedCountry.value.code + phone.value,
           country: country.value,
           hotel_address: hotelAddress.value,
-          user_location: userLocation.value
+          user_location: userLocation.value,
+          confirm: true
         },
         // Tour veya Pass verilerini gönder
         ...(selectedTourStore.tour ? {
@@ -799,6 +878,203 @@ input:focus, select:focus {
   font-size: 3rem;
   color: #0070eb;
 }
+
+/* Cancellation Policy Styles */
+.cancellation-policy-section {
+  margin: 16px 0;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.policy-checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.policy-checkbox {
+  display: none;
+}
+
+.checkbox-custom {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  position: relative;
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: all 0.2s ease;
+}
+
+.policy-checkbox:checked + .checkbox-custom {
+  background: #0070eb;
+  border-color: #0070eb;
+}
+
+.policy-checkbox:checked + .checkbox-custom::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.policy-text {
+  flex: 1;
+  color: #333;
+}
+
+.policy-link {
+  background: none;
+  border: none;
+  color: #0070eb;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+.policy-link:hover {
+  color: #0056b3;
+  text-decoration: none;
+}
+
+/* Modal Styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.modal-content {
+  background: white;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 100%;
+  max-height: 80vh;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 24px;
+  border-bottom: 1px solid #e9ecef;
+  background: #f8f9fa;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1a2a3a;
+}
+
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.modal-close:hover {
+  background: #e9ecef;
+}
+
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+}
+
+.policy-content h4 {
+  color: #1a2a3a;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin: 20px 0 8px 0;
+}
+
+.policy-content h4:first-child {
+  margin-top: 0;
+}
+
+.policy-content p {
+  margin: 0 0 12px 0;
+  line-height: 1.6;
+  color: #444;
+}
+
+.policy-content ul {
+  margin: 8px 0 12px 20px;
+  padding: 0;
+}
+
+.policy-content li {
+  margin: 4px 0;
+  line-height: 1.5;
+  color: #444;
+}
+
+.policy-content strong {
+  color: #1a2a3a;
+  font-weight: 600;
+}
+
+.modal-footer {
+  padding: 16px 24px;
+  border-top: 1px solid #e9ecef;
+  background: #f8f9fa;
+  text-align: right;
+}
+
+.modal-close-btn {
+  background: #0070eb;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+.modal-close-btn:hover {
+  background: #0056b3;
+}
 @media (max-width: 900px) {
   .checkout-main-layout {
     flex-direction: column;
@@ -887,6 +1163,71 @@ input:focus, select:focus {
   }
   .form-note {
     font-size: 0.9rem !important;
+  }
+  
+  /* Modal responsive styles */
+  .modal-overlay {
+    padding: 10px !important;
+  }
+  
+  .modal-content {
+    max-height: 90vh !important;
+    border-radius: 8px !important;
+  }
+  
+  .modal-header {
+    padding: 16px 20px !important;
+  }
+  
+  .modal-header h3 {
+    font-size: 1.2rem !important;
+  }
+  
+  .modal-body {
+    padding: 20px !important;
+  }
+  
+  .policy-content h4 {
+    font-size: 1rem !important;
+    margin: 16px 0 6px 0 !important;
+  }
+  
+  .policy-content p {
+    font-size: 0.9rem !important;
+    margin: 0 0 10px 0 !important;
+  }
+  
+  .policy-content ul {
+    margin: 6px 0 10px 16px !important;
+  }
+  
+  .policy-content li {
+    font-size: 0.9rem !important;
+    margin: 3px 0 !important;
+  }
+  
+  .modal-footer {
+    padding: 12px 20px !important;
+  }
+  
+  .modal-close-btn {
+    padding: 8px 20px !important;
+    font-size: 0.9rem !important;
+  }
+  
+  .cancellation-policy-section {
+    margin: 12px 0 !important;
+    padding: 12px !important;
+  }
+  
+  .policy-checkbox-label {
+    font-size: 0.9rem !important;
+    gap: 10px !important;
+  }
+  
+  .checkbox-custom {
+    width: 18px !important;
+    height: 18px !important;
   }
   /* Scroll edilebilirlik için: */
   .checkout-modal,

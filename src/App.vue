@@ -3,6 +3,7 @@
     <Header />
     <router-view />
     <Footer />
+    <WhatsAppBubble />
   </div>
 </template>
 
@@ -10,6 +11,7 @@
 import { onMounted } from 'vue'
 import Header from './components/Header.vue'
 import Footer from './components/Footer.vue'
+import WhatsAppBubble from './components/WhatsAppBubble.vue'
 
 const tenantId = 'ad5257a5-efdd-4314-9e5e-b56aabe321f1'
 // Lifecycle

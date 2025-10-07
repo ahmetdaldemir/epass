@@ -25,6 +25,7 @@
             <div class="mobile-menu-links">
               <router-link to="/" @click="closeMobileMenu">{{ $t('nav.home') }}</router-link>
               <router-link to="/attractions" @click="closeMobileMenu">{{ $t('nav.tours') }}</router-link>
+              <router-link to="/blog" @click="closeMobileMenu">{{ $t('nav.blog') }}</router-link>
               <router-link to="/contact" @click="closeMobileMenu">{{ $t('nav.contact') }}</router-link>
               <router-link to="/my-pass" @click="closeMobileMenu">{{ $t('nav.myPass') }}</router-link>
               <router-link to="/about" @click="closeMobileMenu">{{ $t('nav.about') }}</router-link>
@@ -39,6 +40,7 @@
                 <ul>
                   <li><router-link to="/">{{ $t('nav.home') }}</router-link></li>
                   <li><router-link to="/attractions">{{ $t('nav.tours') }}</router-link></li>
+                  <li><router-link to="/blog">{{ $t('nav.blog') }}</router-link></li>
                   <li><router-link to="/about">{{ $t('nav.about') }}</router-link></li>
                   <li><router-link to="/contact">{{ $t('nav.contact') }}</router-link></li>
                   <li><router-link to="/faqs">{{ $t('nav.faqs') }}</router-link></li>

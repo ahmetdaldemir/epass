@@ -9,6 +9,10 @@
       </div>
     </section>
 
+    <div class="container">
+      <Breadcrumb />
+    </div>
+
     <!-- Tours Grid -->
     <section class="tours-section">
       <div class="container">
@@ -47,7 +51,7 @@
           <router-link
             v-for="tour in filteredTours"
             :key="tour.id"
-            :to="`/tour/${tour.id}`"
+            :to="`${tour.slug_url}`"
             class="tour-card"
             style="text-decoration: none; color: inherit; display: flex; flex-direction: column; height: 100%;"
           >
@@ -95,6 +99,7 @@
 
 <script setup>
 import { ref, computed, onMounted, watch, onBeforeUnmount} from 'vue'
+import Breadcrumb from '../components/Breadcrumb.vue'
 
 const selectedDestination = ref('')
 const selectedDuration = ref('')

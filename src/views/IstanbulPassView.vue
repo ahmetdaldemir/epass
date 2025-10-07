@@ -7,6 +7,10 @@
       </div>
     </section>
 
+    <div class="container">
+      <Breadcrumb />
+    </div>
+
     <section class="pass-selection">
       <div class="container pass-flex">
         <div class="pass-grid">
@@ -137,6 +141,7 @@
 import { ref, computed, onMounted, nextTick, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useSelectedTourStore } from '../stores/selectedTour'
+import Breadcrumb from '../components/Breadcrumb.vue'
 import { ElDatePicker } from 'element-plus'
 import 'element-plus/dist/index.css'
 import { Calendar } from 'v-calendar';

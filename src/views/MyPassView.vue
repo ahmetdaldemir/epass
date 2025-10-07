@@ -1,5 +1,9 @@
 <template>
   <div class="my-pass-panel">
+    <div class="container">
+      <Breadcrumb />
+    </div>
+    
     <div v-if="!loggedIn" class="login-outer">
       <div class="login-box">
         <h2>{{ $t('myPass.login.title') }}</h2>
@@ -236,6 +240,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
+import Breadcrumb from '../components/Breadcrumb.vue'
 
 const { t } = useI18n()
 

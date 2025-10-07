@@ -13,7 +13,7 @@ export default {
     becomePartner: 'Partner Ol',
     myPass: 'Pass\'ım',
     myListing: 'Listelerim',
-    thingsToDo: 'İstanbul\'da Yapılacaklar',
+    blog: 'Blog',
     buyNow: 'Şimdi Satın Al'
   },
 
@@ -96,6 +96,7 @@ export default {
     },
     common: {
       likelyToSellOut: 'Tükenmek üzere',
+      bestseller: 'En Çok Satılan',
       bookNow: 'Şimdi Satın Al'
     }
   },
@@ -184,11 +185,18 @@ export default {
     about: 'Hakkında',
     terms: 'Şartlar',
     privacy: 'Gizlilik',
-    cookies: 'Çerezler'
+    cookies: 'Çerezler',
+    security: 'Güvenlik',
+    signup: 'Kayıt Ol',
+    checkout: 'Ödeme',
+    paymentSuccess: 'Ödeme Başarılı',
+    planSave: 'Plan Kaydet',
+    resetPassword: 'Şifre Sıfırla'
   },
 
   // Tour Detail
   tourDetail: {
+    title: 'Tur Detayı',
     loading: 'Tur detayları yükleniyor...',
     tryAgain: 'Tekrar Dene',
     likelyToSellOut: 'Tükenmek üzere',
@@ -235,24 +243,76 @@ export default {
     title: 'Sık Sorulan Sorular',
     subtitle: 'SearchYourTour hakkında yaygın soruların cevaplarını bulun',
     q1: {
-      question: 'SearchYourTour Pass\'te neler dahil?',
-      answer: 'SearchYourTour Pass, İstanbul genelinde 100+ cazibe merkezi, müze ve tura erişim içerir. Ayrıca sıra atlama, ücretsiz rehberli turlar ve mobil bilet alırsınız.'
+      question: 'SearchYourTour.com nedir?',
+      answer: 'SearchYourTour.com, çeşitli destinasyonlardaki güvenilir tur operatörlerinden en iyi turları, aktiviteleri ve tatil paketlerini keşfetmenize, karşılaştırmanıza ve rezervasyon yapmanıza yardımcı olan bir seyahat platformudur.'
     },
     q2: {
-      question: 'Pass ne kadar süre geçerli?',
-      answer: 'Pass, seçtiğiniz süre boyunca geçerlidir: ilk kullanımdan itibaren 1 gün, 3 gün, 5 gün veya 7 gün.'
+      question: 'Nasıl çalışır?',
+      answer: 'İstediğiniz destinasyonu veya aktiviteyi arayın, farklı tur paketlerini karşılaştırın, doğrulanmış yorumları okuyun ve doğrudan platform üzerinden rezervasyon yapın.'
     },
     q3: {
-      question: 'Aynı cazibe merkezini birden fazla kez ziyaret edebilir miyim?',
-      answer: 'Çoğu cazibe merkezi pass başına bir ziyarete izin verir. Ancak bazı cazibe merkezleri birden fazla ziyarete izin verebilir - lütfen belirli cazibe merkezi detaylarını kontrol edin.'
+      question: 'Sitede listelenen tur sağlayıcıları kimler?',
+      answer: 'Kalite standartlarımızı karşılayan lisanslı ve deneyimli tur operatörleri ile ortaklık yapıyoruz. Her sağlayıcı listelenmeden önce incelenir ve doğrulanır.'
     },
     q4: {
-      question: 'Pass\'imi nasıl kullanırım?',
-      answer: 'Sadece dahil edilen herhangi bir cazibe merkezinin girişinde mobil pass\'inizi veya yazdırılmış pass\'inizi gösterin. Ayrı bilet satın almaya gerek yok.'
+      question: 'Tur rezervasyonu nasıl yaparım?',
+      answer: 'Beğendiğiniz bir turu bulduğunuzda, tam detayları görüntülemek için üzerine tıklayın, tarihlerinizi seçin ve rezervasyon sürecini takip edin. Rezervasyonunuz tamamlandığında onay e-postası alacaksınız.'
     },
     q5: {
-      question: 'Pass\'i kullanmazsam iade alabilir miyim?',
-      answer: 'Evet, pass\'i kullanmadıysanız ve satın alma tarihinden itibaren 30 gün içinde talep ederseniz tam iade alabilirsiniz.'
+      question: 'Sitenizde ödeme yapmak güvenli mi?',
+      answer: 'Evet, verilerinizi ve işlemlerinizi korumak için güvenli ödeme ağ geçitleri ve şifreleme protokolleri kullanıyoruz.'
+    },
+    q6: {
+      question: 'Hangi ödeme yöntemlerini kabul ediyorsunuz?',
+      answer: 'Tüm büyük kredi/banka kartları, UPI, internet bankacılığı ve diğer güvenli ödeme seçeneklerini kabul ediyoruz.'
+    },
+    q7: {
+      question: 'Grup rezervasyonu yapabilir miyim?',
+      answer: 'Evet, tur paketlerimizin çoğu grup rezervasyonlarını destekler. Tur operatörü ile doğrudan tur sayfası üzerinden iletişime geçebilir veya yardım için destek ekibimizle iletişime geçebilirsiniz.'
+    },
+    q8: {
+      question: 'Rezervasyonumu iptal edebilir veya yeniden planlayabilir miyim?',
+      answer: 'İptal ve yeniden planlama politikaları tur operatörüne göre değişir. Rezervasyon yapmadan önce lütfen tur sayfasında listelenen iptal politikasına bakın.'
+    },
+    q9: {
+      question: 'İptal edersem tam iade alır mıyım?',
+      answer: 'Planlanan zamandan 24 saat önce yapılan iptaller tam iade için uygundur.'
+    },
+    q10: {
+      question: 'Tur paketini özelleştirebilir miyim?',
+      answer: 'Evet, bazı turlar güzergah değişiklikleri, otel yükseltmeleri veya özel grup turları gibi özelleştirme seçenekleri sunar. Tercihlerinizi görüşmek için tur sayfasındaki "Tur Operatörü ile İletişim" seçeneğini kullanın.'
+    },
+    q11: {
+      question: 'Tur paketlerinde uçuşlar dahil mi?',
+      answer: 'Belirtilmediği sürece, uçuşlar genellikle dahil değildir. Detaylar için her turun "Dahil Olanlar/Dahil Olmayanlar" bölümünü kontrol edin.'
+    },
+    q12: {
+      question: 'Turlar rehberli mi?',
+      answer: 'Çoğu tur, özellikle gezilecek yerler ve macera paketleri için profesyonel rehberler içerir. Detaylar bireysel tur açıklamalarında mevcuttur.'
+    },
+    q13: {
+      question: 'Rezervasyon onayımı nasıl alacağım?',
+      answer: 'Rezervasyon yaptıktan sonra, güzergahınız, rezervasyon kimliğiniz ve tur operatörünün iletişim bilgileri ile birlikte onay e-postası alacaksınız.'
+    },
+    q14: {
+      question: 'Onay e-postası almazsam ne yapmalıyım?',
+      answer: 'Lütfen spam veya promosyon klasörünüzü kontrol edin. Hala görmüyorsanız, derhal destek ekibimizle info@searchyourtour.com adresinden iletişime geçin.'
+    },
+    q15: {
+      question: 'Müşteri desteği ile nasıl iletişime geçebilirim?',
+      answer: 'Bize info@searchyourtour.com adresinden e-posta gönderebilir veya web sitemizdeki iletişim formunu kullanabilirsiniz. 7/24 yardımcı olmak için buradayız.'
+    },
+    q16: {
+      question: 'Turumu platformunuzda listeleyebilir miyim?',
+      answer: 'Evet! Doğrulanmış bir tur operatörüyseniz, "Bizimle Partner Ol" bölümünü ziyaret ederek paketlerinizi listeleme başvurusu yapabilirsiniz.'
+    },
+    q17: {
+      question: 'SearchYourTour.com birden fazla dilde mevcut mu?',
+      answer: 'Şu anda platform İngilizce olarak mevcut. Yakında daha fazla dil eklemek için çalışıyoruz.'
+    },
+    q18: {
+      question: 'Mobil uygulama erişimi sunuyor musunuz?',
+      answer: 'Evet, mobil uygulamamız yakında geliyor! Şimdilik, herhangi bir cihazda mobil optimize edilmiş web sitemize erişebilirsiniz.'
     }
   },
 
@@ -282,6 +342,12 @@ export default {
       sendMessage: 'Mesaj Gönder',
       successMessage: 'Mesajınız için teşekkürler! En kısa sürede size geri döneceğiz.'
     }
+  },
+
+  // WhatsApp
+  whatsapp: {
+    tooltip: 'Yardıma mı ihtiyacınız var? WhatsApp\'ta bizimle sohbet edin!',
+    defaultMessage: 'Merhaba! Tur rezervasyonumla ilgili yardıma ihtiyacım var.'
   },
 
   // MyPass
@@ -708,5 +774,29 @@ SearchYourTour – olağanüstü hizmetin unutulmaz deneyimlerle buluştuğu yer
       'Bölge Temsilcisi',
       'Diğer'
     ]
+  },
+
+  // Blog
+  blog: {
+    title: 'Blog',
+    subtitle: 'En güncel yazılar ve rehberler',
+    loading: 'Yazılar yükleniyor...',
+    emptyState: {
+      title: 'Henüz yazı bulunmuyor',
+      description: 'Yakında harika içeriklerle burada olacağız!'
+    },
+    readMore: 'Devamını Oku →',
+    pagination: {
+      previous: '← Önceki',
+      next: 'Sonraki →'
+    },
+    post: {
+      title: 'Blog Yazısı',
+      loading: 'Yazı yükleniyor...',
+      notFound: 'Yazı bulunamadı',
+      backToBlog: '← Blog\'a Dön',
+      share: '📤 Paylaş',
+      linkCopied: 'Link kopyalandı!'
+    }
   }
 }

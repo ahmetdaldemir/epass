@@ -8,6 +8,10 @@
       </div>
     </section>
 
+    <div class="container">
+      <Breadcrumb />
+    </div>
+
     <section class="attractions-list">
       <div class="container">
         <!-- Loading State -->
@@ -27,7 +31,7 @@
           <router-link
             v-for="attraction in attractions"
             :key="attraction.id"
-            :to="`/tour/${attraction.id}`"
+            :to="`${attraction.slug_url}`"
             class="attraction-card"
             style="text-decoration: none; color: inherit; display: block; height: 100%;"
           >
@@ -45,7 +49,7 @@
                 </span>
               </div>
               <div class="attraction-actions">
-                <router-link @click.stop :to="`/tour/${attraction.id}`" class="btn btn-primary">{{ $t('attractions.view') }}</router-link>
+                <router-link @click.stop :to="`${attraction.slug_url}`" class="btn btn-primary">{{ $t('attractions.view') }}</router-link>
                 <button @click.stop="addToWishlist(attraction.id)" class="btn btn-secondary">
                   <i class="fas fa-heart"></i>
                 </button>
@@ -66,6 +70,7 @@
 <script setup>
 import { ref, onMounted, watch, computed ,onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
+import Breadcrumb from '../components/Breadcrumb.vue'
 
 const { t, locale } = useI18n()
 
