@@ -147,20 +147,32 @@ const fetchBlogPosts = async (page = 1) => {
     
     const data = await response.json()
     
-    // Debug: API'den gelen image URL'lerini kontrol et
-    console.log('=== BLOG IMAGES DEBUG ===')
+    // Debug: API'den gelen image URL'lerini ve tarih bilgilerini kontrol et
+    console.log('=== BLOG DATA DEBUG ===')
     if (data && data.length > 0) {
       data.slice(0, 3).forEach((post, index) => {
         console.log(`Blog ${index + 1} (ID: ${post.id}):`)
+        console.log('  - created_at:', post.created_at)
+        console.log('  - updated_at:', post.updated_at)
         console.log('  - images:', post.images)
         console.log('  - image array:', post.image)
         console.log('  - files:', post.files)
       })
     }
-    console.log('=== END BLOG IMAGES DEBUG ===')
+    console.log('=== END BLOG DATA DEBUG ===')
     
-    // Adjust according to API response format
-    blogPosts.value = data || []
+    // Adjust according to API response format and sort by created_at (newest first)
+    if (data && Array.isArray(data)) {
+      // Sort by created_at in descending order (newest first)
+      blogPosts.value = data.sort((a, b) => {
+        const dateA = a.created_at ? new Date(a.created_at) : new Date(0)
+        const dateB = b.created_at ? new Date(b.created_at) : new Date(0)
+        return dateB - dateA // Descending order (newest first)
+      })
+    } else {
+      blogPosts.value = []
+    }
+    
     totalPages.value = Math.ceil(blogPosts.value.length / postsPerPage.value)
     currentPage.value = page
     
