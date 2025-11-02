@@ -1017,8 +1017,40 @@ const categories = [
 ]
 const selectedCategory = ref('culture')
 
-// Kültür kategorisi için turlar (şimdilik tüm attractions)
-const cultureTours = attractions
+// Kültür kategorisi için turlar - özel sıralama ile
+const cultureTours = computed(() => {
+  // İstediğiniz tur ID'lerini buraya sırayla yazın
+  const preferredTourOrder = [
+    81,  
+    125,
+    80,
+    126,  
+    79,  
+    63,  
+    56,
+    124,
+      // Beşinci öncelikli tur
+    // Daha fazla tur ID'si ekleyebilirsiniz
+  ]
+  
+  // Önce tercih edilen sıraya göre turları al
+  const orderedTours = []
+  const remainingTours = [...attractions.value]
+  
+  // Tercih edilen sıraya göre turları ekle
+  preferredTourOrder.forEach(tourId => {
+    const tourIndex = remainingTours.findIndex(tour => tour.id === tourId)
+    if (tourIndex !== -1) {
+      orderedTours.push(remainingTours[tourIndex])
+      remainingTours.splice(tourIndex, 1)
+    }
+  })
+  
+  // Kalan turları da ekle
+  orderedTours.push(...remainingTours)
+  
+  return orderedTours
+})
 
 
 </script>

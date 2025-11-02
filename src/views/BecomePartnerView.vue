@@ -48,7 +48,7 @@
         <div class="form-row">
           <div class="form-group">
             <input v-model="form.email" type="email" :placeholder="$t('becomePartner.form.contactInfo.email.placeholder')" required pattern="[^\s@]+@[^\s@]+\.[^\s@]+" />
-            <div class="input-desc">{{ $t('becomePartner.form.contactInfo.email.description') }}</div>
+            <div class="input-desc">Email address for communication. Ex: https://info@youragency.com</div>
           </div>
           <div class="form-group phone-group">
             <div class="phone-input-combined">
@@ -212,7 +212,7 @@
             <div v-if="serviceAreaDropdownOpen" class="multi-select-dropdown">
               <div v-for="group in serviceAreaOptions" :key="group.group">
                 <div class="dropdown-group-title">{{ $t(`becomePartner.serviceAreas.${group.groupKey}`) }}</div>
-                <div v-for="area in group.options" :key="area" class="dropdown-option" @click.stop="toggleServiceArea(area)">
+                <div v-for="area in group.options" :key="area" class="dropdown-option" @click.stop="toggleServiceArea(area)" @touchstart.stop="toggleServiceArea(area)">
                   <input type="checkbox" :checked="isServiceAreaSelected(area)" readonly />
                   <span>{{ area }}</span>
                 </div>
@@ -327,7 +327,7 @@
             </select>
           </div>
           <div class="form-group">
-            <input v-model="form.managerTitle" type="text" :placeholder="$t('becomePartner.form.manager.title.placeholder')" required />
+            <input v-model="form.managerTitle" type="text" :placeholder="$t('becomePartner.form.manager.jobTitle.placeholder')" required />
           </div>
         </div>
         <div class="form-row">
@@ -454,6 +454,7 @@ const logoPreview = ref(null)
 function onLogoChange(e) {
   const file = e.target.files[0]
   if (file) {
+    form.logo = file
     const reader = new FileReader()
     reader.onload = (ev) => {
       logoPreview.value = ev.target.result
@@ -560,15 +561,23 @@ const serviceAreaOptions = [
 
 const serviceAreaDropdownOpen = ref(false)
 function toggleServiceAreaDropdown() {
+  console.log('Toggling dropdown, current state:', serviceAreaDropdownOpen.value) // Debug için
   serviceAreaDropdownOpen.value = !serviceAreaDropdownOpen.value
+  console.log('New dropdown state:', serviceAreaDropdownOpen.value)
 }
 function closeServiceAreaDropdown() {
   serviceAreaDropdownOpen.value = false
 }
 function toggleServiceArea(area) {
+  console.log('Toggling service area:', area) // Debug için
   const idx = form.serviceAreas.indexOf(area)
-  if (idx === -1) form.serviceAreas.push(area)
-  else form.serviceAreas.splice(idx, 1)
+  if (idx === -1) {
+    form.serviceAreas.push(area)
+    console.log('Added:', area, 'Current areas:', form.serviceAreas)
+  } else {
+    form.serviceAreas.splice(idx, 1)
+    console.log('Removed:', area, 'Current areas:', form.serviceAreas)
+  }
 }
 function isServiceAreaSelected(area) {
   return form.serviceAreas.includes(area)
@@ -577,7 +586,12 @@ function isServiceAreaSelected(area) {
 const dropdownRef = ref(null)
 function handleClickOutside(e) {
   if (dropdownRef.value && !dropdownRef.value.contains(e.target)) {
-    closeServiceAreaDropdown()
+    // Masaüstü için daha uzun timeout, mobil için kısa
+    const isMobile = window.innerWidth <= 900
+    const timeout = isMobile ? 0 : 100
+    setTimeout(() => {
+      closeServiceAreaDropdown()
+    }, timeout)
   }
 }
 onMounted(() => {
@@ -629,13 +643,122 @@ onUnmounted(() => {
   document.removeEventListener('mousedown', handleCountryClickOutside)
 })
 
-function submitForm() {
+// Dosyayı Base64'e çeviren yardımcı fonksiyon
+function fileToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = error => reject(error)
+  })
+}
+
+async function submitForm() {
   if (form.password !== form.passwordRepeat) {
     alert(t('becomePartner.form.passwordMismatch'))
     return
   }
-  alert(t('becomePartner.form.success'))
-  console.log('Form:', JSON.parse(JSON.stringify(form)))
+  
+  try {
+    // Dosyaları Base64'e çevir
+    const fileData = {}
+    
+    if (form.logo) {
+      console.log('Converting logo to Base64...')
+      fileData.logo = await fileToBase64(form.logo)
+      fileData.logoName = form.logo.name
+      fileData.logoType = form.logo.type
+    }
+    
+    if (form.taxDocument) {
+      console.log('Converting tax document to Base64...')
+      fileData.taxDocument = await fileToBase64(form.taxDocument)
+      fileData.taxDocumentName = form.taxDocument.name
+      fileData.taxDocumentType = form.taxDocument.type
+    }
+    
+    if (form.tursabDocument) {
+      console.log('Converting tursab document to Base64...')
+      fileData.tursabDocument = await fileToBase64(form.tursabDocument)
+      fileData.tursabDocumentName = form.tursabDocument.name
+      fileData.tursabDocumentType = form.tursabDocument.type
+    }
+    
+    if (form.expertiseDocument) {
+      console.log('Converting expertise document to Base64...')
+      fileData.expertiseDocument = await fileToBase64(form.expertiseDocument)
+      fileData.expertiseDocumentName = form.expertiseDocument.name
+      fileData.expertiseDocumentType = form.expertiseDocument.type
+    }
+    
+    if (form.otherDocuments && form.otherDocuments.length > 0) {
+      console.log('Converting other documents to Base64...')
+      fileData.otherDocuments = []
+      for (let i = 0; i < form.otherDocuments.length; i++) {
+        const file = form.otherDocuments[i]
+        const base64 = await fileToBase64(file)
+        fileData.otherDocuments.push({
+          data: base64,
+          name: file.name,
+          type: file.type
+        })
+      }
+    }
+    
+    console.log('File conversion completed. File data size:', JSON.stringify(fileData).length)
+
+    const API_BASE_URL = 'https://backend.searchyourtour.com/api'
+    const path = '/tenant/store'
+    const res = await fetch(`${API_BASE_URL}${path}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        username: form.username,
+        companyName: form.companyName,
+        email: form.email,
+        countryCode: form.countryCode,
+        phone: form.phone,
+        country: form.country,
+        city: form.city,
+        address: form.address,
+        foundationDate: form.foundationDate,
+        employeeCount: form.employeeCount,
+        monthlyRevenue: form.monthlyRevenue,
+        currency: form.currency,
+        website: form.website,
+        taxOffice: form.taxOffice,
+        taxNumber: form.taxNumber,
+        pibNumber: form.pibNumber,
+        iban: form.iban,
+        accountHolder: form.accountHolder,
+        bank: form.bank,
+        swiftCode: form.swiftCode,
+        accountNumber: form.accountNumber,
+        serviceAreas: form.serviceAreas,
+        language: form.language,
+        heardFrom: form.heardFrom,
+        managerGender: form.managerGender,
+        managerTitle: form.managerTitle,
+        managerName: form.managerName,
+        managerSurname: form.managerSurname,
+        managerPhone: form.managerPhone,
+        managerBirthDate: form.managerBirthDate,
+        password: form.password,
+        passwordRepeat: form.passwordRepeat,
+        agreeCookies: form.agreeCookies,
+        agreeContract: form.agreeContract,
+        // Dosya verilerini ekle
+        ...fileData
+      })
+    })
+    if (!res.ok) throw new Error(await res.text())
+    alert(t('becomePartner.form.success'))
+  } catch (err) {
+    console.error(err)
+    alert('Submission failed')
+  }
 }
 </script>
 
@@ -999,7 +1122,7 @@ function submitForm() {
   border: 1px solid #ddd;
   border-radius: 0 0 8px 8px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-  z-index: 100;
+  z-index: 1000;
   max-height: 260px;
   overflow-y: auto;
   margin-top: 2px;
@@ -1025,6 +1148,28 @@ function submitForm() {
 }
 .dropdown-option input[type="checkbox"] {
   accent-color: #fc6421;
+}
+
+/* Desktop specific styles for better interaction */
+@media (min-width: 901px) {
+  .multi-select-dropdown {
+    z-index: 1001;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+  }
+  
+  .dropdown-option {
+    padding: 12px 16px;
+    font-size: 15px;
+  }
+  
+  .dropdown-option:hover {
+    background: #e8f4fd;
+    color: #fc6421;
+  }
+  
+  .dropdown-option:active {
+    background: #d1ecf1;
+  }
 }
 .custom-language-select {
   position: relative;

@@ -3,7 +3,7 @@
     "activeCommit": 0,
     "commits": [
         {
-            "activePatchIndex": 19,
+            "activePatchIndex": 20,
             "patches": [
                 {
                     "date": 1755552618152,
@@ -84,6 +84,10 @@
                 {
                     "date": 1759480678156,
                     "content": "Index: \n===================================================================\n--- \n+++ \n@@ -440,11 +440,11 @@\n           email: email.value,\r\n           phone: selectedCountry.value.code + phone.value,\r\n           country: country.value,\r\n           hotel_address: hotelAddress.value,\r\n-          user_location: userLocation.value\r\n+          user_location: userLocation.value,\r\n+          confirm: true\r\n         },\r\n-        confirm: true,\r\n         // Tour veya Pass verilerini gönder\r\n         ...(selectedTourStore.tour ? {\r\n           tour: {\r\n             id: selectedTourStore.tour?.id || null,\r\n"
+                },
+                {
+                    "date": 1760562963008,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n@@ -405,9 +405,9 @@\n }\r\n \r\n const handleStep = async () => {\r\n   if (currentStep.value === 1) {\r\n-    if (!name.value || !email.value || !country.value || !phone.value || !hotelAddress.value) {\r\n+    if (!name.value || !email.value || !country.value || !phone.value) {\r\n       errorMsg.value = 'Please fill in all required fields.';\r\n       return;\r\n     }\r\n     if (!policyAccepted.value) {\r\n"
                 }
             ],
             "date": 1755552618152,

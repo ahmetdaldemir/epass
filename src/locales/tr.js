@@ -604,7 +604,7 @@ SearchYourTour – olağanüstü hizmetin unutulmaz deneyimlerle buluştuğu yer
         website: {
           label: 'Website',
           placeholder: 'Website',
-          description: 'Ajansınızın websitesi. Örn: www.youragency.com'
+          description: 'Ajansınızın websitesi. Örn: https://www.youragency.com'
         }
       },
       taxInfo: {
@@ -707,7 +707,7 @@ SearchYourTour – olağanüstü hizmetin unutulmaz deneyimlerle buluştuğu yer
             notSpecified: 'Belirtmek istemiyorum'
           }
         },
-        title: {
+        jobTitle: {
           label: 'Unvan *',
           placeholder: 'Unvan *'
         },

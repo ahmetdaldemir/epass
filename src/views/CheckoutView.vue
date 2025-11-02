@@ -406,7 +406,7 @@ function convertPriceToCents(priceString) {
 
 const handleStep = async () => {
   if (currentStep.value === 1) {
-    if (!name.value || !email.value || !country.value || !phone.value || !hotelAddress.value) {
+    if (!name.value || !email.value || !country.value || !phone.value) {
       errorMsg.value = 'Please fill in all required fields.';
       return;
     }

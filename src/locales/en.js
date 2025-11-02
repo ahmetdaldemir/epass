@@ -595,7 +595,7 @@ SearchYourTour – where exceptional service meets unforgettable experiences.`
         website: {
           label: 'Website',
           placeholder: 'Website',
-          description: 'Your agency\'s website. Ex: www.youragency.com'
+          description: 'Your agency\'s website. Ex: https://www.youragency.com'
         }
       },
       taxInfo: {
@@ -698,7 +698,7 @@ SearchYourTour – where exceptional service meets unforgettable experiences.`
             notSpecified: 'Prefer not to specify'
           }
         },
-        title: {
+        jobTitle: {
           label: 'Title *',
           placeholder: 'Title *'
         },

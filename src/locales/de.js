@@ -599,7 +599,7 @@ SearchYourTour – wo außergewöhnlicher Service auf unvergessliche Erlebnisse 
         website: {
           label: 'Website',
           placeholder: 'Website',
-          description: 'Website Ihres Reisebüros. Z.B.: www.youragency.com'
+          description: 'Website Ihres Reisebüros. Z.B.: https://www.youragency.com'
         }
       },
       taxInfo: {
@@ -702,7 +702,7 @@ SearchYourTour – wo außergewöhnlicher Service auf unvergessliche Erlebnisse 
             notSpecified: 'Möchte nicht angeben'
           }
         },
-        title: {
+        jobTitle: {
           label: 'Titel *',
           placeholder: 'Titel *'
         },
