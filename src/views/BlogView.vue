@@ -22,10 +22,74 @@
       <p>{{ t('blog.emptyState.description') }}</p>
     </div>
 
-    <!-- Blog Posts Grid -->
-    <div v-else class="blog-posts">
+    <!-- Blog Hero Slider -->
+    <div v-else-if="sliderBlogs.length > 0" class="blog-hero-slider-wrapper">
+      <div class="blog-hero-slider-container">
+          <swiper
+          :modules="[Navigation, Autoplay]"
+          :slides-per-view="1"
+          :loop="false"
+          :autoplay="{
+            delay: 5000,
+            disableOnInteraction: false
+          }"
+          @slideChange="onSlideChange"
+          class="blog-hero-slider"
+          ref="heroSwiper"
+        >
+          <swiper-slide v-for="post in sliderBlogs" :key="post.id">
+            <div 
+              class="hero-slide"
+              :style="{ backgroundImage: `url(${getBlogImage(post)})` }"
+            >
+              <div class="hero-overlay"></div>
+              <h2 class="hero-title">
+                <a @click="navigateToPost(post)" class="hero-title-link">
+                  {{ getBlogTitle(post) }}
+                </a>
+              </h2>
+              <div class="hero-content">
+                <p class="hero-description">{{ getBlogExcerpt(post) }}</p>
+                <div class="hero-meta">
+                  <span class="hero-author-date">
+                    <span class="hero-icon">📍</span>
+                    Admin On {{ formatDate(post.created_at) }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </swiper-slide>
+        </swiper>
+
+        <!-- Thumbnail Navigation -->
+        <div class="blog-thumbnail-nav">
+          <div 
+            v-for="(post, index) in sliderBlogs" 
+            :key="post.id"
+            class="thumbnail-item"
+            :class="{ active: activeSlideIndex === index }"
+            @click="handleThumbnailClick(post, index)"
+          >
+            <div class="thumbnail-image">
+              <img 
+                :src="getBlogImage(post)" 
+                :alt="getBlogTitle(post)"
+                loading="lazy"
+              />
+            </div>
+            <div class="thumbnail-content">
+              <h6 class="thumbnail-title">{{ getBlogTitle(post) }}</h6>
+              <span class="thumbnail-date">{{ formatDate(post.created_at) }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Remaining Blog Posts Grid -->
+    <div v-if="remainingBlogs.length > 0" class="blog-posts">
       <article 
-        v-for="post in blogPosts" 
+        v-for="post in remainingBlogs" 
         :key="post.id" 
         class="blog-post"
         @click="navigateToPost(post)"
@@ -104,6 +168,11 @@
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Navigation, Autoplay } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/autoplay'
 import Breadcrumb from '../components/Breadcrumb.vue'
 
 const router = useRouter()
@@ -114,10 +183,14 @@ const blogPosts = ref([])
 const loading = ref(true)
 const currentPage = ref(1)
 const totalPages = ref(1)
-const postsPerPage = ref(6)
+const postsPerPage = ref(20) // İlk 4 slider için, kalanlar grid için
 
 // API Configuration
 const API_BASE_URL = 'https://backend.searchyourtour.com/api'
+
+// Reactive data for slider
+const heroSwiper = ref(null)
+const activeSlideIndex = ref(0)
 
 // Computed properties
 const visiblePages = computed(() => {
@@ -129,6 +202,16 @@ const visiblePages = computed(() => {
     pages.push(i)
   }
   return pages
+})
+
+// Slider blogs (first 4 posts)
+const sliderBlogs = computed(() => {
+  return blogPosts.value.slice(0, 4)
+})
+
+// Remaining blogs (for grid below)
+const remainingBlogs = computed(() => {
+  return blogPosts.value.slice(4)
 })
 
 // Methods
@@ -284,6 +367,29 @@ const navigateToPost = (post) => {
   console.log('Generated slug:', slug)
   console.log('Navigating to:', `/blog/${slug}`)
   router.push(`/blog/${slug}`)
+}
+
+// Slider methods
+const onSlideChange = (swiper) => {
+  activeSlideIndex.value = swiper.activeIndex
+}
+
+const goToSlide = (index) => {
+  if (heroSwiper.value) {
+    // Swiper instance'ı kontrol et
+    const swiperInstance = heroSwiper.value.swiper || heroSwiper.value
+    if (swiperInstance && typeof swiperInstance.slideTo === 'function') {
+      swiperInstance.slideTo(index, 500) // 500ms animasyon ile geçiş
+      activeSlideIndex.value = index
+    }
+  }
+}
+
+const handleThumbnailClick = (post, index) => {
+  // Slider'ı o slide'a geçir
+  goToSlide(index)
+  // Blog detay sayfasına yönlendir
+  navigateToPost(post)
 }
 
 const loadPage = (page) => {
@@ -587,6 +693,187 @@ onBeforeUnmount(() => {
   padding-right: 15px;
 }
 
+/* Blog Hero Slider */
+.blog-hero-slider-wrapper {
+  margin-bottom: 3rem;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.blog-hero-slider-container {
+  position: relative;
+}
+
+.blog-hero-slider {
+  width: 100%;
+  height: 550px;
+  position: relative;
+}
+
+.hero-slide {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 3rem;
+}
+
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.3));
+  z-index: 1;
+}
+
+.hero-title {
+  position: relative;
+  z-index: 2;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  line-height: 1;
+  color: white;
+  max-width: 800px;
+  width: 100%;
+  margin-top: 2rem;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  color: white;
+  max-width: 800px;
+  width: 100%;
+  margin-bottom: 3rem;
+}
+
+.hero-title-link {
+  color: white;
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.hero-title-link:hover {
+  color: #FC6421;
+}
+
+.hero-description {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.95);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.hero-meta {
+  margin-bottom: 1rem;
+}
+
+.hero-author-date {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero-icon {
+  font-size: 1rem;
+  color: #FC6421;
+}
+
+/* Thumbnail Navigation */
+.blog-thumbnail-nav {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+}
+
+.thumbnail-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.thumbnail-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.thumbnail-item.active {
+  background: #333;
+  border-color: #FC6421;
+}
+
+.thumbnail-image {
+  width: 80px;
+  height: 80px;
+  flex-shrink: 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.thumbnail-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbnail-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.thumbnail-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem 0;
+  color: #333;
+  line-height: 1.3;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.thumbnail-item.active .thumbnail-title {
+  color: white;
+}
+
+.thumbnail-date {
+  font-size: 0.75rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.thumbnail-item.active .thumbnail-date {
+  color: rgba(255, 255, 255, 0.8);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .blog-container {
@@ -595,6 +882,51 @@ onBeforeUnmount(() => {
   
   .blog-header h1 {
     font-size: 2rem;
+  }
+
+  .blog-hero-slider {
+    height: 400px;
+  }
+
+  .hero-slide {
+    padding: 2rem 1.5rem;
+  }
+
+  .hero-title {
+    font-size: 1.4rem;
+    position: absolute;
+    top: 20%;
+    left: 0;
+    right: 0;
+    padding: 0 2rem;
+    margin-top: 0;
+  }
+
+  .hero-content {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    padding: 0 2rem;
+    margin-bottom: 0;
+  }
+
+  .hero-description {
+    font-size: 1rem;
+  }
+
+  .blog-thumbnail-nav {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 1rem;
+  }
+
+  .thumbnail-image {
+    width: 60px;
+    height: 60px;
+  }
+
+  .thumbnail-title {
+    font-size: 0.8rem;
   }
   
   .blog-posts {
@@ -619,6 +951,61 @@ onBeforeUnmount(() => {
   
   .subtitle {
     font-size: 1rem;
+  }
+
+  .blog-hero-slider {
+    height: 350px;
+  }
+
+  .hero-slide {
+    padding: 1.5rem 1rem;
+  }
+
+  .hero-title {
+    font-size: 1.4rem;
+    position: absolute;
+    top: 20%;
+    left: 0;
+    right: 0;
+    padding: 0 1.5rem;
+    margin-top: 0;
+  }
+
+  .hero-content {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    padding: 0 1.5rem;
+    margin-bottom: 0;
+  }
+
+  .hero-description {
+    font-size: 0.9rem;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  .blog-thumbnail-nav {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .thumbnail-item {
+    padding: 0.75rem;
+  }
+
+  .thumbnail-image {
+    width: 50px;
+    height: 50px;
+  }
+
+  .thumbnail-title {
+    font-size: 0.75rem;
+  }
+
+  .thumbnail-date {
+    font-size: 0.7rem;
   }
   
   .post-content {
